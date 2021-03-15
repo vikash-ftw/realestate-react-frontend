@@ -14,7 +14,7 @@ class ownerReg extends React.Component{
             IdProof: '',
             city: '',
             pinCode: '',
-            RegDate: new Date()
+            regDate: new Date()
 
         }
     }
@@ -28,12 +28,12 @@ class ownerReg extends React.Component{
     // "ownerRegistDate": null
     
     addOwner() {
-        console.log(this.state.email);
-        const { name, email, password, phone, IdProof, city, pinCode, RegDate } = this.state;
+        const { name, email, password, phone, IdProof, city, pinCode, regDate } = this.state;
+        console.log(pinCode);
         Axios.post("http://localhost:8080/realEstate/owner", {
-            ownerName: this.state.name, ownerEmail: this.state.email, ownerPassword: this.state.password,
-            ownerPhoneNo: this.state.phone, ownerIdProof: this.state.IdProof, ownerCity: this.state.city,
-            ownerPincode:this.state.pinCode, ownerRegistDate:this.state.RegDate
+            ownerName: name, ownerEmail: email, ownerPassword: password,
+            ownerPhoneNo: phone, ownerIdProof: IdProof, ownerCity: city,
+            ownerPincode:pinCode, ownerRegistDate:regDate
         }).then((response) => {
             console.log("new Owner");
             console.log(response.data);
@@ -48,7 +48,7 @@ class ownerReg extends React.Component{
                 <form class="col-lg-6 offset-lg-3 ">  
                     <div className="form-group">
                         <label>Owner Name</label>
-                        <input type="email" className="form-control" id="0InputEmail" aria-describedby="emailHelp" 
+                        <input type="text" className="form-control" id="0InputEmail" aria-describedby="emailHelp" 
                                 placeholder="FullName" 
                                 onChange={(e)=>{this.setState({name :e.target.value})}}
                                 />
@@ -56,7 +56,7 @@ class ownerReg extends React.Component{
                     </div>
                     <div className="form-group">
                         <label>Email</label>
-                        <input type="text" className="form-control" id="name" aria-describedby="name" 
+                        <input type="email" className="form-control" id="name" aria-describedby="name" 
                                 placeholder="Email" 
                                 onChange={(e)=>{this.setState({email :e.target.value})}}
                                 />
@@ -73,6 +73,12 @@ class ownerReg extends React.Component{
                         <label>PhoneNumber</label>
                         <input type="text" className="form-control" id="InputPassword" placeholder="PhoneNo"
                                 onChange={(e)=>{this.setState({phone : e.target.value})}}
+                                />
+                    </div>
+                    <div className="form-group">
+                        <label>OwnerIdProof</label>
+                        <input type="text" className="form-control" id="InputPassword" placeholder="ID"
+                                onChange={(e)=>{this.setState({IdProof: e.target.value})}}
                                 />
                     </div>
                     <div className="form-group">

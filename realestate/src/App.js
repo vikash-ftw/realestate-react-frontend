@@ -7,6 +7,7 @@ import OwnerProfile from './components/ownerProfile';
 import BuyerProfile from './components/buyerProfile';
 import Home from './components/home';
 import OwnerReg from './components/ownerReg'
+import BuyerReg from './components/buyerReg'
 
 
 import { BrowserRouter as Router, Route, Link, NavLink, Switch } from "react-router-dom";
@@ -62,7 +63,8 @@ class App extends React.Component{
           <Route exact path='/Login'component={Login}/>
           <Route exact path='/Login' component={OwnerProfile}/>
           <Route exact path='/Register' component={Register} />
-          <Route path='/ownerReg' component={OwnerReg}/>
+          <Route path='/ownerReg' component={OwnerReg} />
+          <Route path='/buyerReg' component={BuyerReg}/>
         </Switch>
         
         

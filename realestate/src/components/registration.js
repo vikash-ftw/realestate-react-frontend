@@ -17,7 +17,7 @@ class Register extends React.Component{
                     >OwnerRegister</button>
                     <button onClick={
                         (e) => {
-                            this.props.history.replace("./home" , this.state);
+                            this.props.history.push("./buyerReg");
                         }
                     }
                     >Buyer</button>
