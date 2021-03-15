@@ -5,7 +5,8 @@ import Login from './components/login';
 import Register from './components/registration';
 import OwnerProfile from './components/ownerProfile';
 import BuyerProfile from './components/buyerProfile';
-import Home from './components/home'
+import Home from './components/home';
+import OwnerReg from './components/ownerReg'
 
 
 import { BrowserRouter as Router, Route, Link, NavLink, Switch } from "react-router-dom";
@@ -27,7 +28,7 @@ class App extends React.Component{
               <nav className="navbar navbar-expand navbar-dark bg-dark">
                 <div className="navbar-nav">
                   <ul className="nav navbar-nav m-2">
-                    <li> <Link activeClassName="active" to='/'>Home</Link></li>
+                    <li> <Link ClassName="active" to='/'>Home</Link></li>
                   </ul>        
                 </div>
               
@@ -35,32 +36,33 @@ class App extends React.Component{
                 {this.state.isBuyerLogin ? (
                     <div className="navbar-nav ml-auto">
                       <ul className="nav navbar-nav">
-                        <li> <Link activeClassName="active" to='/Login'>BuyerProfile</Link></li>
+                        <li> <Link ClassName="active" to='/Login'>BuyerProfile</Link></li>
                       </ul>
                         
                       <ul className="nav navbar-nav">
-                        <li> <Link activeClassName="active" exact to='/Register'>Logout</Link></li>
+                        <li> <Link ClassName="active" exact to='/Register'>Logout</Link></li>
                       </ul>
                     </div>
           ) : (
               <div className="navbar-nav ml-auto">
                 <ul className="nav navbar-nav m-2">
-                  <li> <Link activeClassName="active" to='/Login'>Login</Link></li>
+                  <li> <Link ClassName="active" to='/Login'>Login</Link></li>
                 </ul>
                         
                 <ul className="nav navbar-nav m-2 ">
-                  <li> <Link activeClassName="active" exact to='/Register'>SignUp</Link></li>
+                  <li> <Link ClassName="active" exact to='/Register'>SignUp</Link></li>
                 </ul>
               </div>      
             )}
                 
           </nav>
-        
+           
         <Switch>
-                <Route exact path='/' component={Home}/>
-                <Route exact path='/Login'component={Login}/>
-                <Route exact path='/Login' component={OwnerProfile}/>
-                <Route exact path='/Register' component={Register}/>
+          <Route exact path='/' component={Home}/>
+          <Route exact path='/Login'component={Login}/>
+          <Route exact path='/Login' component={OwnerProfile}/>
+          <Route exact path='/Register' component={Register} />
+          <Route path='/ownerReg' component={OwnerReg}/>
         </Switch>
         
         

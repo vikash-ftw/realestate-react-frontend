@@ -1,5 +1,7 @@
 import React from 'react';
-import css from '../css/login.css'
+import css from '../css/login.css';
+import Axios from 'axios';
+
 
 class Login extends React.Component{
 
@@ -9,36 +11,67 @@ class Login extends React.Component{
             email : '',
             password : '',
             users : [],    
-            isLogin : false
+            isLogin: false,
+            isOwner: false,
+            isBuyer: false,
+            isAdmin: true,
+            userRole : ''
+            
             
         }
        
     }
 
+    loginProcess() {
+        console.log(this.state.email, this.state.password);
+        Axios.post("http://localhost:8080/realEstate/owner/login",
+            { email: this.state.email, password: this.state.password }).then((response) => {
+                localStorage.setItem("user", JSON.stringify(response.data));
+                console.log(response.data);
+                console.log('onlogin');
+            })
+        
+        
+    }
+
+
+
     render() {
         return (
-    <div id="cover-caption">
-        <div class="container">
-            <div class="row text-white">
-                <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
-                    <h1 class="display-4 py-2 text-truncate">Login</h1>
-                    <div class="px-2">
-                        <form action="" class="justify-content-center">
-                            <div class="form-group">
-                                <label class="sr-only">Email</label>
-                                <input type="text" class="form-control" placeholder="Email"/>
-                            </div>
-                            <div class="form-group">
-                                <label class="sr-only">Password</label>
-                                <input type="text" class="form-control" placeholder="Password"/>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-lg">Launch</button>
-                        </form>
-                    </div>
-                </div>
+        <>
+            <div className="justify-content-center">
+                    <button onClick={
+                        (e) => {
+                            this.setState({ userRole: 'Owner', isOwner: true });
+                            localStorage.setItem('userRole', this.state.userRole);
+                            console.log(this.state.userRole, this.state.isOwner);
+                           // this.props.history.replace("./home" , this.state);
+                            
+                        }
+                    }    
+                    >Owner</button>
+                    <button onClick={
+                        (e) => {
+                            this.setState({ userRole: 'Buyer', isBuyer: true });
+                            localStorage.setItem('userRole', this.state.userRole);
+                            console.log(this.state.userRole)
+                        }
+                    }
+                    >Buyer</button>
+                    <button
+                        onClick={
+                        (e) => {
+                            this.setState({ userRole: 'Admin', isAdmin: true });
+                            localStorage.setItem('userRole', this.state.userRole);
+                            console.log(this.state.userRole);
+                        }
+                    }
+                    >Admin</button>
             </div>
-        </div>
- </div>
+            {
+                    
+            }  
+        </>
         )
     }
 
