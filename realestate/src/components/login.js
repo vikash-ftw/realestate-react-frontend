@@ -1,5 +1,4 @@
 import React from 'react';
-import css from '../css/login.css';
 import Axios from 'axios';
 
 
@@ -8,8 +7,8 @@ class Login extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            email : '',
-            password : '',
+            email : 'ram00@gmail.com',
+            password : 'ram1234',
             users : [],    
             isLogin: false,
             isOwner: false,
@@ -24,8 +23,9 @@ class Login extends React.Component{
 
     loginProcess() {
         console.log(this.state.email, this.state.password);
+        const { email, password } = this.state;
         Axios.post("http://localhost:8080/realEstate/owner/login",
-            { email: this.state.email, password: this.state.password }).then((response) => {
+            { email: email, password: password }).then((response) => {
                 localStorage.setItem("user", JSON.stringify(response.data));
                 console.log(response.data);
                 console.log('onlogin');
@@ -40,14 +40,7 @@ class Login extends React.Component{
         return (
         <>
             <div className="justify-content-center">
-                    <button onClick={
-                        (e) => {
-                            this.setState({ userRole: 'Owner', isOwner: true });
-                            localStorage.setItem('userRole', this.state.userRole);
-                            console.log(this.state.userRole, this.state.isOwner);
-                           // this.props.history.replace("./home" , this.state);
-                            
-                        }
+                    <button onClick={ () =>this.loginProcess() 
                     }    
                     >Owner</button>
                     <button onClick={

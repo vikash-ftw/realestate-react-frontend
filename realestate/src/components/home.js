@@ -2,7 +2,7 @@ import React from "react";
 import image from '../images/image.jpg';
 import i2 from "../images/i2.jpg";
 import i3 from '../images/i3.jpg';
-import { Button, FormGroup, FormControl, ControlLabel,Carousel } from "react-bootstrap";
+import { Carousel } from "react-bootstrap";
 
 class Home extends React.Component{
     

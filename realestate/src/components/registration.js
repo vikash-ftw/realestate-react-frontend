@@ -1,6 +1,4 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, NavLink, Switch } from "react-router-dom";
-import ownerReg from './ownerReg';
 
 class Register extends React.Component{
     render() {
@@ -28,9 +26,7 @@ class Register extends React.Component{
                     }
                     >Admin</button>
             </div>
-            <Switch>
-                <Route exact path='owner' component={ownerReg} />
-            </Switch>
+            
         </>
             
         )

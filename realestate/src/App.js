@@ -10,7 +10,7 @@ import OwnerReg from './components/ownerReg'
 import BuyerReg from './components/buyerReg'
 
 
-import { BrowserRouter as Router, Route, Link, NavLink, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 
 
@@ -29,7 +29,7 @@ class App extends React.Component{
               <nav className="navbar navbar-expand navbar-dark bg-dark">
                 <div className="navbar-nav">
                   <ul className="nav navbar-nav m-2">
-                    <li> <Link ClassName="active" to='/'>Home</Link></li>
+                    <li> <Link to='/'>Home</Link></li>
                   </ul>        
                 </div>
               
@@ -37,21 +37,21 @@ class App extends React.Component{
                 {this.state.isBuyerLogin ? (
                     <div className="navbar-nav ml-auto">
                       <ul className="nav navbar-nav">
-                        <li> <Link ClassName="active" to='/Login'>BuyerProfile</Link></li>
+                        <li> <Link className="active" to='/Login'>BuyerProfile</Link></li>
                       </ul>
                         
                       <ul className="nav navbar-nav">
-                        <li> <Link ClassName="active" exact to='/Register'>Logout</Link></li>
+                        <li> <Link className="active" exact to='/Register'>Logout</Link></li>
                       </ul>
                     </div>
           ) : (
               <div className="navbar-nav ml-auto">
                 <ul className="nav navbar-nav m-2">
-                  <li> <Link ClassName="active" to='/Login'>Login</Link></li>
+                  <li> <Link  to='/Login'>Login</Link></li>
                 </ul>
                         
                 <ul className="nav navbar-nav m-2 ">
-                  <li> <Link ClassName="active" exact to='/Register'>SignUp</Link></li>
+                  <li> <Link className="active" exact to='/Register'>SignUp</Link></li>
                 </ul>
               </div>      
             )}
@@ -60,9 +60,9 @@ class App extends React.Component{
            
         <Switch>
           <Route exact path='/' component={Home}/>
-          <Route exact path='/Login'component={Login}/>
-          <Route exact path='/Login' component={OwnerProfile}/>
-          <Route exact path='/Register' component={Register} />
+          <Route  path='/Login'component={Login}/>
+          <Route  path='/Login' component={OwnerProfile}/>
+          <Route  path='/Register' component={Register} />
           <Route path='/ownerReg' component={OwnerReg} />
           <Route path='/buyerReg' component={BuyerReg}/>
         </Switch>
