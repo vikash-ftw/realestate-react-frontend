@@ -9,10 +9,8 @@ import Home from './components/home';
 import OwnerReg from './components/ownerReg'
 import BuyerReg from './components/buyerReg';
 import AdminReg from "./components/adminReg";
-
-
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
-
+import MainLogin from './components/mainLogin';
 
 
 class App extends React.Component{
@@ -85,7 +83,20 @@ class App extends React.Component{
           <Route path="/ownerReg" component={OwnerReg} />
           <Route path="/buyerReg" component={BuyerReg} />
           <Route path="/adminReg" component={AdminReg} />
-          <Redirect to='/not-found'/>
+          <Route path="/mainLogin" component={MainLogin} />
+          <Route
+            path="/ownerLogin"
+            render={(props) => <MainLogin ownerType="Owner" {...props} />}
+          />
+          <Route
+            path="/buyerLogin"
+            render={(props) => <MainLogin ownerType="Buyer" {...props} />}
+          />
+          <Route
+            path="/adminLogin"
+            render={(props) => <MainLogin ownerType="Admin" {...props} />}
+          />
+          <Redirect to="/not-found" />
         </Switch>
       </div>
     );

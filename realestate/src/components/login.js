@@ -1,5 +1,6 @@
 import React from "react";
 import Axios from "axios";
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
   constructor(props) {
@@ -8,11 +9,7 @@ class Login extends React.Component {
       email: "ram00@gmail.com",
       password: "ram1234",
       users: [],
-      isLogin: false,
-      isOwner: false,
-      isBuyer: false,
-      isAdmin: true,
-      userRole: "",
+      userRole: "NA",
     };
   }
 
@@ -29,31 +26,44 @@ class Login extends React.Component {
     });
   }
 
+  isOwner() {
+    this.setState({ userRole: 'owner' });
+    console.log(this.state.userRole);
+    localStorage.setItem("Role", this.state.userRole);
+    this.props.history.push("./mainLogin");
+    
+  }
+
   render() {
     return (
       <>
-        <div className="justify-content-center">
-          <button onClick={() => this.loginProcess()}>Owner</button>
-          <button
-            onClick={(e) => {
-              this.setState({ userRole: "Buyer", isBuyer: true });
-              localStorage.setItem("userRole", this.state.userRole);
-              console.log(this.state.userRole);
-            }}
-          >
-            Buyer
-          </button>
-          <button
-            onClick={(e) => {
-              this.setState({ userRole: "Admin", isAdmin: true });
-              localStorage.setItem("userRole", this.state.userRole);
-              console.log(this.state.userRole);
-            }}
-          >
-            Admin
-          </button>
+        <div className="row">
+          <br></br>
         </div>
-        {}
+        <div>
+          <div className="row">
+            <div className="col text-center">
+              <Link to="/ownerLogin">OwnerLogin</Link>
+            </div>
+          </div>
+          <div className="row">
+            <br></br>
+          </div>
+
+          <div className="row">
+            <div className="col text-center">
+              <Link to="/BuyerLogin">BuyerLogin</Link>
+            </div>
+          </div>
+          <div className="row">
+            <br></br>
+          </div>
+          <div className="row">
+            <div className="col text-center">
+              <Link to='/adminLogin'>AdminLogin</Link>
+            </div>
+          </div>
+        </div>
       </>
     );
   }
