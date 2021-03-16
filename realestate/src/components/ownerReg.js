@@ -143,8 +143,8 @@ class ownerReg extends React.Component {
           </div>
         </form>
         <div className="row">
-          <div className="col-md-10">
-            <div className="col-md-1">
+          
+            <div className="col text-center">
               <button
                 className="btn btn-primary"
                 onClick={() => this.addOwner()}
@@ -152,7 +152,7 @@ class ownerReg extends React.Component {
                 Register
               </button>
             </div>
-          </div>
+       
         </div>
       </>
     );

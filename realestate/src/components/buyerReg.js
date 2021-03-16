@@ -123,8 +123,8 @@ class BuyerReg extends React.Component {
           </div>
         </form>
         <div className="row">
-          <div className="col-md-10">
-            <div className="col-md-1">
+          
+            <div className="col text-center">
               <button
                 type="submit"
                 className="btn btn-primary"
@@ -133,7 +133,7 @@ class BuyerReg extends React.Component {
                 Register
               </button>
             </div>
-          </div>
+         
         </div>
       </>
     );
