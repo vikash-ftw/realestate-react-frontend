@@ -33,18 +33,9 @@ class Login extends React.Component {
           <br></br>
         </div>
         <div>
-          <div className="row">
+        <div className="row">
             <div className="col text-center">
-              <Link to="/ownerLogin">OwnerLogin</Link>
-            </div>
-          </div>
-          <div className="row">
-            <br></br>
-          </div>
-
-          <div className="row">
-            <div className="col text-center">
-              <Link to="/BuyerLogin">BuyerLogin</Link>
+              <Link className="btn btn-secondary stretched-link" to="/BuyerLogin">BuyerLogin</Link>
             </div>
           </div>
           <div className="row">
@@ -52,7 +43,15 @@ class Login extends React.Component {
           </div>
           <div className="row">
             <div className="col text-center">
-              <Link to='/adminLogin'>AdminLogin</Link>
+              <Link className="btn btn-primary stretched-link" to="/ownerLogin">OwnerLogin</Link>
+            </div>
+          </div>
+          <div className="row">
+            <br></br>
+          </div>
+          <div className="row">
+            <div className="col text-center">
+              <Link className="btn btn-danger stretched-link" to='/adminLogin'>AdminLogin</Link>
             </div>
           </div>
         </div>

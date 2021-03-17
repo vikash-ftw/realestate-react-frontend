@@ -15,6 +15,7 @@ import {
   Link,
   Switch,
   Redirect,
+  NavLink
 } from "react-router-dom";
 import MainLogin from "./components/login";
 import AdminDashboard from "./components/adminDashboard";
@@ -43,12 +44,11 @@ class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <nav className="navbar navbar-expand navbar-dark bg-dark">
+        <nav className="navbar navbar-expand navbar-light bg-light">
           <div className="navbar-nav">
             <ul className="nav navbar-nav m-2">
               <li>
-                {" "}
-                <Link to="/">Home</Link>
+                <NavLink className="nav-link" to="/">Horizon Real Estate</NavLink>
               </li>
             </ul>
           </div>
@@ -57,23 +57,22 @@ class App extends React.Component {
             <div className="navbar-nav ml-auto">
               <ul className="nav navbar-nav m-2">
                 <li>
-                  <Link className="active" to="/Login">
-                    {this.state.actorName}
-                  </Link>
+                  <NavLink className="nav-link" to="/Login">
+                    {"HI, "+ String(this.state.actorName).toUpperCase()}
+                  </NavLink>
                 </li>
               </ul>
 
-              <ul className="nav navbar-nav">
+              <ul className="nav navbar-nav m-2">
                 <li>
-                  {" "}
-                  <Link
-                    className="active"
+                  <NavLink
+                    className="nav-link"
                     exact
                     onClick={this.logout}
                     to="/Register"
                   >
                     Logout
-                  </Link>
+                  </NavLink>
                 </li>
               </ul>
             </div>
@@ -81,17 +80,15 @@ class App extends React.Component {
             <div className="navbar-nav ml-auto">
               <ul className="nav navbar-nav m-2">
                 <li>
-                  {" "}
-                  <Link to="/Login">Login</Link>
+                  <NavLink className="nav-link" to="/Login">Login</NavLink>
                 </li>
               </ul>
 
               <ul className="nav navbar-nav m-2 ">
                 <li>
-                  {" "}
-                  <Link className="active" exact to="/Register">
+                  <NavLink className="nav-link" exact to="/Register">
                     SignUp
-                  </Link>
+                  </NavLink>
                 </li>
               </ul>
             </div>
