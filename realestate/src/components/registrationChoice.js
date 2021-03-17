@@ -44,7 +44,7 @@ class Register extends React.Component {
               <button
                 className="btn btn-primary"
                 onClick={(e) => {
-                  this.props.history.replace("./adminReg", this.state);
+                  this.props.history.push("./adminReg");
                 }}
               >
                 Admin

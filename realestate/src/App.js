@@ -63,7 +63,9 @@ class App extends React.Component {
                 <ul className="nav navbar-nav m-2">
                   <li>
                     {" "}
-                    <Link to="/">{this.state.actorName + "DashBoard"}</Link>
+                    <Link to={"/" + this.state.actorRole + "Profile"}>
+                      Dashboard
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -75,7 +77,6 @@ class App extends React.Component {
                       to={"/" + this.state.actorRole + "Dash"}
                     >
                       {"HI, " + String(this.state.actorName).toUpperCase()}
-                      {console.log("/" + this.state.actorRole + "Dash")}
                     </Link>
                   </li>
                 </ul>
@@ -162,6 +163,10 @@ class App extends React.Component {
                 {...props}
               />
             )}
+          />
+          <Route
+            path='/ownerProfile'
+            render={(props) => (<OwnerProfile/>)}
           />
           <Redirect to="/not-found" />
         </Switch>
