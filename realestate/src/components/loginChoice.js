@@ -1,6 +1,6 @@
 import React from "react";
 import Axios from "axios";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 class Login extends React.Component {
   constructor(props) {
@@ -33,9 +33,11 @@ class Login extends React.Component {
           <br></br>
         </div>
         <div>
-        <div className="row">
+          <div className="row">
             <div className="col text-center">
-              <Link className="btn btn-secondary stretched-link" to="/BuyerLogin">BuyerLogin</Link>
+              <Link className="btn btn-success stretched-link" to="/BuyerLogin">
+                Buyer Login
+              </Link>
             </div>
           </div>
           <div className="row">
@@ -43,7 +45,9 @@ class Login extends React.Component {
           </div>
           <div className="row">
             <div className="col text-center">
-              <Link className="btn btn-primary stretched-link" to="/ownerLogin">OwnerLogin</Link>
+              <Link className="btn btn-primary stretched-link" to="/ownerLogin">
+                Owner Login
+              </Link>
             </div>
           </div>
           <div className="row">
@@ -51,7 +55,9 @@ class Login extends React.Component {
           </div>
           <div className="row">
             <div className="col text-center">
-              <Link className="btn btn-danger stretched-link" to='/adminLogin'>AdminLogin</Link>
+              <Link className="btn btn-danger stretched-link" to="/adminLogin">
+                Admin Login
+              </Link>
             </div>
           </div>
         </div>

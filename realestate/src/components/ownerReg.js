@@ -45,7 +45,6 @@ class ownerReg extends React.Component {
       ownerPincode: pinCode,
       ownerRegistDate: regDate,
     }).then((response) => {
-      localStorage.setItem("owner", JSON.stringify(response.data));
       console.log(response.data);
       this.props.history.replace("/ownerLogin");
     });
@@ -54,9 +53,10 @@ class ownerReg extends React.Component {
   render() {
     return (
       <>
+        <h2 className="text-center">Owner Registration</h2>
         <form className="col-lg-6 offset-lg-3 ">
           <div className="form-group">
-            <label>Owner Name</label>
+            <label>Name</label>
             <input
               type="text"
               className="form-control"
@@ -67,9 +67,6 @@ class ownerReg extends React.Component {
                 this.setState({ name: e.target.value });
               }}
             />
-            <small className="form-text text-muted">
-              We'll never share your email with anyone else.
-            </small>
           </div>
           <div className="form-group">
             <label>Email</label>
@@ -87,7 +84,7 @@ class ownerReg extends React.Component {
           <div className="form-group">
             <label>Password</label>
             <input
-              type="password"
+              type="text"
               className="form-control"
               placeholder="Password"
               onChange={(e) => {
@@ -97,9 +94,9 @@ class ownerReg extends React.Component {
           </div>
 
           <div className="form-group">
-            <label>PhoneNumber</label>
+            <label>Phone Number</label>
             <input
-              type="text"
+              type="tel"
               className="form-control"
               placeholder="PhoneNo"
               onChange={(e) => {
@@ -108,11 +105,11 @@ class ownerReg extends React.Component {
             />
           </div>
           <div className="form-group">
-            <label>OwnerIdProof</label>
+            <label>Govt. Id proof</label>
             <input
               type="text"
               className="form-control"
-              placeholder="ID"
+              placeholder="Enter Id number"
               onChange={(e) => {
                 this.setState({ IdProof: e.target.value });
               }}
@@ -130,11 +127,11 @@ class ownerReg extends React.Component {
             />
           </div>
           <div className="form-group">
-            <label>PinCode</label>
+            <label>Pin code</label>
             <input
               type="text"
               className="form-control"
-              placeholder="PinCode"
+              placeholder="Pin code"
               onChange={(e) => {
                 this.setState({ pinCode: e.target.value });
               }}
@@ -142,16 +139,11 @@ class ownerReg extends React.Component {
           </div>
         </form>
         <div className="row">
-          
-            <div className="col text-center">
-              <button
-                className="btn btn-primary"
-                onClick={() => this.addOwner()}
-              >
-                Register
-              </button>
-            </div>
-       
+          <div className="col text-center">
+            <button className="btn btn-primary" onClick={() => this.addOwner()}>
+              Register
+            </button>
+          </div>
         </div>
       </>
     );

@@ -20,6 +20,7 @@ import {
 import MainLogin from "./components/login";
 import AdminDashboard from "./components/adminDashboard";
 import OwnerDashboard from "./components/ownerDashboard";
+import BuyerDashboard from './components/buyerDashboard';
 
 class App extends React.Component {
   constructor(props) {
@@ -63,34 +64,36 @@ class App extends React.Component {
                 <ul className="nav navbar-nav m-2">
                   <li>
                     {" "}
-                    <Link to="/">{this.state.actorName + "DashBoard"}</Link>
+                    <NavLink className="nav-link" to="/">
+                      {this.state.actorName + "DashBoard"}
+                    </NavLink>
                   </li>
                 </ul>
               </div>
               <div className="navbar-nav ml-auto">
                 <ul className="nav navbar-nav m-2">
                   <li>
-                    <Link
-                      className="active"
+                    <NavLink
+                      className="nav-link"
                       to={"/" + this.state.actorRole + "Dash"}
                     >
                       {"HI, " + String(this.state.actorName).toUpperCase()}
                       {console.log("/" + this.state.actorRole + "Dash")}
-                    </Link>
+                    </NavLink>
                   </li>
                 </ul>
 
                 <ul className="nav navbar-nav m-2">
                   <li>
                     {" "}
-                    <Link
-                      className="active"
+                    <NavLink
+                      className="nav-link"
                       exact
                       onClick={this.logout}
                       to="/Register"
                     >
                       Logout
-                    </Link>
+                    </NavLink>
                   </li>
                 </ul>
               </div>
@@ -136,7 +139,34 @@ class App extends React.Component {
           <Route
             path="/adminLogin"
             render={(props) => (
-              <MainLogin ownerType="Admin" isLogin={true} {...props} />
+              <MainLogin ownerType="Admin" {...props} />
+            )}
+          />
+          
+          <Route
+            path="/buyerDash"
+            render={(props) => (
+              <BuyerDashboard
+                onLogin={this.handleLogin}
+                actorId={localStorage.getItem("actorId")}
+                name={localStorage.getItem("name")}
+                actorType="buyer"
+                {...props}
+              />
+              
+            )}
+          />
+
+          <Route
+            path="/ownerDash"
+            render={(props) => (
+              <OwnerDashboard
+                onLogin={this.handleLogin}
+                actorId={localStorage.getItem("actorId")}
+                name={localStorage.getItem("name")}
+                actorType="owner"
+                {...props}
+              />
             )}
           />
           <Route
@@ -147,18 +177,6 @@ class App extends React.Component {
                 actorId={localStorage.getItem("actorId")}
                 name={localStorage.getItem("name")}
                 actorType="admin"
-                {...props}
-              />
-            )}
-          />
-          <Route
-            path="/ownerDash"
-            render={(props) => (
-              <OwnerDashboard
-                onLogin={this.handleLogin}
-                actorId={localStorage.getItem("actorId")}
-                name={localStorage.getItem("name")}
-                actorType="owner"
                 {...props}
               />
             )}
