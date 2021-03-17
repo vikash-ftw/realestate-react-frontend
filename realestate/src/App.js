@@ -64,8 +64,8 @@ class App extends React.Component {
                 <ul className="nav navbar-nav m-2">
                   <li>
                     {" "}
-                    <NavLink className="nav-link" to="/">
-                      {this.state.actorName + "DashBoard"}
+                    <NavLink className="nav-link" to={"/" + this.state.actorRole + "Profile"}>
+                      Dashboard
                     </NavLink>
                   </li>
                 </ul>
@@ -170,16 +170,8 @@ class App extends React.Component {
             )}
           />
           <Route
-            path="/adminDash"
-            render={(props) => (
-              <AdminDashboard
-                onLogin={this.handleLogin}
-                actorId={localStorage.getItem("actorId")}
-                name={localStorage.getItem("name")}
-                actorType="admin"
-                {...props}
-              />
-            )}
+            path='/ownerProfile'
+            render={(props) => (<OwnerProfile/>)}
           />
           <Redirect to="/not-found" />
         </Switch>
