@@ -1,32 +1,45 @@
-import './App.css';
-import React from 'react';
+import "./App.css";
+import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Login from './components/login';
-import Register from './components/registration';
-import OwnerProfile from './components/ownerProfile';
-import BuyerProfile from './components/buyerProfile';
-import Home from './components/home';
-import OwnerReg from './components/ownerReg'
-import BuyerReg from './components/buyerReg';
+import LoginChoice from "./components/loginChoice";
+import RegisterChoice from "./components/registrationChoice";
+import OwnerProfile from "./components/ownerProfilePage";
+import BuyerProfile from "./components/buyerProfilePage";
+import Home from "./components/home";
+import OwnerReg from "./components/ownerReg";
+import BuyerReg from "./components/buyerReg";
 import AdminReg from "./components/adminReg";
-import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
-import MainLogin from './components/mainLogin';
-import AdminProfile from './components/adminProfile';
-import OwnerDash from './components/ownerDash';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch,
+  Redirect,
+} from "react-router-dom";
+import MainLogin from "./components/login";
+import AdminDashboard from "./components/adminDashboard";
+import OwnerDashboard from "./components/ownerDashboard";
 
-
-class App extends React.Component{
-  state = {
-    isLogin: false,
-    actorName : ''
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLogin: false,
+      actorName: "",
+    };
   }
 
-  handleLogin = (name)=> {
-    this.setState({ isLogin: true })
-    this.setState({ actorName: name })
-    console.log(this.state)
-  }
-  
+  handleLogin = (name) => {
+    this.setState({ isLogin: true });
+    this.setState({ actorName: name });
+    console.log(this.state);
+  };
+  logout = () => {
+    this.setState({ isLogin: false });
+    this.setState({ actorName: "" });
+    //this.props.history.push("/");
+  };
+
   render() {
     return (
       <div className="container">
@@ -42,7 +55,7 @@ class App extends React.Component{
 
           {this.state.isLogin ? (
             <div className="navbar-nav ml-auto">
-              <ul className="nav navbar-nav">
+              <ul className="nav navbar-nav m-2">
                 <li>
                   <Link className="active" to="/Login">
                     {this.state.actorName}
@@ -53,7 +66,12 @@ class App extends React.Component{
               <ul className="nav navbar-nav">
                 <li>
                   {" "}
-                  <Link className="active" exact to="/Register">
+                  <Link
+                    className="active"
+                    exact
+                    onClick={this.logout}
+                    to="/Register"
+                  >
                     Logout
                   </Link>
                 </li>
@@ -82,9 +100,9 @@ class App extends React.Component{
 
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/Login" component={Login} />
+          <Route path="/Login" component={LoginChoice} />
           <Route path="/Login" component={OwnerProfile} />
-          <Route path="/Register" component={Register} />
+          <Route path="/Register" component={RegisterChoice} />
           <Route path="/ownerReg" component={OwnerReg} />
           <Route path="/buyerReg" component={BuyerReg} />
           <Route path="/adminReg" component={AdminReg} />
@@ -106,7 +124,7 @@ class App extends React.Component{
           <Route
             path="/adminProfile"
             render={(props) => (
-              <AdminProfile
+              <AdminDashboard
                 onLogin={this.handleLogin}
                 actorId={localStorage.getItem("actorId")}
                 name={localStorage.getItem("name")}
@@ -117,7 +135,7 @@ class App extends React.Component{
           <Route
             path="/ownerDash"
             render={(props) => (
-              <OwnerDash
+              <OwnerDashboard
                 onLogin={this.handleLogin}
                 actorId={localStorage.getItem("actorId")}
                 name={localStorage.getItem("name")}
