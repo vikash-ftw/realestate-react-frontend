@@ -26,14 +26,6 @@ class Login extends React.Component {
     });
   }
 
-  isOwner() {
-    this.setState({ userRole: 'owner' });
-    console.log(this.state.userRole);
-    localStorage.setItem("Role", this.state.userRole);
-    this.props.history.push("./mainLogin");
-    
-  }
-
   render() {
     return (
       <>

@@ -36,7 +36,7 @@ class BuyerReg extends React.Component {
     }).then((response) => {
       localStorage.setItem("buyer", JSON.stringify(response.data));
       console.log(response.data);
-      console.log("onlogin");
+      this.props.history.replace("/buyerLogin");
     });
   }
 
@@ -123,17 +123,15 @@ class BuyerReg extends React.Component {
           </div>
         </form>
         <div className="row">
-          
-            <div className="col text-center">
-              <button
-                type="submit"
-                className="btn btn-primary"
-                onClick={() => this.addBuyer()}
-              >
-                Register
-              </button>
-            </div>
-         
+          <div className="col text-center">
+            <button
+              type="submit"
+              className="btn btn-primary"
+              onClick={() => this.addBuyer()}
+            >
+              Register
+            </button>
+          </div>
         </div>
       </>
     );

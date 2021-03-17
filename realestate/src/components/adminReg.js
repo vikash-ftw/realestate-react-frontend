@@ -25,7 +25,9 @@ class adminReg extends React.Component {
       adminRegistDate: regDate,
     }).then((response) => {
       console.log(response.data);
+      this.props.history.replace("/adminLogin");
     });
+    //this.props.history.replace("/adminLogin");
   }
 
   render() {

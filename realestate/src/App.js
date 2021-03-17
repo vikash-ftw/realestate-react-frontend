@@ -11,15 +11,21 @@ import BuyerReg from './components/buyerReg';
 import AdminReg from "./components/adminReg";
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
 import MainLogin from './components/mainLogin';
+import AdminProfile from './components/adminProfile';
+import OwnerDash from './components/ownerDash';
 
 
 class App extends React.Component{
-  
   state = {
-    isOwnerLogin : false,
-    isBuyerLogin : false
+    isLogin: false,
+    actorName : ''
   }
 
+  handleLogin = (name)=> {
+    this.setState({ isLogin: true })
+    this.setState({ actorName: name })
+    console.log(this.state)
+  }
   
   render() {
     return (
@@ -34,13 +40,12 @@ class App extends React.Component{
             </ul>
           </div>
 
-          {this.state.isBuyerLogin ? (
+          {this.state.isLogin ? (
             <div className="navbar-nav ml-auto">
               <ul className="nav navbar-nav">
                 <li>
-                  {" "}
                   <Link className="active" to="/Login">
-                    BuyerProfile
+                    {this.state.actorName}
                   </Link>
                 </li>
               </ul>
@@ -94,7 +99,31 @@ class App extends React.Component{
           />
           <Route
             path="/adminLogin"
-            render={(props) => <MainLogin ownerType="Admin" {...props} />}
+            render={(props) => (
+              <MainLogin ownerType="Admin" isLogin={true} {...props} />
+            )}
+          />
+          <Route
+            path="/adminProfile"
+            render={(props) => (
+              <AdminProfile
+                onLogin={this.handleLogin}
+                actorId={localStorage.getItem("actorId")}
+                name={localStorage.getItem("name")}
+                {...props}
+              />
+            )}
+          />
+          <Route
+            path="/ownerDash"
+            render={(props) => (
+              <OwnerDash
+                onLogin={this.handleLogin}
+                actorId={localStorage.getItem("actorId")}
+                name={localStorage.getItem("name")}
+                {...props}
+              />
+            )}
           />
           <Redirect to="/not-found" />
         </Switch>

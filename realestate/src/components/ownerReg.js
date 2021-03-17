@@ -47,9 +47,8 @@ class ownerReg extends React.Component {
     }).then((response) => {
       localStorage.setItem("owner", JSON.stringify(response.data));
       console.log(response.data);
-      console.log("onlogin");
+      this.props.history.replace("/ownerLogin");
     });
-    this.props.history.push("/");
   }
 
   render() {

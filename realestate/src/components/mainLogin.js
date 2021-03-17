@@ -20,6 +20,9 @@ class mainLogin extends React.Component {
           password: password,
         }).then((response) => {
           console.log(response.data);
+          localStorage.setItem("actorId", response.data.ownerId);
+          localStorage.setItem("name", response.data.ownerName);
+          this.props.history.replace("/ownerDash");
         });
 
         break;
@@ -39,7 +42,12 @@ class mainLogin extends React.Component {
               email: email,
               password: password,
             }).then((response) => {
-              console.log(response.data);
+              const id = response.data.adminId;
+              localStorage.setItem('actorId', response.data.adminId);
+              localStorage.setItem("name", response.data.adminName);
+              console.log(response.data , id);
+
+              this.props.history.replace("/adminProfile");
             });
             
         break;
