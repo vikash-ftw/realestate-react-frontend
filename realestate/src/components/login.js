@@ -10,6 +10,7 @@ class mainLogin extends React.Component {
       password: "",
     };
   }
+
   loginProcess() {
     const { email, password } = this.state;
     switch (this.props.ownerType) {
@@ -19,11 +20,33 @@ class mainLogin extends React.Component {
           email: email,
           password: password,
         }).then((response) => {
-          console.log(response.data);
+          const {
+            ownerId,
+            ownerName,
+            ownerEmail,
+            ownerPassword,
+            ownerPhoneNo,
+            ownerIdProof,
+            ownerCity,
+            ownerPincode,
+            ownerRegistDate,
+            landProperties,
+          } = response.data;
+          const user = {
+            id: ownerId,
+            name: ownerName,
+            email: ownerEmail,
+            password: ownerPassword,
+            phoneNo: ownerPhoneNo,
+            idProof: ownerIdProof,
+            city: ownerCity,
+            pinCode: ownerPincode,
+            regDate: ownerRegistDate,
+          }; 
           localStorage.setItem("actorId", response.data.ownerId);
-          localStorage.setItem("name", response.data.ownerName);
-          localStorage.setItem("actorType", "Owner")
+          localStorage.setItem("actorType", "Owner");
           this.props.history.replace("/ownerDash");
+          this.props.sendData(user);
         });
 
         break;
@@ -33,25 +56,19 @@ class mainLogin extends React.Component {
           email: email,
           password: password,
         }).then((response) => {
-          localStorage.setItem("actorId",response.data.buyerId);
-          localStorage.setItem("name", response.data.buyerName);
-          localStorage.setItem("actorType", "Buyer")
-          console.log(response.data);
+          localStorage.setItem("actorId", response.data.buyerId);
+          localStorage.setItem("actorType", "Buyer");
           this.props.history.replace("/buyerDash");
         });
         break;
       case "Admin":
-        console.log("inAdminLogin", email, password);
         Axios.post("http://localhost:8080/realEstate/admin/login", {
           email: email,
           password: password,
         }).then((response) => {
           const id = response.data.adminId;
           localStorage.setItem("actorId", response.data.adminId);
-          localStorage.setItem("name", response.data.adminName);
-          localStorage.setItem("actorType", "Admin")
-          console.log(response.data, id);
-
+          localStorage.setItem("actorType", "Admin");
           this.props.history.replace("/adminDash");
         });
 

@@ -3,7 +3,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LoginChoice from "./components/loginChoice";
 import RegisterChoice from "./components/registrationChoice";
-import OwnerProfile from "./components/ownerProfilePage";
+import OwnerProfile from "./components/updateOwnerProfile";
 import BuyerProfile from "./components/buyerProfilePage";
 import Home from "./components/home";
 import OwnerReg from "./components/ownerReg";
@@ -20,28 +20,44 @@ import {
 import MainLogin from "./components/login";
 import AdminDashboard from "./components/adminDashboard";
 import OwnerDashboard from "./components/ownerDashboard";
-import BuyerDashboard from './components/buyerDashboard';
+import BuyerDashboard from "./components/buyerDashboard";
+import ProfilePage from "./components/profilePage";
+import OwnerUpdate from "./components/updateOwnerProfile";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isLogin: false,
-      actorName: "",
       actorRole: "",
+      user: {
+        id: "",
+        name: "",
+        email: "",
+        password: "",
+        phoneNo: "",
+        idProof: "",
+        city: "",
+        pinCode: "",
+        regDate: "",
+      },
     };
   }
 
-  handleLogin = (name, role) => {
+  handleUserData = (user) => {
+    this.setState({ user });
+    console.log(this.state.user);
+    console.log(this.state.user.id, "state");
+  };
+
+  handleLogin = (role) => {
     this.setState({ isLogin: true });
-    this.setState({ actorName: name });
     this.setState({ actorRole: role });
     console.log(this.state.actorRole);
   };
   logout = () => {
     this.setState({ isLogin: false });
     this.setState({ actorName: "" });
-    //this.props.history.push("/");
   };
 
   render() {
@@ -76,12 +92,8 @@ class App extends React.Component {
               <div className="navbar-nav ml-auto">
                 <ul className="nav navbar-nav m-2">
                   <li>
-                    <NavLink
-                      className="nav-link"
-                      to={"/" + this.state.actorRole + "Profile"}
-                    >
-                      {"HI, " + String(this.state.actorName).toUpperCase()}
-                      {console.log("/" + this.state.actorRole + "Dash")}
+                    <NavLink className="nav-link" to="/profile">
+                      {"HI, " + String(this.state.user.name).toUpperCase()}
                     </NavLink>
                   </li>
                 </ul>
@@ -130,10 +142,19 @@ class App extends React.Component {
           <Route path="/ownerReg" component={OwnerReg} />
           <Route path="/buyerReg" component={BuyerReg} />
           <Route path="/adminReg" component={AdminReg} />
-          <Route path="/mainLogin" component={MainLogin} />
+          {/* <Route
+            path="/mainLogin"
+            render={(props) => <MainLogin sendData={this.handleUserData} />}
+          /> */}
           <Route
             path="/ownerLogin"
-            render={(props) => <MainLogin ownerType="Owner" {...props} />}
+            render={(props) => (
+              <MainLogin
+                sendData={this.handleUserData}
+                ownerType="Owner"
+                {...props}
+              />
+            )}
           />
           <Route
             path="/buyerLogin"
@@ -150,7 +171,6 @@ class App extends React.Component {
               <BuyerDashboard
                 onLogin={this.handleLogin}
                 actorId={localStorage.getItem("actorId")}
-                name={localStorage.getItem("name")}
                 actorType="buyer"
                 {...props}
               />
@@ -163,13 +183,28 @@ class App extends React.Component {
               <OwnerDashboard
                 onLogin={this.handleLogin}
                 actorId={localStorage.getItem("actorId")}
-                name={localStorage.getItem("name")}
+                user={this.state.user}
                 actorType="owner"
                 {...props}
               />
             )}
           />
-          <Route path="/ownerProfile" render={(props) => <OwnerProfile />} />
+          <Route
+            path="/profile"
+            render={(props) => (
+              <ProfilePage
+                user={this.state.user}
+                actorType={this.state.actorRole}
+                {...props}
+              />
+            )}
+          />
+          <Route
+            path="/ownerUpdate"
+            render={(props) => (
+              <OwnerUpdate user={this.state.user} {...props} />
+            )}
+          />
           <Redirect to="/not-found" />
         </Switch>
       </div>
