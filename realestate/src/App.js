@@ -64,7 +64,10 @@ class App extends React.Component {
                 <ul className="nav navbar-nav m-2">
                   <li>
                     {" "}
-                    <NavLink className="nav-link" to={"/" + this.state.actorRole + "Profile"}>
+                    <NavLink
+                      className="nav-link"
+                      to={"/" + this.state.actorRole + "Dash"}
+                    >
                       Dashboard
                     </NavLink>
                   </li>
@@ -75,7 +78,7 @@ class App extends React.Component {
                   <li>
                     <NavLink
                       className="nav-link"
-                      to={"/" + this.state.actorRole + "Dash"}
+                      to={"/" + this.state.actorRole + "Profile"}
                     >
                       {"HI, " + String(this.state.actorName).toUpperCase()}
                       {console.log("/" + this.state.actorRole + "Dash")}
@@ -138,11 +141,9 @@ class App extends React.Component {
           />
           <Route
             path="/adminLogin"
-            render={(props) => (
-              <MainLogin ownerType="Admin" {...props} />
-            )}
+            render={(props) => <MainLogin ownerType="Admin" {...props} />}
           />
-          
+
           <Route
             path="/buyerDash"
             render={(props) => (
@@ -153,7 +154,6 @@ class App extends React.Component {
                 actorType="buyer"
                 {...props}
               />
-              
             )}
           />
 
@@ -169,10 +169,7 @@ class App extends React.Component {
               />
             )}
           />
-          <Route
-            path='/ownerProfile'
-            render={(props) => (<OwnerProfile/>)}
-          />
+          <Route path="/ownerProfile" render={(props) => <OwnerProfile />} />
           <Redirect to="/not-found" />
         </Switch>
       </div>
