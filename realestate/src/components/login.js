@@ -47,7 +47,7 @@ class mainLogin extends React.Component {
               localStorage.setItem("name", response.data.adminName);
               console.log(response.data , id);
 
-              this.props.history.replace("/adminProfile");
+              this.props.history.replace("/adminDash");
             });
             
         break;

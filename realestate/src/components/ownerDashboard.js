@@ -31,6 +31,7 @@ class OwnerDash extends React.Component {
   };
   componentDidMount() {
     const id = this.props.actorId;
+    this.props.onLogin(this.props.name, this.props.actorType);
     Axios.get(`http://localhost:8080/realEstate/owner/${id}`).then((res) => {
       const {
         ownerId,

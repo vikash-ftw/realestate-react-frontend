@@ -11,7 +11,7 @@ class OwnerProfile extends Component {
 
   componentDidMount() {
     const id = this.props.actorId;
-    this.props.onLogin(this.props.name);
+    this.props.onLogin(this.props.name, this.props.actorType);
     Axios.get(`http://localhost:8080/realEstate/admin/${id}`).then((res) => {
       console.log("in Admin profile");
       console.log(res.data);

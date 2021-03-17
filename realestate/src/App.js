@@ -26,13 +26,15 @@ class App extends React.Component {
     this.state = {
       isLogin: false,
       actorName: "",
+      actorRole: "",
     };
   }
 
-  handleLogin = (name) => {
+  handleLogin = (name , role) => {
     this.setState({ isLogin: true });
     this.setState({ actorName: name });
-    console.log(this.state);
+    this.setState({ actorRole: role });
+    console.log(this.state.actorRole);
   };
   logout = () => {
     this.setState({ isLogin: false });
@@ -54,29 +56,43 @@ class App extends React.Component {
           </div>
 
           {this.state.isLogin ? (
-            <div className="navbar-nav ml-auto">
-              <ul className="nav navbar-nav m-2">
-                <li>
-                  <Link className="active" to="/Login">
-                    {this.state.actorName}
-                  </Link>
-                </li>
-              </ul>
+            <>
+              <div className="navbar-nav">
+                <ul className="nav navbar-nav m-2">
+                  <li>
+                    {" "}
+                    <Link to="/">{ this.state.actorName+"DashBoard"}</Link>
+                  </li>
+                </ul>
+              </div>
+              <div className="navbar-nav ml-auto">
+                <ul className="nav navbar-nav m-2">
+                  <li>
+                    <Link
+                      className="active"
+                      to={"/" + this.state.actorRole + "Dash"}
+                    >
+                      {this.state.actorName}
+                      {console.log("/" + this.state.actorRole + "Dash")}
+                    </Link>
+                  </li>
+                </ul>
 
-              <ul className="nav navbar-nav">
-                <li>
-                  {" "}
-                  <Link
-                    className="active"
-                    exact
-                    onClick={this.logout}
-                    to="/Register"
-                  >
-                    Logout
-                  </Link>
-                </li>
-              </ul>
-            </div>
+                <ul className="nav navbar-nav m-2">
+                  <li>
+                    {" "}
+                    <Link
+                      className="active"
+                      exact
+                      onClick={this.logout}
+                      to="/Register"
+                    >
+                      Logout
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </>
           ) : (
             <div className="navbar-nav ml-auto">
               <ul className="nav navbar-nav m-2">
@@ -122,12 +138,13 @@ class App extends React.Component {
             )}
           />
           <Route
-            path="/adminProfile"
+            path="/adminDash"
             render={(props) => (
               <AdminDashboard
                 onLogin={this.handleLogin}
                 actorId={localStorage.getItem("actorId")}
                 name={localStorage.getItem("name")}
+                actorType="admin"
                 {...props}
               />
             )}
@@ -139,6 +156,7 @@ class App extends React.Component {
                 onLogin={this.handleLogin}
                 actorId={localStorage.getItem("actorId")}
                 name={localStorage.getItem("name")}
+                actorType="owner"
                 {...props}
               />
             )}
