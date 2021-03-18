@@ -48,7 +48,9 @@ class OwnerProfile extends Component {
       ownerPincode: pinCode,
       ownerRegistDate: regDate,
     }).then((res) => {
+      this.props.onLogout()
       console.log(res.data);
+      this.props.history.push("/ownerLogin");
     });
   };
   render() {
