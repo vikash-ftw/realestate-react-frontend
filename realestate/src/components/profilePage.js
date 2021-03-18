@@ -8,7 +8,7 @@ class Profile extends Component {
                 this.props.history.push('/ownerUpdate');
             break;
             case "buyer":
-                this.props.history.push("/");
+                this.props.history.push("/buyerUpdate");
             break;
             case "admin":
                 this.props.history.push("/");
@@ -36,9 +36,8 @@ class Profile extends Component {
               <li>Name : {name}</li>
               <li>Email : {email}</li>
               <li> Phone : {phoneNo}</li>
-              <li>IdProof : {idProof}</li>
-                    <li>City : {city}</li>
-                    <li><button onClick={this.handleUpdate}>Update</button></li>
+              <li>City : {city}</li>
+              <li><button onClick={this.handleUpdate}>Update</button></li>
             </ul>
           </>
         );

@@ -49,7 +49,6 @@ class BuyerReg extends React.Component {
             <input
               type="text"
               className="form-control"
-              aria-describedby="emailHelp"
               placeholder="FullName"
               name = "name"
               onChange={this.handleInputChange}
@@ -60,7 +59,6 @@ class BuyerReg extends React.Component {
             <input
               type="email"
               className="form-control"
-              id="name"
               placeholder="Email"
               name = "email"
               onChange={this.handleInputChange}
