@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import  Axios  from "axios";
+import Axios from "axios";
+import Map from "./mapComponent";
+import Register from './registrationChoice';
 class PropertyReg extends Component {
   constructor(props) {
     super(props);
@@ -10,14 +12,19 @@ class PropertyReg extends Component {
       dimensionLength: "",
       dimensionBreadth: "",
       propertyPrice: "",
-      propertyType: "",
-      ownershipType: "",
+      propertyType: "AGRICULTURAL",
+      ownershipType: "FREEHOLD",
       latitude: "",
       longitude: "",
       propertyCity: "",
       propertyPincode: "",
       propertyRegistDate: new Date(),
     };
+  }
+  receiveCoord = (coord) => {
+    console.log(coord, "coord")
+    const { lat, lng } = coord;
+    this.setState({ latitude: lat, longitude: lng });
   }
   registerProperty = () => {
     const {
@@ -54,15 +61,25 @@ class PropertyReg extends Component {
     ).then((res) => {
         console.log(res.data)
     })
-  };
+    };
   render() {
     console.log(this.state.ownershipType);
+    console.log(this.state.propertyType);
+    const {
+      dimensionLength,
+      dimensionBreadth,
+      latitude,
+      longitude,
+    } = this.state;
+    const Area = dimensionLength * dimensionBreadth;
+
     return (
       <div className="row">
         <div className="col-7">
           <form>
+            <h4>Land Property Registeration Form</h4>
             <div className="form-group">
-              <label>PropertyTitle</label>
+              <label>Property Title</label>
               <input
                 type="text"
                 className="form-control"
@@ -73,20 +90,9 @@ class PropertyReg extends Component {
                 }}
               />
             </div>
+
             <div className="form-group">
-              <label>PropertyArea</label>
-              <input
-                type="text"
-                className="form-control"
-                id="propertyArea"
-                placeholder="Area"
-                onChange={(e) => {
-                  this.setState({ propertyArea: e.target.value });
-                }}
-              />
-            </div>
-            <div className="form-group">
-              <label>DimensionLength</label>
+              <label>Length (ft)</label>
               <input
                 type="text"
                 className="form-control"
@@ -98,7 +104,7 @@ class PropertyReg extends Component {
             </div>
 
             <div className="form-group">
-              <label>DimensionBreadth</label>
+              <label>Breadth (ft)</label>
               <input
                 type="text"
                 className="form-control"
@@ -109,7 +115,20 @@ class PropertyReg extends Component {
               />
             </div>
             <div className="form-group">
-              <label>PropertyPrice</label>
+              <label>Property Area (sqft)</label>
+              <input
+                type="text"
+                className="form-control"
+                id="propertyArea"
+                placeholder={Area}
+                disabled
+                onChange={(e) => {
+                  this.setState({ propertyArea: Area });
+                }}
+              />
+            </div>
+            <div className="form-group">
+              <label>Property Price</label>
               <input
                 type="text"
                 className="form-control"
@@ -120,7 +139,7 @@ class PropertyReg extends Component {
               />
             </div>
             <div className="form-group">
-              <label>PropertyType</label>
+              <label>Property Type</label>
               <select
                 className="form-control"
                 onChange={(e) => {
@@ -133,7 +152,7 @@ class PropertyReg extends Component {
               </select>
             </div>
             <div className="form-group">
-              <label>OwnershipType</label>
+              <label>Ownership Type</label>
               <select
                 className="form-control"
                 onChange={(e) => {
@@ -170,7 +189,7 @@ class PropertyReg extends Component {
               />
             </div>
             <div className="form-group">
-              <label>PropertyCity</label>
+              <label>Property City</label>
               <input
                 type="text"
                 className="form-control"
@@ -181,7 +200,7 @@ class PropertyReg extends Component {
               />
             </div>
             <div className="form-group">
-              <label>PropertyPincode</label>
+              <label>Property Pincode</label>
               <input
                 type="text"
                 className="form-control"
@@ -203,7 +222,10 @@ class PropertyReg extends Component {
             </div>
           </div>
         </div>
-        <div className="col">Map</div>
+        <div className="col">
+          <h4>Mark Your Property on Map</h4>
+          <Map getCoord={ this.receiveCoord}/>
+        </div>
       </div>
     );
   }
