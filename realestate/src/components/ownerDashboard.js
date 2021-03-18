@@ -28,8 +28,6 @@ class OwnerDash extends React.Component {
       //console.log(res.data);
       const land = res.data;
       this.setState({ landProperties: land });
-      console.log('mount fun called');
-      console.log(land);
     });
    
   }
@@ -72,7 +70,9 @@ class OwnerDash extends React.Component {
           </div>
           <div className="col">
             <h5>
-              <button>+AddNewProperty</button>
+              <button onClick={()=>this.props.history.push("/propertyReg")}>
+                +AddNewProperty
+              </button>
             </h5>
           </div>
         </div>
@@ -98,7 +98,7 @@ class OwnerDash extends React.Component {
                   >
                     update
                   </button>
-                  <button onClick={()=>this.deleteProperty(val.propertyId)}>
+                  <button onClick={() => this.deleteProperty(val.propertyId)}>
                     delete
                   </button>
                 </p>

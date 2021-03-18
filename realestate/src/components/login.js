@@ -42,11 +42,12 @@ class mainLogin extends React.Component {
             city: ownerCity,
             pinCode: ownerPincode,
             regDate: ownerRegistDate,
-          }; 
+          };
+          this.props.sendData(user);
           localStorage.setItem("actorId", response.data.ownerId);
           localStorage.setItem("actorType", "Owner");
           this.props.history.replace("/ownerDash");
-          this.props.sendData(user);
+          
         });
 
         break;
@@ -77,11 +78,12 @@ class mainLogin extends React.Component {
             city: buyerCity,
             pinCode: buyerPincode,
             regDate: buyerRegistDate,
-          }; 
+          };
+          this.props.sendData(user);
           localStorage.setItem("actorId", response.data.buyerId);
           localStorage.setItem("actorType", "Buyer");
           this.props.history.replace("/buyerDash");
-          this.props.sendData(user);
+          
         });
         break;
         

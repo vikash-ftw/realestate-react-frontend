@@ -161,7 +161,13 @@ class App extends React.Component {
           />
           <Route
             path="/buyerLogin"
-            render={(props) => <MainLogin sendData={this.handleUserData} ownerType="Buyer" {...props} />}
+            render={(props) => (
+              <MainLogin
+                sendData={this.handleUserData}
+                ownerType="Buyer"
+                {...props}
+              />
+            )}
           />
           <Route
             path="/adminLogin"
@@ -174,7 +180,7 @@ class App extends React.Component {
               <BuyerDashboard
                 onLogin={this.handleLogin}
                 actorId={localStorage.getItem("actorId")}
-                user = {this.state.user}
+                user={this.state.user}
                 actorType="buyer"
                 {...props}
               />
@@ -206,22 +212,23 @@ class App extends React.Component {
           <Route
             path="/ownerUpdate"
             render={(props) => (
-              <OwnerUpdate user={this.state.user}
-              onLogout={this.logout}  {...props} />
+              <OwnerUpdate
+                user={this.state.user}
+                onLogout={this.logout}
+                {...props}
+              />
             )}
           />
-           <Route
+          <Route
             path="/buyerUpdate"
             render={(props) => (
               <BuyerUpdateProfile user={this.state.user} {...props} />
             )}
           />
           <Route
-            path='/propertyReg'
+            path="/propertyReg"
             render={(props) => (
-              <PropertyReg user={this.state.user}
-                {...props}
-              />
+              <PropertyReg user={this.state.user} {...props} />
             )}
           />
           <Redirect to="/not-found" />
