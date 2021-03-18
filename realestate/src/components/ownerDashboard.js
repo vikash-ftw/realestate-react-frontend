@@ -20,20 +20,19 @@ class OwnerDash extends React.Component {
       },
     ],
   };
+
   componentDidMount() {
     this.props.onLogin("owner");
     Axios.get(
-      `http://localhost:8080/realEstate/owner/myProperty/${this.props.user.id}`
+      `http://localhost:8080/realEstate/owner/myProperty/${localStorage.getItem(
+        "actorId"
+      )}`
     ).then((res) => {
-      //console.log(res.data);
       const land = res.data;
       this.setState({ landProperties: land });
     });
-   
   }
-  getLand = () => {
-     
-  }
+  
 
   // "ownerId": 4,
   // "ownerName": "root",
@@ -49,7 +48,14 @@ class OwnerDash extends React.Component {
     const ownerId = this.props.user.id;
     Axios.delete(`http://localhost:8080/realEstate/owner/deleteProp/${ownerId}/${id}`).then(
       (res) => {
-        console.log("delete roperty done");
+        Axios.get(
+          `http://localhost:8080/realEstate/owner/myProperty/${localStorage.getItem(
+            "actorId"
+          )}`
+        ).then((res) => {
+          const land = res.data;
+          this.setState({ landProperties: land });
+        });
       }
     );
   };
