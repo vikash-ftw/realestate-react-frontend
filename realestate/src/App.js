@@ -24,6 +24,7 @@ import ProfilePage from "./components/profilePage";
 import OwnerUpdate from "./components/updateOwnerProfile";
 import PropertyReg from './components/PropertyReg';
 import BuyerUpdateProfile from './components/updateBuyerProfile';
+import  Axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class App extends React.Component {
       isLogin: false,
       actorRole: "",
       user: {
-        id: "",
+        id: "", 
         name: "",
         email: "",
         password: "",
@@ -43,6 +44,39 @@ class App extends React.Component {
         regDate: "",
       },
     };
+  }
+
+  componentDidMount(){
+    console.log(typeof this.state.user.id);
+    console.log("app cdm ", this.state.user.id);
+    if(this.state.user.id === "" 
+      && localStorage.getItem("actorType") !== null 
+      && localStorage.getItem("actorId") !== null)
+    {
+      const id = localStorage.getItem("actorId");
+      switch(localStorage.getItem("actorType"))
+      {
+          case "Buyer" : {
+            Axios.get(`http://localhost:8080/realEstate/buyer/${id}`)
+              .then((res) => {
+                const buyerUser = res.data;
+                const user = {
+                  id: buyerUser.buyerId, 
+                  name: buyerUser.buyerName,
+                  email: buyerUser.buyerEmail,
+                  password: buyerUser.buyerPassword,
+                  phoneNo: buyerUser.buyerPhoneNo,
+                  city: buyerUser.buyerCity,
+                  pinCode: buyerUser.buyerPincode,
+                  regDate: buyerUser.buyerRegistDate
+                }
+                this.setState({ user });
+                this.handleLogin("buyer");
+              })
+              break;
+          }
+      }
+    }
   }
 
   handleUserData = (user) => {
