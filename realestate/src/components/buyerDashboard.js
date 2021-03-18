@@ -3,10 +3,18 @@ import Axios from "axios";
 
 class BuyerDashboard extends Component {
   state = {
+    landProperty : {},
   };
 
-  componentDidMount() {
+  componentDidMount = ()=> {
+    console.log("com did mount cld");
     this.props.onLogin("buyer")
+    console.log("after login cld");
+    console.log("user", this.props.user);
+    Axios.get(`http://localhost:8080/realEstate/LandProperty/city/${this.props.user.city}`)
+    .then((res) => {
+      console.log(res.data);
+    })
   }
 
   render() {
