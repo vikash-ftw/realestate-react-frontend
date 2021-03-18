@@ -56,11 +56,35 @@ class mainLogin extends React.Component {
           email: email,
           password: password,
         }).then((response) => {
+
+          const {
+            buyerId,
+            buyerName,
+            buyerEmail,
+            buyerPassword,
+            buyerPhoneNo,
+            buyerCity,
+            buyerPincode,
+            buyerRegistDate,
+          } = response.data;
+
+          const user = {
+            id: buyerId,
+            name: buyerName,
+            email: buyerEmail,
+            password: buyerPassword,
+            phoneNo: buyerPhoneNo,
+            city: buyerCity,
+            pinCode: buyerPincode,
+            regDate: buyerRegistDate,
+          }; 
           localStorage.setItem("actorId", response.data.buyerId);
           localStorage.setItem("actorType", "Buyer");
           this.props.history.replace("/buyerDash");
+          this.props.sendData(user);
         });
         break;
+        
       case "Admin":
         Axios.post("http://localhost:8080/realEstate/admin/login", {
           email: email,

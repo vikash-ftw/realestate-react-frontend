@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import LoginChoice from "./components/loginChoice";
 import RegisterChoice from "./components/registrationChoice";
 import OwnerProfile from "./components/updateOwnerProfile";
-import BuyerProfile from "./components/buyerProfilePage";
 import Home from "./components/home";
 import OwnerReg from "./components/ownerReg";
 import BuyerReg from "./components/buyerReg";
@@ -23,6 +22,7 @@ import OwnerDashboard from "./components/ownerDashboard";
 import BuyerDashboard from "./components/buyerDashboard";
 import ProfilePage from "./components/profilePage";
 import OwnerUpdate from "./components/updateOwnerProfile";
+import BuyerUpdateProfile from './components/updateBuyerProfile';
 
 class App extends React.Component {
   constructor(props) {
@@ -158,7 +158,7 @@ class App extends React.Component {
           />
           <Route
             path="/buyerLogin"
-            render={(props) => <MainLogin ownerType="Buyer" {...props} />}
+            render={(props) => <MainLogin sendData={this.handleUserData} ownerType="Buyer" {...props} />}
           />
           <Route
             path="/adminLogin"
@@ -171,6 +171,7 @@ class App extends React.Component {
               <BuyerDashboard
                 onLogin={this.handleLogin}
                 actorId={localStorage.getItem("actorId")}
+                user = {this.state.user}
                 actorType="buyer"
                 {...props}
               />
@@ -203,6 +204,12 @@ class App extends React.Component {
             path="/ownerUpdate"
             render={(props) => (
               <OwnerUpdate user={this.state.user} {...props} />
+            )}
+          />
+           <Route
+            path="/buyerUpdate"
+            render={(props) => (
+              <BuyerUpdateProfile user={this.state.user} {...props} />
             )}
           />
           <Redirect to="/not-found" />
