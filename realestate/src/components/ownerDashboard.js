@@ -28,12 +28,15 @@ class OwnerDash extends React.Component {
       //console.log(res.data);
       const land = res.data;
       this.setState({ landProperties: land });
-      console.log(this.state.landProperties, "land");
-      console.log(land)
+      console.log('mount fun called');
+      console.log(land);
     });
+   
+  }
+  getLand = () => {
+     
   }
 
-  
   // "ownerId": 4,
   // "ownerName": "root",
   // "ownerEmail": "mangesh@gmail.com",
@@ -44,12 +47,20 @@ class OwnerDash extends React.Component {
   // "  ": null,
   // "ownerRegistDate": "1997-02-22",
   // "landProperties": []
+  deleteProperty = (id) => {
+    const ownerId = this.props.user.id;
+    Axios.delete(`http://localhost:8080/realEstate/owner/deleteProp/${ownerId}/${id}`).then(
+      (res) => {
+        console.log("delete roperty done");
+      }
+    );
+  };
 
   render() {
+    console.log('render called')
     const { name, email } = this.props.user;
-    console.log(this.props.user, "ownerDash");
+
     const list = this.state.landProperties;
-    console.log(list , 'list in render')
     return (
       <>
         <div className="row">
@@ -73,8 +84,23 @@ class OwnerDash extends React.Component {
           return (
             <div className="cart">
               <div className="row">
+                Property
                 <p>
-                  Id : {val.propertyId} Area :{val.propertyArea} 
+                  Id : {val.propertyId} Area :{val.propertyArea}
+                  Length :{val.dimensionLength}
+                  Breadth :{val.dimensionBreadth}
+                  Price :{val.propertyPrice}
+                  Price :{val.ownershipType}
+                  <button
+                    onClick={() => {
+                      this.props.history.push("/");
+                    }}
+                  >
+                    update
+                  </button>
+                  <button onClick={()=>this.deleteProperty(val.propertyId)}>
+                    delete
+                  </button>
                 </p>
               </div>
             </div>
@@ -87,16 +113,16 @@ class OwnerDash extends React.Component {
 
 export default OwnerDash;
 // const {
-  //   propertyTitle,
-  //   propertyArea,
-  //   dimensionLength,
-  //   dimensionBreadth,
-  //   propertyPrice,
-  //   propertyType,
-  //   ownershipType,
-  //   latitude,
-  //   longitude,
-  //   propertyCity,
-  //   propertyPincode,
-  //   propertyRegistDate,
-  // } = res.data;
+//     propertyTitle,
+//     propertyArea,
+//     dimensionLength,
+//     dimensionBreadth,
+//     propertyPrice,
+//     propertyType,
+//     ownershipType,
+//     latitude,
+//     longitude,
+//     propertyCity,
+//     propertyPincode,
+//     propertyRegistDate,
+//   } = res.data;

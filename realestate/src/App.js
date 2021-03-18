@@ -23,6 +23,7 @@ import OwnerDashboard from "./components/ownerDashboard";
 import BuyerDashboard from "./components/buyerDashboard";
 import ProfilePage from "./components/profilePage";
 import OwnerUpdate from "./components/updateOwnerProfile";
+import PropertyReg from './components/PropertyReg';
 
 class App extends React.Component {
   constructor(props) {
@@ -184,7 +185,7 @@ class App extends React.Component {
             render={(props) => (
               <OwnerDashboard
                 onLogin={this.handleLogin}
-                actorId={localStorage.getItem("actorId")}
+                actorId={this.state.user.id}
                 user={this.state.user}
                 actorType="owner"
                 {...props}
@@ -208,6 +209,15 @@ class App extends React.Component {
               onLogout={this.logout}  {...props} />
             )}
           />
+          <Route
+            path='/propertyReg'
+            render={(props) => (
+              <PropertyReg user={this.state.user}
+                {...props}
+              />
+            )}
+          />
+
           <Redirect to="/not-found" />
         </Switch>
       </div>
