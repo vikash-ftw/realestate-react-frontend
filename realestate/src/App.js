@@ -58,6 +58,8 @@ class App extends React.Component {
   logout = () => {
     this.setState({ isLogin: false });
     this.setState({ actorName: "" });
+    localStorage.removeItem("actorType");
+    localStorage.removeItem("actorId");
   };
 
   render() {
@@ -202,7 +204,8 @@ class App extends React.Component {
           <Route
             path="/ownerUpdate"
             render={(props) => (
-              <OwnerUpdate user={this.state.user} {...props} />
+              <OwnerUpdate user={this.state.user}
+              onLogout={this.logout}  {...props} />
             )}
           />
           <Redirect to="/not-found" />
