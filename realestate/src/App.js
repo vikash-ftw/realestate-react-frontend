@@ -29,6 +29,14 @@ class App extends React.Component {
       isLogin: false,
       actorName: "",
       actorRole: "",
+      user : {
+        // owner profile 
+        id : "",
+        name : "",
+        password : "",
+        city : "",
+
+      }
     };
   }
 
