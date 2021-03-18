@@ -25,6 +25,7 @@ import OwnerUpdate from "./components/updateOwnerProfile";
 import PropertyReg from "./components/PropertyReg";
 import BuyerUpdateProfile from "./components/updateBuyerProfile";
 import Axios from "axios";
+import UpdateLandProperty from './components/updateLandProperty';
 
 class App extends React.Component {
   constructor(props) {
@@ -42,6 +43,20 @@ class App extends React.Component {
         city: "",
         pinCode: "",
         regDate: "",
+      },
+      landProperty: {
+        propertyTitle: "",
+        propertyArea: "",
+        dimensionLength: "",
+        dimensionBreadth: "",
+        propertyPrice: "",
+        propertyType: "",
+        ownershipType: "",
+        latitude: "",
+        longitude: "",
+        propertyCity: "",
+        propertyPincode: "",
+        propertyRegistDate: "",
       },
     };
   }
@@ -101,6 +116,11 @@ class App extends React.Component {
       }
     }
   }
+  handlePropertyData = (landProperty) => {
+    this.setState({ landProperty });
+    console.log(landProperty, "in main App");
+    console.log(this.state.landProperty, "in main App LandProperty state");
+  };
 
   handleUserData = (user) => {
     this.setState({ user });
@@ -202,10 +222,7 @@ class App extends React.Component {
           <Route path="/ownerReg" component={OwnerReg} />
           <Route path="/buyerReg" component={BuyerReg} />
           <Route path="/adminReg" component={AdminReg} />
-          {/* <Route
-            path="/mainLogin"
-            render={(props) => <MainLogin sendData={this.handleUserData} />}
-          /> */}
+
           <Route
             path="/ownerLogin"
             render={(props) => (
@@ -216,6 +233,7 @@ class App extends React.Component {
               />
             )}
           />
+
           <Route
             path="/buyerLogin"
             render={(props) => (
@@ -226,6 +244,7 @@ class App extends React.Component {
               />
             )}
           />
+
           <Route
             path="/adminLogin"
             render={(props) => <MainLogin ownerType="Admin" {...props} />}
@@ -252,10 +271,12 @@ class App extends React.Component {
                 actorId={this.state.user.id}
                 user={this.state.user}
                 actorType="owner"
+                sendPropertyData={this.handlePropertyData}
                 {...props}
               />
             )}
           />
+
           <Route
             path="/profile"
             render={(props) => (
@@ -266,6 +287,7 @@ class App extends React.Component {
               />
             )}
           />
+
           <Route
             path="/ownerUpdate"
             render={(props) => (
@@ -276,18 +298,28 @@ class App extends React.Component {
               />
             )}
           />
+
           <Route
             path="/buyerUpdate"
             render={(props) => (
               <BuyerUpdateProfile user={this.state.user} {...props} />
             )}
           />
+
           <Route
             path="/propertyReg"
             render={(props) => (
               <PropertyReg user={this.state.user} {...props} />
             )}
           />
+
+          <Route
+            path="/updateLandProperty"
+            render={(props) => {
+              <UpdateLandProperty  {...props} />;
+            }}
+          />
+
           <Redirect to="/not-found" />
         </Switch>
       </div>
