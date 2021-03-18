@@ -5,15 +5,17 @@ class OwnerProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: this.props.user.id,
-      name: this.props.user.name,
-      email: this.props.user.email,
-      password: this.props.user.password,
-      phone: this.props.user.phoneNo,
-      IdProof: this.props.user.idProof,
-      city: this.props.user.city,
-      pinCode: this.props.user.pinCode,
-      regDate: new Date(),
+      owner: {
+        id: this.props.user.id,
+        name: this.props.user.name,
+        email: this.props.user.email,
+        password: this.props.user.password,
+        phoneNo: this.props.user.phoneNo,
+        idProof: this.props.user.idProof,
+        city: this.props.user.city,
+        pinCode: this.props.user.pinCode,
+        regDate: this.props.user.regDate,
+      },
     };
   }
 
@@ -31,27 +33,32 @@ class OwnerProfile extends Component {
       name,
       email,
       password,
-      phone,
-      IdProof,
+      phoneNo,
+      idProof,
       city,
       pinCode,
       regDate,
-    } = this.state;
+    } = this.state.owner;
     Axios.put(`http://localhost:8080/realEstate/owner/update/${id}`, {
       ownerId: id,
       ownerName: name,
       ownerEmail: email,
       ownerPassword: password,
-      ownerPhoneNo: phone,
-      ownerIdProof: IdProof,
+      ownerPhoneNo: phoneNo,
+      ownerIdProof: idProof,
       ownerCity: city,
       ownerPincode: pinCode,
       ownerRegistDate: regDate,
     }).then((res) => {
-      this.props.onLogout()
+      this.props.onLogout();
       console.log(res.data);
       this.props.history.push("/ownerLogin");
     });
+  };
+  handleInputChange = (e) => {
+    const owner = { ...this.state.owner };
+    owner[e.currentTarget.name] = e.currentTarget.value;
+    this.setState({ owner });
   };
   render() {
     const {
@@ -64,7 +71,7 @@ class OwnerProfile extends Component {
       city,
       pinCode,
       regDate,
-    } = this.props.user;
+    } = this.state.owner;
     return (
       <>
         <form className="col-lg-6 offset-lg-3 justify-content-center">
@@ -73,9 +80,8 @@ class OwnerProfile extends Component {
             <input
               type="text"
               className="form-control"
-              id="0InputEmail"
-              aria-describedby="emailHelp"
-              placeholder={id}
+              name="id"
+              value={id}
               disabled
             />
           </div>
@@ -84,12 +90,9 @@ class OwnerProfile extends Component {
             <input
               type="text"
               className="form-control"
-              id="0InputEmail"
-              aria-describedby="emailHelp"
-              placeholder={name}
-              onChange={(e) => {
-                this.setState({ name: e.target.value });
-              }}
+              name="name"
+              value={name}
+              onChange={this.handleInputChange}
             />
           </div>
           <div className="form-group">
@@ -97,12 +100,9 @@ class OwnerProfile extends Component {
             <input
               type="email"
               className="form-control"
-              id="name"
-              aria-describedby="name"
-              placeholder={email}
-              onChange={(e) => {
-                this.setState({ email: e.target.value });
-              }}
+              name="email"
+              value={email}
+              onChange={this.handleInputChange}
             />
           </div>
           <div className="form-group">
@@ -110,10 +110,9 @@ class OwnerProfile extends Component {
             <input
               type="password"
               className="form-control"
-              placeholder={password}
-              onChange={(e) => {
-                this.setState({ password: e.target.value });
-              }}
+              name="password"
+              value={password}
+              onChange={this.handleInputChange}
             />
           </div>
 
@@ -122,10 +121,9 @@ class OwnerProfile extends Component {
             <input
               type="text"
               className="form-control"
-              placeholder={phoneNo}
-              onChange={(e) => {
-                this.setState({ phone: e.target.value });
-              }}
+              name="phoneNo"
+              value={phoneNo}
+              onChange={this.handleInputChange}
             />
           </div>
           <div className="form-group">
@@ -133,10 +131,9 @@ class OwnerProfile extends Component {
             <input
               type="text"
               className="form-control"
-              placeholder={idProof}
-              onChange={(e) => {
-                this.setState({ IdProof: e.target.value });
-              }}
+              name="idProof"
+              value={idProof}
+              onChange={this.handleInputChange}
             />
           </div>
           <div className="form-group">
@@ -144,10 +141,9 @@ class OwnerProfile extends Component {
             <input
               type="text"
               className="form-control"
-              placeholder={city}
-              onChange={(e) => {
-                this.setState({ city: e.target.value });
-              }}
+              name="city"
+              value={city}
+              onChange={this.handleInputChange}
             />
           </div>
           <div className="form-group">
@@ -155,10 +151,9 @@ class OwnerProfile extends Component {
             <input
               type="text"
               className="form-control"
-              placeholder={pinCode}
-              onChange={(e) => {
-                this.setState({ pinCode: e.target.value });
-              }}
+              name="pinCode"
+              value={pinCode}
+              onChange={this.handleInputChange}
             />
           </div>
         </form>

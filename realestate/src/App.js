@@ -22,9 +22,9 @@ import OwnerDashboard from "./components/ownerDashboard";
 import BuyerDashboard from "./components/buyerDashboard";
 import ProfilePage from "./components/profilePage";
 import OwnerUpdate from "./components/updateOwnerProfile";
-import PropertyReg from './components/PropertyReg';
-import BuyerUpdateProfile from './components/updateBuyerProfile';
-import  Axios from 'axios';
+import PropertyReg from "./components/PropertyReg";
+import BuyerUpdateProfile from "./components/updateBuyerProfile";
+import Axios from "axios";
 
 class App extends React.Component {
   constructor(props) {
@@ -33,7 +33,7 @@ class App extends React.Component {
       isLogin: false,
       actorRole: "",
       user: {
-        id: "", 
+        id: "",
         name: "",
         email: "",
         password: "",
@@ -46,35 +46,58 @@ class App extends React.Component {
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     console.log(typeof this.state.user.id);
     console.log("app cdm ", this.state.user.id);
-    if(this.state.user.id === "" 
-      && localStorage.getItem("actorType") !== null 
-      && localStorage.getItem("actorId") !== null)
-    {
+    if (
+      this.state.user.id === "" &&
+      localStorage.getItem("actorType") !== null &&
+      localStorage.getItem("actorId") !== null
+    ) {
       const id = localStorage.getItem("actorId");
-      switch(localStorage.getItem("actorType"))
-      {
-          case "Buyer" : {
-            Axios.get(`http://localhost:8080/realEstate/buyer/${id}`)
-              .then((res) => {
+      switch (localStorage.getItem("actorType")) {
+        case "Buyer":
+          {
+            Axios.get(`http://localhost:8080/realEstate/buyer/${id}`).then(
+              (res) => {
                 const buyerUser = res.data;
                 const user = {
-                  id: buyerUser.buyerId, 
+                  id: buyerUser.buyerId,
                   name: buyerUser.buyerName,
                   email: buyerUser.buyerEmail,
                   password: buyerUser.buyerPassword,
                   phoneNo: buyerUser.buyerPhoneNo,
                   city: buyerUser.buyerCity,
                   pinCode: buyerUser.buyerPincode,
-                  regDate: buyerUser.buyerRegistDate
-                }
+                  regDate: buyerUser.buyerRegistDate,
+                };
                 this.setState({ user });
                 this.handleLogin("buyer");
-              })
-              break;
+              }
+            );
           }
+          break;
+        case "Owner":
+          {
+            Axios.get(`http://localhost:8080/realEstate/owner/${id}`).then(
+              (res) => {
+                const ownerUser = res.data;
+                const user = {
+                  id: ownerUser.ownerId,
+                  name: ownerUser.ownerName,
+                  email: ownerUser.ownerEmail,
+                  password: ownerUser.ownerPassword,
+                  phoneNo: ownerUser.ownerPhoneNo,
+                  city: ownerUser.ownerCity,
+                  pinCode: ownerUser.ownerPincode,
+                  regDate: ownerUser.ownerRegistDate,
+                };
+                this.setState({ user });
+                this.handleLogin("owner");
+              }
+            );
+          }
+          break;
       }
     }
   }
@@ -142,7 +165,7 @@ class App extends React.Component {
                       className="nav-link"
                       exact
                       onClick={this.logout}
-                      to="/Register"
+                      to="/"
                     >
                       Logout
                     </NavLink>
@@ -195,7 +218,13 @@ class App extends React.Component {
           />
           <Route
             path="/buyerLogin"
-            render={(props) => <MainLogin sendData={this.handleUserData} ownerType="Buyer" {...props} />}
+            render={(props) => (
+              <MainLogin
+                sendData={this.handleUserData}
+                ownerType="Buyer"
+                {...props}
+              />
+            )}
           />
           <Route
             path="/adminLogin"
@@ -208,7 +237,7 @@ class App extends React.Component {
               <BuyerDashboard
                 onLogin={this.handleLogin}
                 actorId={localStorage.getItem("actorId")}
-                user = {this.state.user}
+                user={this.state.user}
                 actorType="buyer"
                 {...props}
               />
@@ -240,22 +269,23 @@ class App extends React.Component {
           <Route
             path="/ownerUpdate"
             render={(props) => (
-              <OwnerUpdate user={this.state.user}
-              onLogout={this.logout}  {...props} />
+              <OwnerUpdate
+                user={this.state.user}
+                onLogout={this.logout}
+                {...props}
+              />
             )}
           />
-           <Route
+          <Route
             path="/buyerUpdate"
             render={(props) => (
               <BuyerUpdateProfile user={this.state.user} {...props} />
             )}
           />
           <Route
-            path='/propertyReg'
+            path="/propertyReg"
             render={(props) => (
-              <PropertyReg user={this.state.user}
-                {...props}
-              />
+              <PropertyReg user={this.state.user} {...props} />
             )}
           />
           <Redirect to="/not-found" />
