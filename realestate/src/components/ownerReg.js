@@ -53,7 +53,7 @@ class ownerReg extends React.Component {
   render() {
     return (
       <>
-        <h2 className="text-center">Owner Registration</h2>
+        <h2 className="text-center">Owner Registration Form</h2>
         <form className="col-lg-6 offset-lg-3 ">
           <div className="form-group">
             <label>Name</label>

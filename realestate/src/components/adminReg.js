@@ -33,7 +33,7 @@ class adminReg extends React.Component {
   render() {
     return (
       <>
-        <h2 className="text-center">Admin Registration</h2>
+        <h2 className="text-center">Admin Registration Form</h2>
         <form className="col-lg-6 offset-lg-3 ">
           <div className="form-group">
             <label>Name</label>

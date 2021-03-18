@@ -2,21 +2,28 @@ import React from "react";
 import Axios from "axios";
 
 class BuyerReg extends React.Component {
-
   state = {
-    buyer : {
+    buyer: {
       name: "",
       email: "",
       password: "",
       phone: "",
       city: "",
       pinCode: "",
-      regDate: new Date()
-    }
-  }
+      regDate: new Date(),
+    },
+  };
 
   addBuyer() {
-    const { name, email, password, phone, city, pinCode, regDate } = this.state.buyer;
+    const {
+      name,
+      email,
+      password,
+      phone,
+      city,
+      pinCode,
+      regDate,
+    } = this.state.buyer;
 
     Axios.post("http://localhost:8080/realEstate/buyer", {
       buyerName: name,
@@ -28,21 +35,20 @@ class BuyerReg extends React.Component {
       buyerRegistDate: regDate,
     }).then((response) => {
       console.log(response.data);
-      this.props.history.replace("/buyerLogin"); 
+      this.props.history.replace("/buyerLogin");
     });
   }
 
-
   handleInputChange = (e) => {
-    const buyer = {...this.state.buyer };
+    const buyer = { ...this.state.buyer };
     buyer[e.currentTarget.name] = e.currentTarget.value;
-    this.setState({ buyer })
-  }
+    this.setState({ buyer });
+  };
 
   render() {
     return (
       <>
-        <h2 className="text-center">Buyer Registration</h2>
+        <h2 className="text-center">Buyer Registration Form</h2>
         <form className="col-lg-6 offset-lg-3 ">
           <div className="form-group">
             <label>Name</label>
@@ -50,7 +56,7 @@ class BuyerReg extends React.Component {
               type="text"
               className="form-control"
               placeholder="FullName"
-              name = "name"
+              name="name"
               onChange={this.handleInputChange}
             />
           </div>
@@ -60,7 +66,7 @@ class BuyerReg extends React.Component {
               type="email"
               className="form-control"
               placeholder="Email"
-              name = "email"
+              name="email"
               onChange={this.handleInputChange}
             />
           </div>
@@ -70,7 +76,7 @@ class BuyerReg extends React.Component {
               type="text"
               className="form-control"
               placeholder="Password"
-              name = "password"
+              name="password"
               onChange={this.handleInputChange}
             />
           </div>
@@ -81,7 +87,7 @@ class BuyerReg extends React.Component {
               type="tel"
               className="form-control"
               placeholder="PhoneNo"
-              name = "phone"
+              name="phone"
               onChange={this.handleInputChange}
             />
           </div>
@@ -91,7 +97,7 @@ class BuyerReg extends React.Component {
               type="text"
               className="form-control"
               placeholder="City"
-              name = "city"
+              name="city"
               onChange={this.handleInputChange}
             />
           </div>
@@ -101,7 +107,7 @@ class BuyerReg extends React.Component {
               type="text"
               className="form-control"
               placeholder="Pin code"
-              name = "pinCode"
+              name="pinCode"
               onChange={this.handleInputChange}
             />
           </div>

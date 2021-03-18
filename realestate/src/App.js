@@ -130,7 +130,7 @@ class App extends React.Component {
                 <ul className="nav navbar-nav m-2">
                   <li>
                     <NavLink className="nav-link" to="/profile">
-                      {"HI, " + String(this.state.user.name).toUpperCase()}
+                      {"hi, " + String(this.state.user.name).toLowerCase()}
                     </NavLink>
                   </li>
                 </ul>

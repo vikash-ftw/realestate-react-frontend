@@ -47,7 +47,6 @@ class BuyerUpdateProfile extends Component {
         this.setState({buyer});
     };
 
-
     render() { 
         const {
             id, name, email, password, phoneNo, city, pinCode
