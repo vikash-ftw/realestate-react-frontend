@@ -1,31 +1,46 @@
 import React, { Component } from "react";
-import Axios from "axios";
 
 class BuyerDashboard extends Component {
   state = {
-    landProperty : {},
+    user: this.props.user,
+    properties: []
   };
 
-  componentDidMount = ()=> {
-    console.log("com did mount cld");
-    this.props.onLogin("buyer")
-    console.log("after login cld");
-    console.log("user", this.props.user);
-    Axios.get(`http://localhost:8080/realEstate/LandProperty/city/${this.props.user.city}`)
-    .then((res) => {
-      console.log(res.data);
-    })
+  componentDidMount() {
+    this.props.onLogin("buyer");
+    console.log("cdm:", this.state.user);
+  }
+
+  componentDidUpdate(prevProps){
+    if(prevProps.user.id !== this.props.user.id) {
+      this.setState({user : this.props.user});
+    }
+    console.log("in cdu", this.state.user);
   }
 
   render() {
-    const {id, name} = this.props.user
-    return(
-        <div>
-            <h2>{name}'s dashboard</h2>
-            <h5>
-                
-            </h5>
+    const {name, city} = this.state.user;
+    return (
+      <div>
+        <h2>{name}'s dashboard</h2>
+        <div className="row">
+          <div className="col-10">
+            <div>
+              <h3>Map</h3>
+            </div>
+            <div>
+              <h3>Property in your city</h3>
+            </div>
+          </div>
+          <div className="col">
+            <h3>Filtering criteria</h3>
+            <ul>
+              <li>By price</li>
+              <li>By dimension</li>
+            </ul>
+          </div>
         </div>
+      </div>
     );
   }
 }

@@ -47,8 +47,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log(typeof this.state.user.id);
-    console.log("app cdm ", this.state.user.id);
+    console.log("App.js cdm cld");
     if (
       this.state.user.id === "" &&
       localStorage.getItem("actorType") !== null &&
@@ -121,6 +120,7 @@ class App extends React.Component {
   };
 
   render() {
+    console.log("App.js render cld ");
     return (
       <div className="container">
         <nav className="navbar navbar-expand navbar-light bg-light">
@@ -236,7 +236,7 @@ class App extends React.Component {
             render={(props) => (
               <BuyerDashboard
                 onLogin={this.handleLogin}
-                actorId={localStorage.getItem("actorId")}
+                actorId={this.state.user.id}
                 user={this.state.user}
                 actorType="buyer"
                 {...props}
