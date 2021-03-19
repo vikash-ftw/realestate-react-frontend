@@ -1,36 +1,30 @@
 import { Component } from "react";
 import Axios from "axios";
 
-class OwnerProfile extends Component {
+class AdminDashboard extends Component {
   state = {
     name: "",
     email: "",
     password: "",
     regDate: null,
+    admin : {}
   };
+  
 
   componentDidMount() {
-    const id = this.props.actorId;
-    this.props.onLogin(this.props.name, this.props.actorType);
-    Axios.get(`http://localhost:8080/realEstate/admin/${id}`).then((res) => {
-      console.log("in Admin profile");
-      console.log(res.data);
-      const {
-        adminName,
-        adminEmail,
-        adminPassword,
-        adminRegistDate,
-      } = res.data;
-      this.setState({
-        name: adminName,
-        email: adminEmail,
-        password: adminPassword,
-        regDate: adminRegistDate,
-      });
-    });
+    this.props.onLogin("admin");
+    this.setState({ admin: this.props.user })
+    console.log(this.state.admin , "admin state");
+    console.log(this.props.user , "admin propbs")
   }
+  // componentDidUpdate(prevProps) {
+  //   if (prevProps.user.id !== this.props.user.id) {
+  //     this.setState({admin : this.props.user})
+  //   }
+  // }
 
   render() {
+    console.log(this.state.admin)
     return (
       <>
         {this.state.email}
@@ -44,4 +38,4 @@ class OwnerProfile extends Component {
   }
 }
 
-export default OwnerProfile;
+export default AdminDashboard;

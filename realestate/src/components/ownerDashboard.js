@@ -60,17 +60,15 @@ class OwnerDash extends React.Component {
   };
 
   updateLandData = (propertyId) => {
-    Axios.get(
-      `http://localhost:8080/realEstate/LandProperty/${propertyId}`
-    ).then((res) => {
-      this.props.sendPropertyData(res.data)
-      this.props.history.push("/updateLandProperty");
-    });
+    
+    this.props.sendPropertyId(propertyId);
+    this.props.history.push("/updateLandProperty");
   };
 
   render() {
-    console.log("render called");
-    const { name, email } = this.props.user;
+    // console.log("render called");
+     const { name, email } = this.props.user;
+     console.log(this.props.user, 'in ownerDash');
 
     const list = this.state.landProperties;
     return (

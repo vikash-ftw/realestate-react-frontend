@@ -25,7 +25,7 @@ import OwnerUpdate from "./components/updateOwnerProfile";
 import PropertyReg from "./components/PropertyReg";
 import BuyerUpdateProfile from "./components/updateBuyerProfile";
 import Axios from "axios";
-import UpdateLandProperty from './components/updateLandProperty';
+import UpdateLandProperty from "./components/updateLandProperty";
 
 class App extends React.Component {
   constructor(props) {
@@ -33,6 +33,7 @@ class App extends React.Component {
     this.state = {
       isLogin: false,
       actorRole: "",
+      landPropertyId: 0,
       user: {
         id: "",
         name: "",
@@ -44,20 +45,21 @@ class App extends React.Component {
         pinCode: "",
         regDate: "",
       },
-      landProperty: {
-        propertyTitle: "",
-        propertyArea: "",
-        dimensionLength: "",
-        dimensionBreadth: "",
-        propertyPrice: "",
-        propertyType: "",
-        ownershipType: "",
-        latitude: "",
-        longitude: "",
-        propertyCity: "",
-        propertyPincode: "",
-        propertyRegistDate: "",
-      },
+
+      // landProperty: {
+      //   propertyTitle: "",
+      //   propertyArea: "",
+      //   dimensionLength: "",
+      //   dimensionBreadth: "",
+      //   propertyPrice: "",
+      //   propertyType: "",
+      //   ownershipType: "",
+      //   latitude: "",
+      //   longitude: "",
+      //   propertyCity: "",
+      //   propertyPincode: "",
+      //   propertyRegistDate: "",
+      // },
     };
   }
 
@@ -113,13 +115,27 @@ class App extends React.Component {
             );
           }
           break;
+        case "Admin":
+          {
+            Axios.get(`http://localhost:8080/realEstate/admin/${id}`).then(
+              (res) => {
+                const admin = res.data;
+                const user = {
+                  id: admin.adminId,
+                  name: admin.adminName,
+                  email: admin.adminEmail,
+                };
+                this.setState({ user });
+                this.handleLogin("admin");
+              }
+            );
+          }
+          break;
       }
     }
   }
-  handlePropertyData = (landProperty) => {
-    this.setState({ landProperty });
-    console.log(landProperty, "in main App");
-    console.log(this.state.landProperty, "in main App LandProperty state");
+  handlePropertyData = (landPropertyId) => {
+    this.setState({ landPropertyId: landPropertyId });
   };
 
   handleUserData = (user) => {
@@ -142,7 +158,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <div >
         <nav className="navbar navbar-expand navbar-light bg-light">
           <div className="navbar-nav">
             <ul className="nav navbar-nav m-2">
@@ -247,7 +263,13 @@ class App extends React.Component {
 
           <Route
             path="/adminLogin"
-            render={(props) => <MainLogin ownerType="Admin" {...props} />}
+            render={(props) => (
+              <MainLogin
+                sendData={this.handleUserData}
+                ownerType="Admin"
+                {...props}
+              />
+            )}
           />
 
           <Route
@@ -271,7 +293,20 @@ class App extends React.Component {
                 actorId={this.state.user.id}
                 user={this.state.user}
                 actorType="owner"
-                sendPropertyData={this.handlePropertyData}
+                sendPropertyId={this.handlePropertyData}
+                {...props}
+              />
+            )}
+          />
+          <Route
+            path="/adminDash"
+            render={(props) => (
+              <AdminDashboard
+                onLogin={this.handleLogin}
+                actorId={this.state.user.id}
+                user={this.state.user}
+                actorType="owner"
+                sendPropertyId={this.handlePropertyData}
                 {...props}
               />
             )}
@@ -315,9 +350,13 @@ class App extends React.Component {
 
           <Route
             path="/updateLandProperty"
-            render={(props) => {
-              <UpdateLandProperty  {...props} />;
-            }}
+            render={(props) => (
+              <UpdateLandProperty
+                landProperty={this.state.landPropertyId}
+                user={this.state.user}
+                {...props}
+              />
+            )}
           />
 
           <Redirect to="/not-found" />

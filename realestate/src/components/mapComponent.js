@@ -18,7 +18,7 @@ function DraggableMarker(props) {
         if (marker != null) {
           setPosition(marker.getLatLng());
           console.log(marker.getLatLng());
-          props.onSet(marker.getLatLng())
+          props.onSet(marker.getLatLng());
         }
       },
     }),

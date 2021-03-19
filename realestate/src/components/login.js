@@ -91,7 +91,9 @@ class mainLogin extends React.Component {
           email: email,
           password: password,
         }).then((response) => {
-          const id = response.data.adminId;
+          const { adminId, adminEmail, adminName } = response.data;
+          const user ={id : adminId , name:adminName , email : adminEmail}
+          this.props.sendData(user)
           localStorage.setItem("actorId", response.data.adminId);
           localStorage.setItem("actorType", "Admin");
           this.props.history.replace("/adminDash");
