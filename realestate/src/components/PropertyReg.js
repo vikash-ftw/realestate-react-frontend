@@ -8,7 +8,7 @@ class PropertyReg extends Component {
     this.state = {
       ownerId: this.props.user.id,
       propertyTitle: "",
-      propertyArea: "",
+      propertyArea: 0,
       dimensionLength: "",
       dimensionBreadth: "",
       propertyPrice: "",
@@ -22,10 +22,11 @@ class PropertyReg extends Component {
     };
   }
   receiveCoord = (coord) => {
-    console.log(coord, "coord")
+    console.log(coord, "coord");
     const { lat, lng } = coord;
     this.setState({ latitude: lat, longitude: lng });
-  }
+  };
+
   registerProperty = () => {
     const {
       ownerId,
@@ -45,34 +46,28 @@ class PropertyReg extends Component {
     Axios.post(
       `http://localhost:8080/realEstate/owner/newProperty/${ownerId}`,
       {
-        propertyTitle : propertyTitle,
-        propertyArea : propertyArea,
-        dimensionLength : dimensionLength,
-        dimensionBreadth : dimensionBreadth,
-        propertyPrice :propertyPrice,
-        propertyType : propertyType,
-        ownershipType :ownershipType,
-        latitude :latitude,
-        longitude :longitude,
-        propertyCity :propertyCity,
-        propertyPincode : propertyPincode,
-        propertyRegistDate : propertyRegistDate,
+        propertyTitle: propertyTitle,
+        propertyArea: dimensionBreadth*dimensionLength,
+        dimensionLength: dimensionLength,
+        dimensionBreadth: dimensionBreadth,
+        propertyPrice: propertyPrice,
+        propertyType: propertyType,
+        ownershipType: ownershipType,
+        latitude: latitude,
+        longitude: longitude,
+        propertyCity: propertyCity,
+        propertyPincode: propertyPincode,
+        propertyRegistDate: propertyRegistDate,
       }
     ).then((res) => {
-        console.log(res.data)
-    })
-    };
-  render() {
-    console.log(this.state.ownershipType);
-    console.log(this.state.propertyType);
-    const {
-      dimensionLength,
-      dimensionBreadth,
-      latitude,
-      longitude,
-    } = this.state;
-    const Area = dimensionLength * dimensionBreadth;
+      console.log(res.data);
+      this.props.history.push("/ownerDash");
+    });
+  };
 
+  render() {
+    const { dimensionLength, dimensionBreadth } = this.state;
+    const Area = dimensionLength * dimensionBreadth;
     return (
       <div className="row">
         <div className="col-7">
@@ -122,10 +117,8 @@ class PropertyReg extends Component {
                 id="propertyArea"
                 placeholder={Area}
                 disabled
-                onChange={(e) => {
-                  this.setState({ propertyArea: Area });
-                }}
               />
+              {}
             </div>
             <div className="form-group">
               <label>Property Price</label>
@@ -224,7 +217,7 @@ class PropertyReg extends Component {
         </div>
         <div className="col">
           <h4>Mark Your Property on Map</h4>
-          <Map getCoord={ this.receiveCoord}/>
+          <Map getCoord={this.receiveCoord} />
         </div>
       </div>
     );

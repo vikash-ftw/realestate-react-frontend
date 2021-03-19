@@ -20,19 +20,17 @@ class OwnerDash extends React.Component {
       },
     ],
   };
+
   componentDidMount() {
     this.props.onLogin("owner");
     Axios.get(
-      `http://localhost:8080/realEstate/owner/myProperty/${this.props.user.id}`
+      `http://localhost:8080/realEstate/owner/myProperty/${localStorage.getItem(
+        "actorId"
+      )}`
     ).then((res) => {
-      //console.log(res.data);
       const land = res.data;
       this.setState({ landProperties: land });
     });
-   
-  }
-  getLand = () => {
-     
   }
 
   // "ownerId": 4,
@@ -47,16 +45,30 @@ class OwnerDash extends React.Component {
   // "landProperties": []
   deleteProperty = (id) => {
     const ownerId = this.props.user.id;
-    Axios.delete(`http://localhost:8080/realEstate/owner/deleteProp/${ownerId}/${id}`).then(
-      (res) => {
-        console.log("delete roperty done");
-      }
-    );
+    Axios.delete(
+      `http://localhost:8080/realEstate/owner/deleteProp/${ownerId}/${id}`
+    ).then((res) => {
+      Axios.get(
+        `http://localhost:8080/realEstate/owner/myProperty/${localStorage.getItem(
+          "actorId"
+        )}`
+      ).then((res) => {
+        const land = res.data;
+        this.setState({ landProperties: land });
+      });
+    });
+  };
+
+  updateLandData = (propertyId) => {
+    
+    this.props.sendPropertyId(propertyId);
+    this.props.history.push("/updateLandProperty");
   };
 
   render() {
-    console.log('render called')
-    const { name, email } = this.props.user;
+    // console.log("render called");
+     const { name, email } = this.props.user;
+     console.log(this.props.user, 'in ownerDash');
 
     const list = this.state.landProperties;
     return (
@@ -70,7 +82,7 @@ class OwnerDash extends React.Component {
           </div>
           <div className="col">
             <h5>
-              <button onClick={()=>this.props.history.push("/propertyReg")}>
+              <button onClick={() => this.props.history.push("/propertyReg")}>
                 +AddNewProperty
               </button>
             </h5>
@@ -91,11 +103,7 @@ class OwnerDash extends React.Component {
                   Breadth :{val.dimensionBreadth}
                   Price :{val.propertyPrice}
                   Price :{val.ownershipType}
-                  <button
-                    onClick={() => {
-                      this.props.history.push("/");
-                    }}
-                  >
+                  <button onClick={() => this.updateLandData(val.propertyId)}>
                     update
                   </button>
                   <button onClick={() => this.deleteProperty(val.propertyId)}>

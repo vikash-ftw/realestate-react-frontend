@@ -31,15 +31,16 @@ class Profile extends Component {
             regDate,
         } = this.props.user;
         return (
-          <>
+          <div className="container">
             <ul>
               <li>Name : {name}</li>
               <li>Email : {email}</li>
               <li> Phone : {phoneNo}</li>
               <li>City : {city}</li>
-              <li><button onClick={this.handleUpdate}>Update</button></li>
+              <li></li>
             </ul>
-          </>
+            <button onClick={this.handleUpdate}>Update</button>
+          </div>
         );
     }
 }
