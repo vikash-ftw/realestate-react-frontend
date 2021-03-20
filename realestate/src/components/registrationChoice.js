@@ -37,18 +37,6 @@ class Register extends React.Component {
         <div className="row">
           <br></br>
         </div>
-        <div className="row">
-          <div className="col text-center">
-            <button
-              className="btn btn-outline-danger btn-lg"
-              onClick={(e) => {
-                this.props.history.push("./adminReg");
-              }}
-            >
-              Admin Registration
-            </button>
-          </div>
-        </div>
       </React.Fragment>
     );
   }

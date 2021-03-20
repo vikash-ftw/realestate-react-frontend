@@ -60,60 +60,94 @@ class OwnerDash extends React.Component {
   };
 
   updateLandData = (propertyId) => {
-    
     this.props.sendPropertyId(propertyId);
     this.props.history.push("/updateLandProperty");
   };
 
   render() {
     // console.log("render called");
-     const { name, email } = this.props.user;
-     console.log(this.props.user, 'in ownerDash');
+    const { name, email } = this.props.user;
+    console.log(this.props.user, "in ownerDash");
 
     const list = this.state.landProperties;
     return (
       <>
-        <div className="row">
-          <br />
-        </div>
-        <div className="row">
-          <div className="col-8">
-            <h4>{name}'DashBoard</h4>
+        <div className="container">
+          <div className="row">
+            <br />
           </div>
-          <div className="col">
-            <h5>
-              <button onClick={() => this.props.history.push("/propertyReg")}>
-                +AddNewProperty
-              </button>
-            </h5>
-          </div>
-        </div>
-        <div className="row">
-          <br />
-        </div>
-        <div className="row"></div>
-        {list.map((val) => {
-          return (
-            <div className="cart">
-              <div className="row">
-                Property
-                <p>
-                  Id : {val.propertyId} Area :{val.propertyArea}
-                  Length :{val.dimensionLength}
-                  Breadth :{val.dimensionBreadth}
-                  Price :{val.propertyPrice}
-                  Price :{val.ownershipType}
-                  <button onClick={() => this.updateLandData(val.propertyId)}>
-                    update
-                  </button>
-                  <button onClick={() => this.deleteProperty(val.propertyId)}>
-                    delete
-                  </button>
-                </p>
-              </div>
+          <div className="row">
+            <div className="col-8">
+              <h4>{name}'DashBoard</h4>
             </div>
-          );
-        })}
+            <div className="col">
+              <h5>
+                <button className="btn btn-success" onClick={() => this.props.history.push("/propertyReg")}>
+                  +AddNewProperty
+                </button>
+              </h5>
+            </div>
+          </div>
+          <div className="row">
+            <br />
+          </div>
+          <div className="row">
+            <div className="col-sm-12 col-md-10 col-md-offset-1">
+              <table className="table table-hover">
+                <thead>
+                  <tr>
+                    <th>PropertyId</th>
+                    <th>Area</th>
+                    <th className="text-center">Property Type</th>
+                    <th className="text-center">Ownership Type</th>
+                    <th> Price</th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {list.map((val) => {
+                    return (
+                      <tr key={val.propertyId}>
+                        <td className="col-sm-1 col-md-1">
+                          <div>{val.propertyId}</div>
+                        </td>
+                        <td className="col-sm-1 col-md-1 text-center">
+                          <div>{val.propertyArea}</div>
+                        </td>
+                        <td className="col-sm-1 col-md-1 text-center">
+                          {val.propertyType}
+                        </td>
+                        <td className="col-sm-1 col-md-1 text-center">
+                          {val.ownershipType}
+                        </td>
+                        <td className="col-sm-1 col-md-1 text-center">
+                          {val.propertyPrice}
+                        </td>
+                        <td>
+                          <button
+                            className="btn btn-warning"
+                            onClick={() => this.updateLandData(val.propertyId)}
+                          >
+                            update
+                          </button>
+                        </td>
+                        <td>
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => this.deleteProperty(val.propertyId)}
+                          >
+                            delete
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </>
     );
   }

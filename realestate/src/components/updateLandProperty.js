@@ -95,146 +95,148 @@ class UpdateLandProperty extends Component {
     const Area = dimensionBreadth * dimensionLength;
     return (
       <>
-        <h2>update</h2>
-        <form className="col-lg-6 offset-lg-3 justify-content-center">
-          <div className="form-group">
-            <label>Property Title</label>
-            <input
-              type="text"
-              className="form-control"
-              name="propertyTitle"
-              value={propertyTitle}
-              disabled
-            />
-          </div>
-          <div className="form-group">
-            <label>Length</label>
-            <input
-              type="text"
-              className="form-control"
-              name="dimensionLength"
-              value={dimensionLength}
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>Breadth</label>
-            <input
-              type="text"
-              className="form-control"
-              name="dimensionBreadth"
-              value={dimensionBreadth}
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>Property Area</label>
-            <input
-              type="text"
-              className="form-control"
-              name="propertyArea"
-              value={Area}
-              disabled
-            />
-          </div>
+        <div class="container">
+          <h2>update</h2>
+          <form className="col-lg-6 offset-lg-3 justify-content-center">
+            <div className="form-group">
+              <label>Property Title</label>
+              <input
+                type="text"
+                className="form-control"
+                name="propertyTitle"
+                value={propertyTitle}
+                disabled
+              />
+            </div>
+            <div className="form-group">
+              <label>Length</label>
+              <input
+                type="text"
+                className="form-control"
+                name="dimensionLength"
+                value={dimensionLength}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <div className="form-group">
+              <label>Breadth</label>
+              <input
+                type="text"
+                className="form-control"
+                name="dimensionBreadth"
+                value={dimensionBreadth}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <div className="form-group">
+              <label>Property Area</label>
+              <input
+                type="text"
+                className="form-control"
+                name="propertyArea"
+                value={Area}
+                disabled
+              />
+            </div>
 
-          <div className="form-group">
-            <label>Property Price</label>
-            <input
-              type="text"
-              className="form-control"
-              name="propertyPrice"
-              value={propertyPrice}
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>Property Type</label>
-            <select
-              className="form-control"
-              onChange={(e) => {
-                this.setState({ propertyType: e.target.value });
-              }}
-            >
-              <option name="AGRICULTURAL" value="AGRICULTURAL">
-                AGRICULTURAL
-              </option>
-              <option name="RENTAL" value="RENTAL">
-                RENTAL
-              </option>
-              <option name="RESIDENTIAL" value="RESIDENTIAL">
-                RESIDENTIAL
-              </option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label>Ownership Type</label>
-            <select
-              className="form-control"
-              onChange={(e) => {
-                this.setState({ ownershipType: e.target.value });
-              }}
-            >
-              <option name="FREEHOLD" value="FREEHOLD">
-                FREEHOLD
-              </option>
-              <option name="LEASEHOLD" value="LEASEHOLD">
-                LEASEHOLD
-              </option>
-              <option name="POWEROFATTORNEY" value="POWEROFATTORNEY">
-                POWEROFATTORNEY
-              </option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label>Latitude</label>
-            <input
-              type="text"
-              className="form-control"
-              name="latitude"
-              value={latitude}
-              disabled
-            />
-          </div>
-          <div className="form-group">
-            <label>Longitude</label>
-            <input
-              type="text"
-              className="form-control"
-              name="longitude"
-              value={longitude}
-              disabled
-            />
-          </div>
-          <div className="form-group">
-            <label>Property City</label>
-            <input
-              type="text"
-              className="form-control"
-              name="propertyCity"
-              value={propertyCity}
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>Property Pincode</label>
-            <input
-              type="text"
-              className="form-control"
-              name="propertyPincode"
-              value={propertyPincode}
-              onChange={this.handleInputChange}
-            />
-          </div>
-        </form>
-        <div className="row">
-          <div className="col text-center">
-            <button
-              className="btn btn-primary"
-              onClick={this.updateLandProperty}
-            >
-              Update
-            </button>
+            <div className="form-group">
+              <label>Property Price</label>
+              <input
+                type="text"
+                className="form-control"
+                name="propertyPrice"
+                value={propertyPrice}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <div className="form-group">
+              <label>Property Type</label>
+              <select
+                className="form-control"
+                onChange={(e) => {
+                  this.setState({ propertyType: e.target.value });
+                }}
+              >
+                <option name="AGRICULTURAL" value="AGRICULTURAL">
+                  AGRICULTURAL
+                </option>
+                <option name="RENTAL" value="RENTAL">
+                  RENTAL
+                </option>
+                <option name="RESIDENTIAL" value="RESIDENTIAL">
+                  RESIDENTIAL
+                </option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Ownership Type</label>
+              <select
+                className="form-control"
+                onChange={(e) => {
+                  this.setState({ ownershipType: e.target.value });
+                }}
+              >
+                <option name="FREEHOLD" value="FREEHOLD">
+                  FREEHOLD
+                </option>
+                <option name="LEASEHOLD" value="LEASEHOLD">
+                  LEASEHOLD
+                </option>
+                <option name="POWEROFATTORNEY" value="POWEROFATTORNEY">
+                  POWEROFATTORNEY
+                </option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Latitude</label>
+              <input
+                type="text"
+                className="form-control"
+                name="latitude"
+                value={latitude}
+                disabled
+              />
+            </div>
+            <div className="form-group">
+              <label>Longitude</label>
+              <input
+                type="text"
+                className="form-control"
+                name="longitude"
+                value={longitude}
+                disabled
+              />
+            </div>
+            <div className="form-group">
+              <label>Property City</label>
+              <input
+                type="text"
+                className="form-control"
+                name="propertyCity"
+                value={propertyCity}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <div className="form-group">
+              <label>Property Pincode</label>
+              <input
+                type="text"
+                className="form-control"
+                name="propertyPincode"
+                value={propertyPincode}
+                onChange={this.handleInputChange}
+              />
+            </div>
+          </form>
+          <div className="row">
+            <div className="col text-center">
+              <button
+                className="btn btn-primary"
+                onClick={this.updateLandProperty}
+              >
+                Update
+              </button>
+            </div>
           </div>
         </div>
       </>
