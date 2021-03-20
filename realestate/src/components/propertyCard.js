@@ -1,0 +1,52 @@
+import React, { Component } from "react";
+
+import Like from "./common/like";
+
+class PropertyCards extends Component {
+  state = {};
+
+  render() {
+    const { properties, onLike, favProperties } = this.props;
+    return (
+      <div>
+        {properties.map((prop) => (
+          <div class="card">
+            <div class="row ">
+              <div class="col-md-7 px-3">
+                <div class="card-block px-6">
+                  <h4 class="card-title">
+                    Title: | <b>Price: Rs.{prop.propertyPrice}</b>
+                  </h4>
+                  <p class="card-text">
+                    Area : {prop.propertyArea}(sqft) | Dimension :{" "}
+                    {prop.dimensionLength}x{prop.dimensionBreadth}
+                    <br />
+                    Property Type : {prop.propertyType} | Ownership Type :{" "}
+                    {prop.ownershipType}
+                    <br />
+                    City : {prop.propertyCity} | Pincode :{" "}
+                    {prop.propertyPincode}
+                  </p>
+                  <br />
+                  <p class="card-text">
+                    Owner Name : {prop.propertyOwner.ownerName} | Phone No. :{" "}
+                    {prop.propertyOwner.ownerPhoneNo}
+                  </p>
+                  <br />
+                  
+                  <Like
+                    favProps = {favProperties}
+                    currentProp = {prop}
+                    onClick = {() => onLike(prop)}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+}
+
+export default PropertyCards;
