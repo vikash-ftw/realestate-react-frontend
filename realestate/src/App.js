@@ -158,7 +158,7 @@ class App extends React.Component {
   render() {
     console.log("App.js render cld ");
     return (
-      <div >
+      <div>
         <nav className="navbar navbar-expand navbar-light bg-light">
           <div className="navbar-nav">
             <ul className="nav navbar-nav m-2">
@@ -189,7 +189,7 @@ class App extends React.Component {
                 <ul className="nav navbar-nav m-2">
                   <li>
                     <NavLink className="nav-link" to="/profile">
-                      {"hi, " + String(this.state.user.name).toLowerCase()}
+                      {"HI, " + String(this.state.user.name).toLowerCase()}
                     </NavLink>
                   </li>
                 </ul>
@@ -198,7 +198,7 @@ class App extends React.Component {
                   <li>
                     {" "}
                     <NavLink
-                      className="nav-link"
+                      className="nav-link btn btn-danger"
                       exact
                       onClick={this.logout}
                       to="/"

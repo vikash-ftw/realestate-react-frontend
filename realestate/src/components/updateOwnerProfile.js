@@ -74,6 +74,7 @@ class OwnerProfile extends Component {
     } = this.state.owner;
     return (
       <>
+        <h2 className="text-center">Owner Updation Page</h2>
         <form className="col-lg-6 offset-lg-3 justify-content-center">
           <div className="form-group">
             <label>Owner ID</label>

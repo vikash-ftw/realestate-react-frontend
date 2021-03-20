@@ -35,9 +35,14 @@ class Login extends React.Component {
         <div>
           <div className="row">
             <div className="col text-center">
-              <Link className="btn btn-success stretched-link" to="/BuyerLogin">
+              <button
+                className="btn btn-outline-success btn-lg"
+                onClick={(e) => {
+                  this.props.history.push("./BuyerLogin");
+                }}
+              >
                 Buyer Login
-              </Link>
+              </button>
             </div>
           </div>
           <div className="row">
@@ -45,9 +50,14 @@ class Login extends React.Component {
           </div>
           <div className="row">
             <div className="col text-center">
-              <Link className="btn btn-primary stretched-link" to="/ownerLogin">
+              <button
+                className="btn btn-outline-primary btn-lg"
+                onClick={(e) => {
+                  this.props.history.push("./ownerLogin");
+                }}
+              >
                 Owner Login
-              </Link>
+              </button>
             </div>
           </div>
           <div className="row">
@@ -55,9 +65,14 @@ class Login extends React.Component {
           </div>
           <div className="row">
             <div className="col text-center">
-              <Link className="btn btn-danger stretched-link" to="/adminLogin">
+              <button
+                className="btn btn-outline-danger btn-lg"
+                onClick={(e) => {
+                  this.props.history.push("./adminLogin");
+                }}
+              >
                 Admin Login
-              </Link>
+              </button>
             </div>
           </div>
         </div>
