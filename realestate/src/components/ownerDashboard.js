@@ -1,5 +1,6 @@
 import Axios from "axios";
 import React from "react";
+import OwnerAxios from '../service/ownerAxios'
 class OwnerDash extends React.Component {
   state = {
     id: this.props.user.id,
@@ -23,11 +24,7 @@ class OwnerDash extends React.Component {
 
   componentDidMount() {
     this.props.onLogin("owner");
-    Axios.get(
-      `http://localhost:8080/realEstate/owner/myProperty/${localStorage.getItem(
-        "actorId"
-      )}`
-    ).then((res) => {
+    OwnerAxios.fetchMyPropertyById(localStorage.getItem("actorId")).then((res) => {
       const land = res.data;
       this.setState({ landProperties: land });
     });
@@ -45,17 +42,13 @@ class OwnerDash extends React.Component {
   // "landProperties": []
   deleteProperty = (id) => {
     const ownerId = this.props.user.id;
-    Axios.delete(
-      `http://localhost:8080/realEstate/owner/deleteProp/${ownerId}/${id}`
-    ).then((res) => {
-      Axios.get(
-        `http://localhost:8080/realEstate/owner/myProperty/${localStorage.getItem(
-          "actorId"
-        )}`
-      ).then((res) => {
-        const land = res.data;
-        this.setState({ landProperties: land });
-      });
+    OwnerAxios.deletePropertyByIdAndLandId(ownerId , id).then((res) => {
+     OwnerAxios.fetchMyPropertyById(localStorage.getItem("actorId")).then(
+       (res) => {
+         const land = res.data;
+         this.setState({ landProperties: land });
+       }
+     );
     });
   };
 
