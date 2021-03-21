@@ -229,138 +229,139 @@ class App extends React.Component {
             </div>
           )}
         </nav>
+        <div className="container-fluid">
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/Login" component={LoginChoice} />
+            <Route path="/Login" component={OwnerProfile} />
+            <Route path="/Register" component={RegisterChoice} />
+            <Route path="/ownerReg" component={OwnerReg} />
+            <Route path="/buyerReg" component={BuyerReg} />
+            <Route path="/adminReg" component={AdminReg} />
 
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/Login" component={LoginChoice} />
-          <Route path="/Login" component={OwnerProfile} />
-          <Route path="/Register" component={RegisterChoice} />
-          <Route path="/ownerReg" component={OwnerReg} />
-          <Route path="/buyerReg" component={BuyerReg} />
-          <Route path="/adminReg" component={AdminReg} />
+            <Route
+              path="/ownerLogin"
+              render={(props) => (
+                <MainLogin
+                  sendData={this.handleUserData}
+                  ownerType="Owner"
+                  {...props}
+                />
+              )}
+            />
 
-          <Route
-            path="/ownerLogin"
-            render={(props) => (
-              <MainLogin
-                sendData={this.handleUserData}
-                ownerType="Owner"
-                {...props}
-              />
-            )}
-          />
+            <Route
+              path="/buyerLogin"
+              render={(props) => (
+                <MainLogin
+                  sendData={this.handleUserData}
+                  ownerType="Buyer"
+                  {...props}
+                />
+              )}
+            />
 
-          <Route
-            path="/buyerLogin"
-            render={(props) => (
-              <MainLogin
-                sendData={this.handleUserData}
-                ownerType="Buyer"
-                {...props}
-              />
-            )}
-          />
+            <Route
+              path="/adminLogin"
+              render={(props) => (
+                <MainLogin
+                  sendData={this.handleUserData}
+                  ownerType="Admin"
+                  {...props}
+                />
+              )}
+            />
 
-          <Route
-            path="/adminLogin"
-            render={(props) => (
-              <MainLogin
-                sendData={this.handleUserData}
-                ownerType="Admin"
-                {...props}
-              />
-            )}
-          />
+            <Route
+              path="/buyerDash"
+              render={(props) => (
+                <BuyerDashboard
+                  onLogin={this.handleLogin}
+                  actorId={this.state.user.id}
+                  user={this.state.user}
+                  actorType="buyer"
+                  {...props}
+                />
+              )}
+            />
 
-          <Route
-            path="/buyerDash"
-            render={(props) => (
-              <BuyerDashboard
-                onLogin={this.handleLogin}
-                actorId={this.state.user.id}
-                user={this.state.user}
-                actorType="buyer"
-                {...props}
-              />
-            )}
-          />
+            <Route
+              path="/ownerDash"
+              render={(props) => (
+                <OwnerDashboard
+                  onLogin={this.handleLogin}
+                  actorId={this.state.user.id}
+                  user={this.state.user}
+                  actorType="owner"
+                  sendPropertyId={this.handlePropertyData}
+                  {...props}
+                />
+              )}
+            />
+            <Route
+              path="/adminDash"
+              render={(props) => (
+                <AdminDashboard
+                  onLogin={this.handleLogin}
+                  actorId={this.state.user.id}
+                  user={this.state.user}
+                  actorType="owner"
+                  sendPropertyId={this.handlePropertyData}
+                  {...props}
+                />
+              )}
+            />
 
-          <Route
-            path="/ownerDash"
-            render={(props) => (
-              <OwnerDashboard
-                onLogin={this.handleLogin}
-                actorId={this.state.user.id}
-                user={this.state.user}
-                actorType="owner"
-                sendPropertyId={this.handlePropertyData}
-                {...props}
-              />
-            )}
-          />
-          <Route
-            path="/adminDash"
-            render={(props) => (
-              <AdminDashboard
-                onLogin={this.handleLogin}
-                actorId={this.state.user.id}
-                user={this.state.user}
-                actorType="owner"
-                sendPropertyId={this.handlePropertyData}
-                {...props}
-              />
-            )}
-          />
+            <Route
+              path="/profile"
+              render={(props) => (
+                <ProfilePage
+                  user={this.state.user}
+                  actorType={this.state.actorRole}
+                  {...props}
+                />
+              )}
+            />
 
-          <Route
-            path="/profile"
-            render={(props) => (
-              <ProfilePage
-                user={this.state.user}
-                actorType={this.state.actorRole}
-                {...props}
-              />
-            )}
-          />
+            <Route
+              path="/ownerUpdate"
+              render={(props) => (
+                <OwnerUpdate
+                  user={this.state.user}
+                  onLogout={this.logout}
+                  {...props}
+                />
+              )}
+            />
 
-          <Route
-            path="/ownerUpdate"
-            render={(props) => (
-              <OwnerUpdate
-                user={this.state.user}
-                onLogout={this.logout}
-                {...props}
-              />
-            )}
-          />
+            <Route
+              path="/buyerUpdate"
+              render={(props) => (
+                <BuyerUpdateProfile user={this.state.user} {...props} />
+              )}
+            />
 
-          <Route
-            path="/buyerUpdate"
-            render={(props) => (
-              <BuyerUpdateProfile user={this.state.user} {...props} />
-            )}
-          />
+            <Route
+              path="/propertyReg"
+              render={(props) => (
+                <PropertyReg user={this.state.user} {...props} />
+              )}
+            />
 
-          <Route
-            path="/propertyReg"
-            render={(props) => (
-              <PropertyReg user={this.state.user} {...props} />
-            )}
-          />
+            <Route
+              path="/updateLandProperty"
+              render={(props) => (
+                <UpdateLandProperty
+                  landProperty={this.state.landPropertyId}
+                  user={this.state.user}
+                  {...props}
+                />
+              )}
+            />
 
-          <Route
-            path="/updateLandProperty"
-            render={(props) => (
-              <UpdateLandProperty
-                landProperty={this.state.landPropertyId}
-                user={this.state.user}
-                {...props}
-              />
-            )}
-          />
-
-          <Redirect to="/not-found" />
-        </Switch>
+            <Redirect to="/not-found" />
+          </Switch>
+        </div>
       </div>
     );
   }

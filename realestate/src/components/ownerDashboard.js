@@ -5,7 +5,7 @@ class OwnerDash extends React.Component {
     id: this.props.user.id,
     landProperties: [
       {
-        propertyTitle: "yes",
+        propertyTitle: "",
         propertyArea: "",
         dimensionLength: "",
         dimensionBreadth: "",

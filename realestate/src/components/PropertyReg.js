@@ -47,7 +47,7 @@ class PropertyReg extends Component {
       `http://localhost:8080/realEstate/owner/newProperty/${ownerId}`,
       {
         propertyTitle: propertyTitle,
-        propertyArea: dimensionBreadth*dimensionLength,
+        propertyArea: Math.ceil(dimensionBreadth*dimensionLength),
         dimensionLength: dimensionLength,
         dimensionBreadth: dimensionBreadth,
         propertyPrice: propertyPrice,
@@ -67,7 +67,7 @@ class PropertyReg extends Component {
 
   render() {
     const { dimensionLength, dimensionBreadth } = this.state;
-    const Area = dimensionLength * dimensionBreadth;
+    const Area = Math.ceil(dimensionLength * dimensionBreadth);
     return (
       <>
         <div>

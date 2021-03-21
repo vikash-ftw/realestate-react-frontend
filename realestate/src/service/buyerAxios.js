@@ -8,6 +8,17 @@ class BuyerApiService {
         console.log("calling fetch all fav props");
         return axios.get(BUYER_API_BASE_URL + '/allFav' + '/' + buyerId);
     }
+
+    markFavProp(favProp){
+        console.log("calling mark fav method");
+        console.log(favProp);
+        return axios.post( BUYER_API_BASE_URL + "/markFav", favProp);
+    }
+
+    unmarkFavProp(unfavProp){
+        console.log("calling unmark fav method");
+        return axios.put(BUYER_API_BASE_URL + "/unFav", unfavProp);
+    }
 }
 
 export default new BuyerApiService();

@@ -63,7 +63,7 @@ class UpdateLandProperty extends Component {
       {
         propertyId: propertyId,
         propertyTitle: propertyTitle,
-        propertyArea: dimensionBreadth * dimensionLength,
+        propertyArea: Math.ceil(dimensionBreadth * dimensionLength),
         dimensionLength: dimensionLength,
         dimensionBreadth: dimensionBreadth,
         propertyPrice: propertyPrice,
@@ -92,7 +92,7 @@ class UpdateLandProperty extends Component {
       propertyCity,
       propertyPincode,
     } = this.state.landProperty;
-    const Area = dimensionBreadth * dimensionLength;
+    const Area = Math.ceil(dimensionBreadth * dimensionLength);
     return (
       <>
         <div class="container">

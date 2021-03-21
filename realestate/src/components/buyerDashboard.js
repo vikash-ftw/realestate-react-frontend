@@ -52,9 +52,29 @@ class BuyerDashboard extends Component {
     this.setState({ currentPage: currentPage });
   };
 
-  handleLike = (prop) => {
+  handleLike = (prop, like) => {
     console.log("like btn clicked");
     console.log(prop);
+    console.log(like);
+    if (like === false) {
+      BuyerApiService.markFavProp({
+        propertyId: prop.propertyId,
+        buyerId: this.state.user.id,
+      }).then((res) => {
+        console.log(res.data);
+        const favProperties = [prop, ...this.state.favProperties];
+        this.setState({favProperties});
+      });
+    } else {
+      BuyerApiService.unmarkFavProp({
+        propertyId: prop.propertyId,
+        buyerId: this.state.user.id,
+      }).then((res) => {
+        console.log(res.data);
+        const favProperties = this.state.favProperties.filter((p) => p.propertyId != prop.propertyId);
+        this.setState({favProperties});
+      });
+    }
   };
 
   render() {
@@ -81,7 +101,7 @@ class BuyerDashboard extends Component {
                 <PropertyCards
                   properties={this.state.properties}
                   favProperties={this.state.favProperties}
-                  onLike = {this.handleLike}
+                  onLike={this.handleLike}
                 ></PropertyCards>
                 {/* <PropertyTable
                   properties={properties}
