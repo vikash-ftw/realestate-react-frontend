@@ -8,6 +8,7 @@ class mainLogin extends React.Component {
     this.state = {
       email: "",
       password: "",
+      isLogin: false
     };
   }
 
@@ -19,36 +20,39 @@ class mainLogin extends React.Component {
         Axios.post("http://localhost:8080/realEstate/owner/login", {
           email: email,
           password: password,
-        }).then((response) => {
-          const {
-            ownerId,
-            ownerName,
-            ownerEmail,
-            ownerPassword,
-            ownerPhoneNo,
-            ownerIdProof,
-            ownerCity,
-            ownerPincode,
-            ownerRegistDate,
-            landProperties,
-          } = response.data;
-          const user = {
-            id: ownerId,
-            name: ownerName,
-            email: ownerEmail,
-            password: ownerPassword,
-            phoneNo: ownerPhoneNo,
-            idProof: ownerIdProof,
-            city: ownerCity,
-            pinCode: ownerPincode,
-            regDate: ownerRegistDate,
-          }; 
-          this.props.sendData(user);
-          localStorage.setItem("actorId", response.data.ownerId);
-          localStorage.setItem("actorType", "Owner");
-          this.props.history.replace("/ownerDash");
-          
-        });
+        })
+          .then((response) => {
+            const {
+              ownerId,
+              ownerName,
+              ownerEmail,
+              ownerPassword,
+              ownerPhoneNo,
+              ownerIdProof,
+              ownerCity,
+              ownerPincode,
+              ownerRegistDate,
+              landProperties,
+            } = response.data;
+            const user = {
+              id: ownerId,
+              name: ownerName,
+              email: ownerEmail,
+              password: ownerPassword,
+              phoneNo: ownerPhoneNo,
+              idProof: ownerIdProof,
+              city: ownerCity,
+              pinCode: ownerPincode,
+              regDate: ownerRegistDate,
+            };
+            this.props.sendData(user);
+            localStorage.setItem("actorId", response.data.ownerId);
+            localStorage.setItem("actorType", "Owner");
+            this.props.history.replace("/ownerDash");
+          })
+          .catch((err) => {
+            this.setState({isLogin : true})
+          });
 
         break;
       case "Buyer":
@@ -56,48 +60,55 @@ class mainLogin extends React.Component {
         Axios.post("http://localhost:8080/realEstate/buyer/login", {
           email: email,
           password: password,
-        }).then((response) => {
+        })
+          .then((response) => {
+            const {
+              buyerId,
+              buyerName,
+              buyerEmail,
+              buyerPassword,
+              buyerPhoneNo,
+              buyerCity,
+              buyerPincode,
+              buyerRegistDate,
+            } = response.data;
 
-          const {
-            buyerId,
-            buyerName,
-            buyerEmail,
-            buyerPassword,
-            buyerPhoneNo,
-            buyerCity,
-            buyerPincode,
-            buyerRegistDate,
-          } = response.data;
-
-          const user = {
-            id: buyerId,
-            name: buyerName,
-            email: buyerEmail,
-            password: buyerPassword,
-            phoneNo: buyerPhoneNo,
-            city: buyerCity,
-            pinCode: buyerPincode,
-            regDate: buyerRegistDate,
-          }; 
-          this.props.sendData(user);
-          localStorage.setItem("actorId", response.data.buyerId);
-          localStorage.setItem("actorType", "Buyer");
-          this.props.history.replace("/buyerDash"); 
-        });
+            const user = {
+              id: buyerId,
+              name: buyerName,
+              email: buyerEmail,
+              password: buyerPassword,
+              phoneNo: buyerPhoneNo,
+              city: buyerCity,
+              pinCode: buyerPincode,
+              regDate: buyerRegistDate,
+            };
+            this.props.sendData(user);
+            localStorage.setItem("actorId", response.data.buyerId);
+            localStorage.setItem("actorType", "Buyer");
+            this.props.history.replace("/buyerDash");
+          })
+          .catch((err) => {
+            this.setState({ isLogin: true });
+          });
         break;
-        
+
       case "Admin":
         Axios.post("http://localhost:8080/realEstate/admin/login", {
           email: email,
           password: password,
-        }).then((response) => {
-          const { adminId, adminEmail, adminName } = response.data;
-          const user ={id : adminId , name:adminName , email : adminEmail}
-          this.props.sendData(user)
-          localStorage.setItem("actorId", response.data.adminId);
-          localStorage.setItem("actorType", "Admin");
-          this.props.history.replace("/adminDash");
-        });
+        })
+          .then((response) => {
+            const { adminId, adminEmail, adminName } = response.data;
+            const user = { id: adminId, name: adminName, email: adminEmail };
+            this.props.sendData(user);
+            localStorage.setItem("actorId", response.data.adminId);
+            localStorage.setItem("actorType", "Admin");
+            this.props.history.replace("/adminDash");
+          })
+          .catch((err) => {
+            this.setState({ isLogin: true });
+          });
 
         break;
 
@@ -155,6 +166,17 @@ class mainLogin extends React.Component {
                       </div>
                     </div>
                   </div>
+
+                  {this.state.isLogin ? (
+                    <>
+                      {" "}
+                      <div class="alert alert-danger">
+                        Username or Password is invalid
+                      </div>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
             </div>

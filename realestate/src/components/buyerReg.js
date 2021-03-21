@@ -11,6 +11,7 @@ class BuyerReg extends React.Component {
       city: "",
       pinCode: "",
       regDate: new Date(),
+      isRegister : false
     },
   };
 
@@ -33,10 +34,14 @@ class BuyerReg extends React.Component {
       buyerCity: city,
       buyerPincode: pinCode,
       buyerRegistDate: regDate,
-    }).then((response) => {
-      console.log(response.data);
-      this.props.history.replace("/buyerLogin");
-    });
+    })
+      .then((response) => {
+        console.log(response.data);
+        this.props.history.replace("/buyerLogin");
+      })
+      .catch((err) => {
+        this.setState({ isRegister: true });
+      });
   }
 
   handleInputChange = (e) => {
@@ -49,6 +54,15 @@ class BuyerReg extends React.Component {
     return (
       <>
         <h2 className="text-center">Buyer Registration Form</h2>
+        {this.state.isRegister ? (
+          <div className="">
+            <div class="alert alert-danger text-center">
+              Not Registered Because of Uniqe Email , IdProof, and Number
+            </div>{" "}
+          </div>
+        ) : (
+          <></>
+        )}
         <form className="col-lg-6 offset-lg-3 ">
           <div className="form-group">
             <label>Name</label>

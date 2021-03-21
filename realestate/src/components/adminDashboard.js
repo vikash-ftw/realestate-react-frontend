@@ -1,7 +1,8 @@
-import { Component } from "react";
+import React from "react";
 import Axios from "axios";
+import OwnerAxios from "./../service/ownerAxios";
 
-class AdminDashboard extends Component {
+class AdminDashboard extends React.Component {
   state = {
     name: "",
     email: "",
@@ -16,7 +17,8 @@ class AdminDashboard extends Component {
   componentDidMount() {
     this.props.onLogin("admin");
     this.setState({ admin: this.props.user });
-    Axios.get(`http://localhost:8080/realEstate/owner`).then((res) => {
+
+    OwnerAxios.fetchOwner().then((res) => {
       console.log(res.data);
       this.setState({ owner: res.data });
     });
@@ -37,24 +39,23 @@ class AdminDashboard extends Component {
   };
 
   deleteBuyer = (id) => {
-    console.log('in buyer del')
-    Axios.delete(`http://localhost:8080/realEstate/buyer/delete/${id}`).then(() => {
-      Axios.get(`http://localhost:8080/realEstate/buyer`).then((res) => {
-        this.setState({ buyer: res.data });
-      });
-    });
-  }
-
-  deleteOwner = (id) => {
-    Axios.delete(`http://localhost:8080/realEstate/owner/delete/${id}`).then(
+    console.log("in buyer del");
+    Axios.delete(`http://localhost:8080/realEstate/buyer/delete/${id}`).then(
       () => {
-        Axios.get(`http://localhost:8080/realEstate/owner`).then((res) => {
-          this.setState({ owner: res.data });
+        Axios.get(`http://localhost:8080/realEstate/buyer`).then((res) => {
+          this.setState({ buyer: res.data });
         });
       }
     );
-    
-  }
+  };
+
+  deleteOwner = (id) => {
+    OwnerAxios.deleteOwner(id).then(() => {
+      OwnerAxios.fetchOwner().then((res) => {
+        this.setState({ owner: res.data });
+      });
+    });
+  };
 
   render() {
     const buyerList = this.state.buyer;
@@ -67,16 +68,15 @@ class AdminDashboard extends Component {
           </div>
           <div className="row">
             <div className="col-8">
-              <h4>'DashBoard</h4>
+              <h4>Admin DashBoard</h4>
             </div>
             <div className="col">
               <h5>
                 <button
-                  className="btn btn-warning"
-                  
+                  className="btn btn-success"
                   onClick={() => this.props.history.push("/adminReg")}
                 >
-                  +AddNewAdmin
+                  +Add New Admin
                 </button>
               </h5>
             </div>
@@ -87,7 +87,7 @@ class AdminDashboard extends Component {
                 className="btn btn-warning m-2"
                 onClick={() => this.mangListState(true, false)}
               >
-                ShowOwnerList
+                Show Owner List
               </button>
             </h5>
             <h5>
@@ -95,7 +95,7 @@ class AdminDashboard extends Component {
                 className="btn btn-warning m-2"
                 onClick={() => this.mangListState(false, true)}
               >
-                ShowBuyerList
+                Show Buyer List
               </button>
             </h5>
           </div>
@@ -152,7 +152,7 @@ class AdminDashboard extends Component {
                               <td>
                                 <button
                                   className="btn btn-danger"
-                                  onClick={()=>this.deleteOwner(val.ownerId)}
+                                  onClick={() => this.deleteOwner(val.ownerId)}
                                 >
                                   delete
                                 </button>
@@ -214,7 +214,10 @@ class AdminDashboard extends Component {
                                 {val.buyerCity}
                               </td>
                               <td>
-                                <button className="btn btn-danger" onClick={()=>this.deleteBuyer(val.buyerId)}>
+                                <button
+                                  className="btn btn-danger"
+                                  onClick={() => this.deleteBuyer(val.buyerId)}
+                                >
                                   delete
                                 </button>
                               </td>

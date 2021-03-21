@@ -1,5 +1,6 @@
 import React from "react";
 import Axios from "axios";
+import Register from './registrationChoice';
 
 class ownerReg extends React.Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class ownerReg extends React.Component {
       city: "",
       pinCode: "",
       regDate: new Date(),
+      isRegister: false,
     };
   }
   // "ownerName": "UpdateFule",
@@ -47,13 +49,24 @@ class ownerReg extends React.Component {
     }).then((response) => {
       console.log(response.data);
       this.props.history.replace("/ownerLogin");
-    });
+    }).catch((err) => {
+      this.setState({isRegister : true})
+    })
   }
 
   render() {
     return (
       <>
         <h2 className="text-center">Owner Registration Form</h2>
+        {this.state.isRegister ? (
+          <div className="">
+            <div class="alert alert-danger text-center">
+              Not Registered Because of Uniqe Email , IdProof, and Number
+            </div>{" "}
+          </div>
+        ) : (
+          <></>
+        )}
         <form className="col-lg-6 offset-lg-3 ">
           <div className="form-group">
             <label>Name</label>

@@ -96,7 +96,7 @@ class UpdateLandProperty extends Component {
     return (
       <>
         <div class="container">
-          <h2>update</h2>
+          <h2 className="text-center">Update Property</h2>
           <form className="col-lg-6 offset-lg-3 justify-content-center">
             <div className="form-group">
               <label>Property Title</label>
