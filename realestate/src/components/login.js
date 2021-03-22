@@ -184,7 +184,7 @@ class mainLogin extends React.Component {
         </div>
         <div className="mt-4 text-center ">
           <p>
-            Don't have an account? <a href="#">Create One</a>
+            Don't have an account? <a href="/Register">Create One</a>
           </p>
         </div>
       </>
