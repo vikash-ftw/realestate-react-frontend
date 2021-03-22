@@ -5,6 +5,10 @@ import Like from "./common/like";
 class PropertyCards extends Component {
   state = {};
 
+  handleClick = (currentProp, like) =>{
+    this.props.onLike(currentProp, like);
+  }
+
   render() {
     const { properties, onLike, favProperties } = this.props;
     return (
@@ -37,7 +41,7 @@ class PropertyCards extends Component {
                   <Like
                     favProps = {favProperties}
                     currentProp = {prop}
-                    onClick = {() => onLike(prop)}
+                    onClick = {this.handleClick}
                   />
                 </div>
               </div>

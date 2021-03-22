@@ -15,7 +15,7 @@ class Like extends Component {
         let classes = "fa fa-star";
         if(!liked) classes+= "-o";
         return ( 
-            <i onClick={this.props.onClick} style={ {cursor : 'pointer' }} className={classes} aria-hidden="true"></i>
+            <i onClick={() => this.props.onClick(this.props.currentProp, liked)} style={ {cursor : 'pointer' }} className={classes} aria-hidden="true"></i>
          );
     }
 }
