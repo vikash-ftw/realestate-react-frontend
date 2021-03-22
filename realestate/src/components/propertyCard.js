@@ -38,11 +38,11 @@ class PropertyCards extends Component {
                   </p>
                   <br />
                   
-                  <Like
+                   <span className="ml-auto"><i>Mark favourite</i> - <Like
                     favProps = {favProperties}
                     currentProp = {prop}
                     onClick = {this.handleClick}
-                  />
+                  /></span>
                 </div>
               </div>
             </div>

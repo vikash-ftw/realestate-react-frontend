@@ -1,6 +1,5 @@
 import "./App.css";
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import LoginChoice from "./components/loginChoice";
 import RegisterChoice from "./components/registrationChoice";
 import OwnerProfile from "./components/updateOwnerProfile";

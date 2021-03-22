@@ -13,6 +13,9 @@ class BuyerDashboard extends Component {
     favProperties: [],
     pageSize: 4,
     currentPage: 1,
+    searchCity: "",
+    length: "",
+    breadth: "",
   };
 
   componentDidMount() {
@@ -63,7 +66,7 @@ class BuyerDashboard extends Component {
       }).then((res) => {
         console.log(res.data);
         const favProperties = [prop, ...this.state.favProperties];
-        this.setState({favProperties});
+        this.setState({ favProperties });
       });
     } else {
       BuyerApiService.unmarkFavProp({
@@ -71,10 +74,68 @@ class BuyerDashboard extends Component {
         buyerId: this.state.user.id,
       }).then((res) => {
         console.log(res.data);
-        const favProperties = this.state.favProperties.filter((p) => p.propertyId != prop.propertyId);
-        this.setState({favProperties});
+        const favProperties = this.state.favProperties.filter(
+          (p) => p.propertyId != prop.propertyId
+        );
+        this.setState({ favProperties });
       });
     }
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  handleCitySearch = () => {
+    if (this.state.searchCity !== "") {
+      PropertyApiService.fetchByCity(this.state.searchCity).then((res) => {
+        const properties = res.data;
+        this.setState({ properties });
+      });
+    }
+  };
+
+  handlePriceSearch = (min, max = 1) => {
+    if (max === 1) {
+      PropertyApiService.fetchByPriceGreaterThan(min).then((res) => {
+        const properties = res.data;
+        this.setState({ properties });
+      });
+    } else {
+      PropertyApiService.fetchByPriceRange(min, max).then((res) => {
+        const properties = res.data;
+        this.setState({ properties });
+      });
+    }
+  };
+
+  handleDimensionSearch = () => {
+    if (this.state.length !== "" && this.state.breadth !== "") {
+      console.log("l :", this.state.length);
+      console.log("b :", this.state.breadth);
+      PropertyApiService.fetchByDimension(
+        this.state.length,
+        this.state.breadth
+      ).then((res) => {
+        console.log(res.data);
+        const properties = res.data;
+        this.setState({ properties });
+      });
+    }
+  };
+
+  handlePropertyTypeSearch = (propType) => {
+    PropertyApiService.fetchByPropertyType(propType).then((res)=>{
+      const properties = res.data;
+      this.setState({ properties });
+    });
+  };
+
+  handleOwnershipTypeSearch = (ownershipType) => {
+    PropertyApiService.fetchByOwnershipType(ownershipType).then((res)=>{
+      const properties = res.data;
+      this.setState({ properties });
+    })
   };
 
   render() {
@@ -87,9 +148,11 @@ class BuyerDashboard extends Component {
     // );
     return (
       <div>
-        <h2>{name}'s dashboard</h2>
+         
+        
         <div className="row">
-          <div className="col-10">
+          <div className="col-8">
+          <h2>{name}'s dashboard <span><button className = "btn btn-outline-warning"></button></span></h2>
             <div>
               <h3>Map</h3>
             </div>
@@ -117,10 +180,210 @@ class BuyerDashboard extends Component {
             )}
           </div>
           <div className="col">
-            <h3>Filtering criteria</h3>
+            <h3>Filter</h3>
             <ul>
-              <li>By price</li>
-              <li>By dimension</li>
+              <li>
+                <form
+                  onSubmit={this.handleSubmit}
+                  id="custom-search-form"
+                  class="form-search form-horizontal"
+                >
+                  <div class="input-append span12">
+                    <input
+                      type="text"
+                      className="search-query"
+                      placeholder="Search By City"
+                      onChange={(e) => {
+                        this.setState({ searchCity: e.target.value });
+                      }}
+                    />
+                    <button
+                      type="submit"
+                      className="btn"
+                      onClick={this.handleCitySearch}
+                    >
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </form>
+              </li>
+              <li>
+                <div class="dropdown">
+                  <button
+                    className="btn btn-secondary dropdown-toggle"
+                    type="button"
+                    id="dropdownMenu2"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Price Range
+                  </button>
+                  <div
+                    className="dropdown-menu"
+                    aria-labelledby="dropdownMenu2"
+                  >
+                    <button
+                      class="dropdown-item"
+                      type="button"
+                      onClick={() => this.handlePriceSearch(500000, 2000000)}
+                    >
+                      5Lac - 20Lac
+                    </button>
+                    <button
+                      class="dropdown-item"
+                      type="button"
+                      onClick={() => this.handlePriceSearch(2000000, 5000000)}
+                    >
+                      20Lac - 50Lac
+                    </button>
+                    <button
+                      class="dropdown-item"
+                      type="button"
+                      onClick={() => this.handlePriceSearch(5000000, 8000000)}
+                    >
+                      50Lac - 80Lac
+                    </button>
+                    <button
+                      class="dropdown-item"
+                      type="button"
+                      onClick={() => this.handlePriceSearch(8000000, 10000000)}
+                    >
+                      80Lac - 1Cr
+                    </button>
+                    <button
+                      class="dropdown-item"
+                      type="button"
+                      onClick={() => this.handlePriceSearch(10000000, 50000000)}
+                    >
+                      1Cr - 5Cr
+                    </button>
+                    <button
+                      class="dropdown-item"
+                      type="button"
+                      onClick={() => this.handlePriceSearch(50000000)}
+                    >
+                      {">"} 5Cr
+                    </button>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <h6>Based on dimension</h6>
+                <form
+                  onSubmit={this.handleSubmit}
+                  id="custom-search-form"
+                  class="form-search form-horizontal"
+                >
+                  <div class="input-append span12">
+                    <input
+                      type="number"
+                      className="search-query"
+                      placeholder="Enter length"
+                      onChange={(e) => {
+                        this.setState({ length: e.target.value });
+                      }}
+                    />
+                    <br />
+                    <input
+                      type="number"
+                      className="search-query"
+                      placeholder="Enter breadth"
+                      onChange={(e) => {
+                        this.setState({ breadth: e.target.value });
+                      }}
+                    />
+                    <br />
+                    <button
+                      type="submit"
+                      className="btn btn-outline-success"
+                      onClick={this.handleDimensionSearch}
+                    >
+                      Search
+                    </button>
+                  </div>
+                </form>
+              </li>
+              <li>
+                <div class="dropdown">
+                  <button
+                    className="btn btn-secondary dropdown-toggle"
+                    type="button"
+                    id="dropdownMenu2"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Property Type
+                  </button>
+                  <div
+                    className="dropdown-menu"
+                    aria-labelledby="dropdownMenu2"
+                  >
+                    <button
+                      class="dropdown-item"
+                      type="button"
+                      onClick={() => this.handlePropertyTypeSearch("RESIDENTIAL")}
+                    >
+                      Residential
+                    </button>
+                    <button
+                      class="dropdown-item"
+                      type="button"
+                      onClick={() => this.handlePropertyTypeSearch("RENTAL")}
+                    >
+                      Rental
+                    </button>
+                    <button
+                      class="dropdown-item"
+                      type="button"
+                      onClick={() => this.handlePropertyTypeSearch("AGRICULTURAL")}
+                    >
+                      Agricultural
+                    </button>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="dropdown">
+                  <button
+                    className="btn btn-secondary dropdown-toggle"
+                    type="button"
+                    id="dropdownMenu2"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Ownership Type
+                  </button>
+                  <div
+                    className="dropdown-menu"
+                    aria-labelledby="dropdownMenu2"
+                  >
+                    <button
+                      class="dropdown-item"
+                      type="button"
+                      onClick={() => this.handleOwnershipTypeSearch("FREEHOLD")}
+                    > 
+                    Freehold
+                    </button>
+                    <button
+                      class="dropdown-item"
+                      type="button"
+                      onClick={() =>this.handleOwnershipTypeSearch("LEASEHOLD")}
+                    >
+                      Leasehold
+                    </button>
+                    <button
+                      class="dropdown-item"
+                      type="button"
+                      onClick={() => this.handleOwnershipTypeSearch("POWEROFATTORNEY")}
+                    >
+                     Power of Attorney
+                    </button>
+                  </div>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
