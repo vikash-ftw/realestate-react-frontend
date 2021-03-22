@@ -69,10 +69,10 @@ class Home extends React.Component {
           </Carousel>
         </div> */}
         <div className="row">
-          <div className="col-9"></div>
+          {/* <div className="col-9"></div>
           <div className="col">
             <h4>Property Registered</h4>
-          </div>
+          </div> */}
         </div>
         <MapContainer center={position} zoom={5} scrollWheelZoom={true}>
           <TileLayer
