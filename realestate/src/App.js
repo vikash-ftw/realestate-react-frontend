@@ -239,7 +239,6 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/Login" component={LoginChoice} />
-            <Route path="/Login" component={OwnerProfile} />
             <Route path="/Register" component={RegisterChoice} />
             <Route path="/ownerReg" component={OwnerReg} />
             <Route path="/buyerReg" component={BuyerReg} />

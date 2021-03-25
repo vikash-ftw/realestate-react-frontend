@@ -94,8 +94,6 @@ class PropertyReg extends Component {
 
     const {id} = this.props.user;
     const {propertyRegistDate} = this.state;
-    console.log("ownerId:",id);
-    console.log("property",this.state.property);
     Axios.post(
       `http://localhost:8080/realEstate/owner/newProperty/${id}`,
       {

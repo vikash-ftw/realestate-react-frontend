@@ -1,25 +1,44 @@
 import React, { Component } from "react";
 import Axios from "axios";
+import Joi from 'joi-browser';
+
 class UpdateLandProperty extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      propertyType: "",
-      ownershipType: "",
-      landProperty: {
+      property: {
         propertyTitle: "",
-        propertyArea: "",
+        propertyArea: 0,
         dimensionLength: "",
         dimensionBreadth: "",
         propertyPrice: "",
+        propertyType: "",
+        ownershipType: "",
         latitude: "",
         longitude: "",
         propertyCity: "",
         propertyPincode: "",
-        propertyRegistDate: "",
       },
+      propertyId:"",
+      propertyRegistDate:"",
+      errors:{},
     };
   }
+
+  schema = {
+    propertyTitle: Joi.string().max(30).required().label("Title"),
+    propertyArea: Joi.number().required().label("Area"),
+    dimensionLength: Joi.number().required().label("Length"),
+    dimensionBreadth: Joi.number().required().label("Breadth"),
+    propertyPrice: Joi.number().required().label("Price"),
+    propertyType: Joi.string().required().label("Property Type"),
+    ownershipType: Joi.string().required().label("Ownership Type"),
+    latitude: Joi.number().required().label("Latitude"),
+    longitude: Joi.number().required().label("Latitude"),
+    propertyCity: Joi.string().regex(/^[A-Za-z]+$/).max(20).required().label("City"),
+    propertyPincode: Joi.string().length(6).regex(/^\d+$/).required().label("Pincode"),
+  };
+
   componentDidMount() {
     console.log("in update", this.props.landProperty);
     const propertyId = this.props.landProperty;
@@ -27,37 +46,102 @@ class UpdateLandProperty extends Component {
       `http://localhost:8080/realEstate/LandProperty/${propertyId}`
     ).then((res) => {
       console.log(res.data);
-      this.setState({ landProperty: res.data });
-      this.setState({ propertyType: res.data.propertyType });
-      this.setState({ ownershipType: res.data.ownershipType });
+      const {
+        propertyId,
+        propertyTitle,
+        propertyArea,
+        dimensionLength,
+        dimensionBreadth,
+        propertyPrice,
+        propertyType,
+        ownershipType,
+        latitude,
+        longitude,
+        propertyCity,
+        propertyPincode,
+        propertyRegistDate,
+      } = res.data;
 
-      console.log(this.state.propertyType , this.state.ownershipType, "in land state");
+      const property = {
+        propertyTitle: propertyTitle,
+        propertyArea: propertyArea,
+        dimensionLength : dimensionLength,
+        dimensionBreadth: dimensionBreadth,
+        propertyPrice : propertyPrice,
+        propertyType: propertyType,
+        ownershipType : ownershipType,
+        latitude : latitude,
+        longitude : longitude,
+        propertyCity : propertyCity,
+        propertyPincode : propertyPincode,
+      }
+      
+      this.setState({ property });
+      this.setState({ propertyId });
+      this.setState({ propertyRegistDate })
     });
   }
-  handleInputChange = (e) => {
-    const landProperty = { ...this.state.landProperty };
-    landProperty[e.currentTarget.name] = e.currentTarget.value;
-    console.log(e.currentTarget.value);
-    this.setState({ landProperty });
+
+  validate = () => {
+
+    const {error} = Joi.validate(this.state.property,  this.schema, {abortEarly : false});
+    if(!error) return null;
+
+    const errors = {};
+
+    for (let item of error.details){
+      errors[item.path[0]] = item.message;
+    }
+
+    return errors;
   };
 
-  updateLandProperty = () => {
+  validateProperty = (input) =>{
+    const obj = {[input.name] : input.value}
+    const schema = {[input.name] : this.schema[input.name]}
+    const {error} = Joi.validate(obj, schema);
+
+    return error ? error.details[0].message : null;
+  }
+
+
+  handleInputChange = (e) => {
+    const errors = {...this.state.errors};
+    const errorMessages = this.validateProperty(e.currentTarget);
+    if(errorMessages) errors[e.currentTarget.name] = errorMessages;
+    else delete errors[e.currentTarget.name]
+
+    const property = { ...this.state.property };
+    property[e.currentTarget.name] = e.currentTarget.value;
+    this.setState({ property, errors});
+  };
+
+  updateLandProperty = (e) => {
     console.log(this.state, "in update button");
+
+    e.preventDefault();
+    const errors = this.validate();
+    console.log(errors);
+    this.setState({ errors : errors || {}});
+    if (errors) return;
+
     const {
       propertyTitle,
       propertyArea,
       dimensionLength,
       dimensionBreadth,
       propertyPrice,
+      propertyType,
+      ownershipType,
       latitude,
       longitude,
       propertyCity,
       propertyPincode,
-      propertyRegistDate,
-    } = this.state.landProperty;
-    const { propertyType, ownershipType } = this.state;
-    console.log(this.state.landProperty.propertyType, "in update button");
-    const propertyId = this.props.landProperty;
+    } = this.state.property;
+
+    const {propertyId} = this.state;
+    const {propertyRegistDate} = this.state;
+    
     Axios.put(
       `http://localhost:8080/realEstate/owner/updateProp/${this.props.user.id}/${propertyId}`,
       {
@@ -77,6 +161,7 @@ class UpdateLandProperty extends Component {
       }
     ).then((res) => {
       console.log(res.data, "updated data");
+      this.props.history.replace("/ownerDash");
     });
   };
   render() {
@@ -91,13 +176,25 @@ class UpdateLandProperty extends Component {
       longitude,
       propertyCity,
       propertyPincode,
-    } = this.state.landProperty;
+    } = this.state.property;
+    const {propertyId} = this.state;
     const Area = Math.ceil(dimensionBreadth * dimensionLength);
+    const {errors} = this.state;
     return (
       <>
         <div class="container">
           <h2 className="text-center">Update Property</h2>
           <form className="col-lg-6 offset-lg-3 justify-content-center">
+          <div className="form-group">
+              <label>Property Id</label>
+              <input
+                type="text"
+                className="form-control"
+                name="propertyId"
+                value={propertyId}
+                disabled
+              />
+            </div>
             <div className="form-group">
               <label>Property Title</label>
               <input
@@ -105,8 +202,9 @@ class UpdateLandProperty extends Component {
                 className="form-control"
                 name="propertyTitle"
                 value={propertyTitle}
-                disabled
+                onChange={this.handleInputChange}
               />
+              {errors.propertyTitle && <div className="alert alert-danger">{errors.propertyTitle}</div>}
             </div>
             <div className="form-group">
               <label>Length</label>
@@ -117,6 +215,7 @@ class UpdateLandProperty extends Component {
                 value={dimensionLength}
                 onChange={this.handleInputChange}
               />
+              {errors.dimensionLength && <div className="alert alert-danger">{errors.dimensionLength}</div>}
             </div>
             <div className="form-group">
               <label>Breadth</label>
@@ -127,6 +226,7 @@ class UpdateLandProperty extends Component {
                 value={dimensionBreadth}
                 onChange={this.handleInputChange}
               />
+              {errors.dimensionBreadth && <div className="alert alert-danger">{errors.dimensionBreadth}</div>}
             </div>
             <div className="form-group">
               <label>Property Area</label>
@@ -148,14 +248,15 @@ class UpdateLandProperty extends Component {
                 value={propertyPrice}
                 onChange={this.handleInputChange}
               />
+               {errors.propertyPrice && <div className="alert alert-danger">{errors.propertyPrice}</div>}
             </div>
             <div className="form-group">
               <label>Property Type</label>
               <select
                 className="form-control"
-                onChange={(e) => {
-                  this.setState({ propertyType: e.target.value });
-                }}
+                name = "propertyType"
+                onChange={this.handleInputChange}
+                value = {propertyType}
               >
                 <option name="AGRICULTURAL" value="AGRICULTURAL">
                   AGRICULTURAL
@@ -172,9 +273,9 @@ class UpdateLandProperty extends Component {
               <label>Ownership Type</label>
               <select
                 className="form-control"
-                onChange={(e) => {
-                  this.setState({ ownershipType: e.target.value });
-                }}
+                name="ownershipType"
+                onChange={this.handleInputChange}
+                value = {ownershipType}
               >
                 <option name="FREEHOLD" value="FREEHOLD">
                   FREEHOLD
@@ -183,7 +284,7 @@ class UpdateLandProperty extends Component {
                   LEASEHOLD
                 </option>
                 <option name="POWEROFATTORNEY" value="POWEROFATTORNEY">
-                  POWEROFATTORNEY
+                  POWER OF ATTORNEY
                 </option>
               </select>
             </div>
@@ -216,6 +317,7 @@ class UpdateLandProperty extends Component {
                 value={propertyCity}
                 onChange={this.handleInputChange}
               />
+              {errors.propertyCity && <div className="alert alert-danger">{errors.propertyCity}</div>}
             </div>
             <div className="form-group">
               <label>Property Pincode</label>
@@ -226,11 +328,13 @@ class UpdateLandProperty extends Component {
                 value={propertyPincode}
                 onChange={this.handleInputChange}
               />
+              {errors.propertyPincode && <div className="alert alert-danger">{errors.propertyPincode}</div>}
             </div>
           </form>
           <div className="row">
             <div className="col text-center">
               <button
+                disabled = {this.validate()}
                 className="btn btn-primary"
                 onClick={this.updateLandProperty}
               >
