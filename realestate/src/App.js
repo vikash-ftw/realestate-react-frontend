@@ -25,6 +25,7 @@ import PropertyReg from "./components/PropertyReg";
 import BuyerUpdateProfile from "./components/updateBuyerProfile";
 import Axios from "axios";
 import UpdateLandProperty from "./components/updateLandProperty";
+import BuyerFavourite from "./components/buyerFavs";
 
 class App extends React.Component {
   constructor(props) {
@@ -163,7 +164,9 @@ class App extends React.Component {
             <ul className="nav navbar-nav m-2">
               <li>
                 <NavLink className="nav-link" to="/">
-                  Horizon Real Estate
+                  <h5>
+                    <i>Horizon Real Estate</i>
+                  </h5>
                 </NavLink>
               </li>
             </ul>
@@ -336,7 +339,7 @@ class App extends React.Component {
             <Route
               path="/buyerUpdate"
               render={(props) => (
-                <BuyerUpdateProfile user={this.state.user} {...props} />
+                <BuyerUpdateProfile user={this.state.user} onLogout={this.logout} {...props} />
               )}
             />
 
@@ -357,6 +360,8 @@ class App extends React.Component {
                 />
               )}
             />
+
+            <Route path="/myFavorites" component={BuyerFavourite} />
 
             <Redirect to="/not-found" />
           </Switch>

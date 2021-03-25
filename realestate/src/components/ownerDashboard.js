@@ -65,99 +65,72 @@ class OwnerDash extends React.Component {
     const list = this.state.landProperties;
     return (
       <>
-        <div className="container">
-          <div className="row">
-            <br />
-          </div>
-          <div className="row">
-            <div className="col-8">
-              <h4>{name}'DashBoard</h4>
-            </div>
-            <div className="col">
-              <h5>
-                <button className="btn btn-success" onClick={() => this.props.history.push("/propertyReg")}>
-                  +AddNewProperty
-                </button>
-              </h5>
-            </div>
-          </div>
-          <div className="row">
-            <br />
-          </div>
-          <div className="row">
-            <div className="col-sm-12 col-md-10 col-md-offset-1">
-              <table className="table table-hover">
-                <thead>
+      <div className="row">
+        <div className="col-7">
+          <h2>{name}' dashboard</h2>
+        </div>
+        <div className="col">
+        <button className="btn btn-success" onClick={() => this.props.history.push("/propertyReg")}>
+                  + AddNewProperty
+        </button>
+        </div>
+      </div>
+          <div className="container">
+              <table className="table table-hover table-striped">
+                <thead className="thead-dark">
                   <tr>
                     <th>PropertyId</th>
+                    <th>Price</th>
                     <th>Area</th>
-                    <th className="text-center">Property Type</th>
-                    <th className="text-center">Ownership Type</th>
-                    <th> Price</th>
-                    <th></th>
-                    <th></th>
+                    <th>Property Type</th>
+                    <th>Ownership Type</th>
+                    <th>City</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {list.map((val) => {
-                    return (
+                  {list.map((val) => (
                       <tr key={val.propertyId}>
-                        <td className="col-sm-1 col-md-1">
-                          <div>{val.propertyId}</div>
+                        <td>
+                         {val.propertyId}
                         </td>
-                        <td className="col-sm-1 col-md-1 text-center">
-                          <div>{val.propertyArea}</div>
-                        </td>
-                        <td className="col-sm-1 col-md-1 text-center">
-                          {val.propertyType}
-                        </td>
-                        <td className="col-sm-1 col-md-1 text-center">
-                          {val.ownershipType}
-                        </td>
-                        <td className="col-sm-1 col-md-1 text-center">
+                        <td>
                           {val.propertyPrice}
                         </td>
                         <td>
-                          <button
-                            className="btn btn-warning"
-                            onClick={() => this.updateLandData(val.propertyId)}
-                          >
-                            update
-                          </button>
+                          {val.propertyArea}
                         </td>
                         <td>
+                          {val.propertyType}
+                        </td>
+                        <td>
+                          {val.ownershipType}
+                        </td>
+                        <td>
+                          {val.propertyCity}
+                        </td>
+                        <td>
+                          <button
+                            className="btn btn-warning mr-3"
+                            onClick={() => this.updateLandData(val.propertyId)}
+                          >
+                            Update
+                          </button>
                           <button
                             className="btn btn-danger"
                             onClick={() => this.deleteProperty(val.propertyId)}
                           >
-                            delete
+                            Delete
                           </button>
                         </td>
                       </tr>
-                    );
-                  })}
+                  ))}
                 </tbody>
               </table>
             </div>
-          </div>
-        </div>
       </>
     );
   }
 }
 
 export default OwnerDash;
-// const {
-//     propertyTitle,
-//     propertyArea,
-//     dimensionLength,
-//     dimensionBreadth,
-//     propertyPrice,
-//     propertyType,
-//     ownershipType,
-//     latitude,
-//     longitude,
-//     propertyCity,
-//     propertyPincode,
-//     propertyRegistDate,
-//   } = res.data;

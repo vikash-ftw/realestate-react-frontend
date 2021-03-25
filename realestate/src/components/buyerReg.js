@@ -1,5 +1,6 @@
 import React from "react";
 import Axios from "axios";
+import Joi from 'joi-browser';
 
 class BuyerReg extends React.Component {
   state = {
@@ -10,12 +11,52 @@ class BuyerReg extends React.Component {
       phone: "",
       city: "",
       pinCode: "",
-      regDate: new Date(),
-      isRegister : false
     },
+    regDate: new Date(),
+    isRegister : false,
+    errors : {},
   };
 
-  addBuyer() {
+  schema = {
+    name : Joi.string().regex(/^[A-Za-z]+$/).max(50).required().label("Name"),
+    email: Joi.string().email().required().label("Email"),
+    password: Joi.string().max(15).required().label("Password"),
+    phone: Joi.string().length(10).regex(/^\d+$/).required().label("PhoneNo"),
+    city: Joi.string().regex(/^[A-Za-z]+$/).max(20).required().label("City"),
+    pinCode: Joi.string().length(6).regex(/^\d+$/).required().label("Pincode"),
+  }
+
+  validate = () => {
+
+    const {error} = Joi.validate(this.state.buyer,  this.schema, {abortEarly : false});
+    if(!error) return null;
+
+    const errors = {};
+
+    for (let item of error.details){
+      errors[item.path[0]] = item.message;
+    }
+
+    return errors;
+  };
+
+  validateProperty = (input) =>{
+    const obj = {[input.name] : input.value}
+    const schema = {[input.name] : this.schema[input.name]}
+    const {error} = Joi.validate(obj, schema);
+
+    return error ? error.details[0].message : null;
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    const errors = this.validate();
+    console.log(errors);
+    this.setState({ errors : errors || {}});
+    if (errors) return;
+
+    //no errors then
     const {
       name,
       email,
@@ -23,8 +64,9 @@ class BuyerReg extends React.Component {
       phone,
       city,
       pinCode,
-      regDate,
     } = this.state.buyer;
+
+    const {regDate} = this.state;
 
     Axios.post("http://localhost:8080/realEstate/buyer", {
       buyerName: name,
@@ -42,22 +84,30 @@ class BuyerReg extends React.Component {
       .catch((err) => {
         this.setState({ isRegister: true });
       });
-  }
-
-  handleInputChange = (e) => {
-    const buyer = { ...this.state.buyer };
-    buyer[e.currentTarget.name] = e.currentTarget.value;
-    this.setState({ buyer });
   };
 
+  handleChange = (e) => {
+
+    const errors = {...this.state.errors};
+    const errorMessages = this.validateProperty(e.currentTarget);
+    if(errorMessages) errors[e.currentTarget.name] = errorMessages;
+    else delete errors[e.currentTarget.name]
+
+    const buyer = { ...this.state.buyer };
+    buyer[e.currentTarget.name] = e.currentTarget.value;
+    this.setState({ buyer, errors });
+  };
+
+
   render() {
+    const {errors} = this.state;
     return (
       <>
         <h2 className="text-center">Buyer Registration Form</h2>
         {this.state.isRegister ? (
           <div className="">
             <div class="alert alert-danger text-center">
-              Not Registered Because of Uniqe Email , IdProof, and Number
+              Registration Failed
             </div>{" "}
           </div>
         ) : (
@@ -71,8 +121,9 @@ class BuyerReg extends React.Component {
               className="form-control"
               placeholder="FullName"
               name="name"
-              onChange={this.handleInputChange}
+              onChange={this.handleChange}
             />
+             {errors.name && <div className="alert alert-danger">{errors.name}</div>}
           </div>
           <div className="form-group">
             <label>Email</label>
@@ -81,18 +132,20 @@ class BuyerReg extends React.Component {
               className="form-control"
               placeholder="Email"
               name="email"
-              onChange={this.handleInputChange}
+              onChange={this.handleChange}
             />
+            {errors.email && <div className="alert alert-danger">{errors.email}</div>}
           </div>
           <div className="form-group">
             <label>Password</label>
             <input
-              type="text"
+              type="password"
               className="form-control"
               placeholder="Password"
               name="password"
-              onChange={this.handleInputChange}
+              onChange={this.handleChange}
             />
+            {errors.password && <div className="alert alert-danger">{errors.password}</div>}
           </div>
 
           <div className="form-group">
@@ -102,8 +155,9 @@ class BuyerReg extends React.Component {
               className="form-control"
               placeholder="PhoneNo"
               name="phone"
-              onChange={this.handleInputChange}
+              onChange={this.handleChange}
             />
+            {errors.phone && <div className="alert alert-danger">{errors.phone}</div>}
           </div>
           <div className="form-group">
             <label>City</label>
@@ -112,8 +166,9 @@ class BuyerReg extends React.Component {
               className="form-control"
               placeholder="City"
               name="city"
-              onChange={this.handleInputChange}
+              onChange={this.handleChange}
             />
+            {errors.city && <div className="alert alert-danger">{errors.city}</div>}
           </div>
           <div className="form-group">
             <label>Pin code</label>
@@ -122,19 +177,23 @@ class BuyerReg extends React.Component {
               className="form-control"
               placeholder="Pin code"
               name="pinCode"
-              onChange={this.handleInputChange}
+              onChange={this.handleChange}
             />
+            {errors.pinCode && <div className="alert alert-danger">{errors.pinCode}</div>}
           </div>
         </form>
         <div className="row">
           <div className="col text-center">
+          <div className="form-group m-0">
             <button
+              disabled = {this.validate()}
               type="submit"
               className="btn btn-primary"
-              onClick={() => this.addBuyer()}
+              onClick={this.handleSubmit}
             >
               Register
             </button>
+            </div>
           </div>
         </div>
       </>
