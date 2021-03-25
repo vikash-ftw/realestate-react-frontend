@@ -148,10 +148,14 @@ class App extends React.Component {
     console.log(this.state.actorRole);
   };
   logout = () => {
+    const initialState = {
+      /* etc */
+    };
     this.setState({ isLogin: false });
     this.setState({ actorName: "" });
     localStorage.removeItem("actorType");
     localStorage.removeItem("actorId");
+    this.setState({ initialState })
   };
 
   render() {
@@ -228,7 +232,7 @@ class App extends React.Component {
             </div>
           )}
         </nav>
-        <div className="container-fluid">
+        <div>
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/Login" component={LoginChoice} />

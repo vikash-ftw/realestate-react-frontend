@@ -43,6 +43,7 @@ class BuyerReg extends React.Component {
         this.setState({ isRegister: true });
       });
   }
+  
 
   handleInputChange = (e) => {
     const buyer = { ...this.state.buyer };
@@ -51,6 +52,7 @@ class BuyerReg extends React.Component {
   };
 
   render() {
+
     return (
       <>
         <h2 className="text-center">Buyer Registration Form</h2>

@@ -32,7 +32,7 @@ class Login extends React.Component {
         <div className="row">
           <br></br>
         </div>
-        <div>
+        <div className="container">
           <div className="row">
             <div className="col text-center">
               <button

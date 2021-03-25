@@ -1,10 +1,19 @@
 .App {
   text-align: center;
+  background-image: url('./images/i2.jpg');
+  position: fixed;
+  min-width: 100%;
+  max-width: 100%;
+  background-size: cover;
+  background-position: center;
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+#Cont {
+  background-image: url('./images/i2.jpg');
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -40,4 +49,8 @@
 html, body {
   height: 100%;
   width: 100%;
+}
+
+.bg {
+  background-image: url('./images/i2.jpg');
 }

@@ -1,6 +1,8 @@
 import React from "react";
 import regAcc from "./registrationChoice";
 import Axios from "axios";
+import Joi from "joi-browser";
+import Css from "../App.css";
 
 class mainLogin extends React.Component {
   constructor(props) {
@@ -8,9 +10,23 @@ class mainLogin extends React.Component {
     this.state = {
       email: "",
       password: "",
-      isLogin: false
+      isLogin: false,
+      errors: {},
+      account: {
+        email: "",
+        password: "",
+      },
     };
   }
+
+  schema = {
+    email: Joi.string().required(),
+    password: Joi.string().required(),
+  };
+
+  validate = () => {
+    Joi.validate(this.sta);
+  };
 
   loginProcess() {
     const { email, password } = this.state;
@@ -51,7 +67,7 @@ class mainLogin extends React.Component {
             this.props.history.replace("/ownerDash");
           })
           .catch((err) => {
-            this.setState({isLogin : true})
+            this.setState({ isLogin: true });
           });
 
         break;
@@ -119,7 +135,7 @@ class mainLogin extends React.Component {
 
   render() {
     return (
-      <>
+      <div>
         <div id="cover-caption">
           <div className="container">
             <div className="row">
@@ -167,15 +183,10 @@ class mainLogin extends React.Component {
                     </div>
                   </div>
 
-                  {this.state.isLogin ? (
-                    <>
-                      {" "}
-                      <div class="alert alert-danger">
-                        Username or Password is invalid
-                      </div>
-                    </>
-                  ) : (
-                    <></>
+                  {this.state.isLogin && (
+                    <div class="alert alert-danger">
+                      Username or Password is invalid
+                    </div>
                   )}
                 </div>
               </div>
@@ -187,7 +198,7 @@ class mainLogin extends React.Component {
             Don't have an account? <a href="/Register">Create One</a>
           </p>
         </div>
-      </>
+      </div>
     );
   }
 }

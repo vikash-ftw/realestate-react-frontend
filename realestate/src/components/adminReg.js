@@ -9,6 +9,7 @@ class adminReg extends React.Component {
       email: "",
       password: "",
       regDate: new Date(),
+      isRegister: false,
     };
   }
 
@@ -23,10 +24,14 @@ class adminReg extends React.Component {
       adminEmail: email,
       adminPassword: password,
       adminRegistDate: regDate,
-    }).then((response) => {
-      console.log(response.data);
-      this.props.history.replace("/adminLogin");
-    });
+    })
+      .then((response) => {
+        console.log(response.data);
+        this.props.history.replace("/adminDash");
+      })
+      .catch((error) => {
+        this.setState({ isRegister: true });
+      });
     //this.props.history.replace("/adminLogin");
   }
 
@@ -34,6 +39,11 @@ class adminReg extends React.Component {
     return (
       <>
         <h2 className="text-center">Admin Registration Form</h2>
+        {this.isRegister && (
+          <div class="alert alert-danger text-center">
+            Not Registered Because of Uniqe Email
+          </div>
+        )}
         <form className="col-lg-6 offset-lg-3 ">
           <div className="form-group">
             <label>Name</label>
