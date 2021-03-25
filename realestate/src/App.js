@@ -26,6 +26,8 @@ import BuyerUpdateProfile from "./components/updateBuyerProfile";
 import Axios from "axios";
 import UpdateLandProperty from "./components/updateLandProperty";
 import BuyerFavourite from "./components/buyerFavs";
+import NotFound from './components/notFound';
+import { render } from '@testing-library/react';
 
 class App extends React.Component {
   constructor(props) {
@@ -156,6 +158,7 @@ class App extends React.Component {
     this.setState({ actorName: "" });
     localStorage.removeItem("actorType");
     localStorage.removeItem("actorId");
+    localStorage.removeItem("role");
     this.setState({ initialState })
   };
 
@@ -239,12 +242,10 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/Login" component={LoginChoice} />
-            <Route path="/Login" component={OwnerProfile} />
             <Route path="/Register" component={RegisterChoice} />
             <Route path="/ownerReg" component={OwnerReg} />
             <Route path="/buyerReg" component={BuyerReg} />
             <Route path="/adminReg" component={AdminReg} />
-
             <Route
               path="/ownerLogin"
               render={(props) => (
@@ -255,7 +256,6 @@ class App extends React.Component {
                 />
               )}
             />
-
             <Route
               path="/buyerLogin"
               render={(props) => (
@@ -266,7 +266,6 @@ class App extends React.Component {
                 />
               )}
             />
-
             <Route
               path="/adminLogin"
               render={(props) => (
@@ -277,47 +276,50 @@ class App extends React.Component {
                 />
               )}
             />
-
-            <Route
-              path="/buyerDash"
-              render={(props) => (
-                <BuyerDashboard
-                  onLogin={this.handleLogin}
-                  actorId={this.state.user.id}
-                  user={this.state.user}
-                  actorType="buyer"
-                  {...props}
-                />
-              )}
-            />
-
-            <Route
-              path="/ownerDash"
-              render={(props) => (
-                <OwnerDashboard
-                  onLogin={this.handleLogin}
-                  actorId={this.state.user.id}
-                  user={this.state.user}
-                  actorType="owner"
-                  sendPropertyId={this.handlePropertyData}
-                  {...props}
-                />
-              )}
-            />
-            <Route
-              path="/adminDash"
-              render={(props) => (
-                <AdminDashboard
-                  onLogin={this.handleLogin}
-                  actorId={this.state.user.id}
-                  user={this.state.user}
-                  actorType="owner"
-                  sendPropertyId={this.handlePropertyData}
-                  {...props}
-                />
-              )}
-            />
-
+            {localStorage.getItem("role") == "Buyer" && (
+              <Route
+                path="/buyerDash"
+                render={(props) => (
+                  <BuyerDashboard
+                    onLogin={this.handleLogin}
+                    actorId={this.state.user.id}
+                    user={this.state.user}
+                    actorType="buyer"
+                    {...props}
+                  />
+                )}
+              />
+            )}
+            {localStorage.getItem("role") == "Owner" && (
+              <Route
+                path="/ownerDash"
+                render={(props) => (
+                  <OwnerDashboard
+                    onLogin={this.handleLogin}
+                    actorId={this.state.user.id}
+                    user={this.state.user}
+                    actorType="owner"
+                    sendPropertyId={this.handlePropertyData}
+                    {...props}
+                  />
+                )}
+              />
+            )}
+            {localStorage.getItem("role") == "Admin" && (
+              <Route
+                path="/adminDash"
+                render={(props) => (
+                  <AdminDashboard
+                    onLogin={this.handleLogin}
+                    actorId={this.state.user.id}
+                    user={this.state.user}
+                    actorType="owner"
+                    sendPropertyId={this.handlePropertyData}
+                    {...props}
+                  />
+                )}
+              />
+            )}
             <Route
               path="/profile"
               render={(props) => (
@@ -328,7 +330,6 @@ class App extends React.Component {
                 />
               )}
             />
-
             <Route
               path="/ownerUpdate"
               render={(props) => (
@@ -339,21 +340,22 @@ class App extends React.Component {
                 />
               )}
             />
-
             <Route
               path="/buyerUpdate"
               render={(props) => (
-                <BuyerUpdateProfile user={this.state.user} onLogout={this.logout} {...props} />
+                <BuyerUpdateProfile
+                  user={this.state.user}
+                  onLogout={this.logout}
+                  {...props}
+                />
               )}
             />
-
             <Route
               path="/propertyReg"
               render={(props) => (
                 <PropertyReg user={this.state.user} {...props} />
               )}
             />
-
             <Route
               path="/updateLandProperty"
               render={(props) => (
@@ -364,9 +366,8 @@ class App extends React.Component {
                 />
               )}
             />
-
             <Route path="/myFavorites" component={BuyerFavourite} />
-
+            <Route path="/not-found" component={NotFound} />
             <Redirect to="/not-found" />
           </Switch>
         </div>
