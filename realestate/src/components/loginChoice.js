@@ -38,6 +38,8 @@ class Login extends React.Component {
               <button
                 className="btn btn-outline-success btn-lg"
                 onClick={(e) => {
+                  const role = "Buyer";
+                  localStorage.setItem("role", role);
                   this.props.history.push("./BuyerLogin");
                 }}
               >
@@ -53,6 +55,8 @@ class Login extends React.Component {
               <button
                 className="btn btn-outline-primary btn-lg"
                 onClick={(e) => {
+                  const role = "Owner";
+                  localStorage.setItem("role", role);
                   this.props.history.push("./ownerLogin");
                 }}
               >
@@ -68,6 +72,7 @@ class Login extends React.Component {
               <button
                 className="btn btn-outline-danger btn-lg"
                 onClick={(e) => {
+                  localStorage.setItem("role", "Admin");
                   this.props.history.push("./adminLogin");
                 }}
               >

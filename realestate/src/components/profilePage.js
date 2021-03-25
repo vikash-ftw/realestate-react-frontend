@@ -53,14 +53,6 @@ class Profile extends Component {
                     <div className="form-group">
                       <h1 className="display-5 py-2 ">City : {city}</h1>
                     </div>
-                  </>
-                )}
-              </form>
-              {this.state.actorType === "Admin" ? (
-                <> </>
-              ) : (
-                <div className="row">
-                  <div className="col text-center">
                     <div className="form-group m-0">
                       <button
                         type="submit"
@@ -70,9 +62,9 @@ class Profile extends Component {
                         Update Profile
                       </button>
                     </div>
-                  </div>
-                </div>
-              )}
+                  </>
+                )}
+              </form>
             </div>
           </div>
         </div>
