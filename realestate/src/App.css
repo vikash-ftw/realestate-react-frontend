@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background-image: url('./images/i2.jpg');
+  
   position: fixed;
   min-width: 100%;
   max-width: 100%;
@@ -12,9 +12,7 @@
   height: 40vmin;
   pointer-events: none;
 }
-#Cont {
-  background-image: url('./images/i2.jpg');
-}
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -51,6 +49,4 @@ html, body {
   width: 100%;
 }
 
-.bg {
-  background-image: url('./images/i2.jpg');
-}
+
