@@ -1,7 +1,4 @@
 import React, { isValidElement } from "react";
-import image from "../images/image.jpg";
-import i2 from "../images/i2.jpg";
-import i3 from "../images/i3.jpg";
 import { Carousel } from "react-bootstrap";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { LatLng } from "leaflet";
@@ -74,7 +71,8 @@ class Home extends React.Component {
             <h4>Property Registered</h4>
           </div> */}
         </div>
-        <MapContainer center={position} zoom={5} scrollWheelZoom={true}>
+        <h3><i>Land Property registered till now - </i></h3>
+        <MapContainer center={position} zoom={6} scrollWheelZoom={false}>
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

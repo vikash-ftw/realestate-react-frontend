@@ -14,27 +14,23 @@ class PropertyCards extends Component {
     return (
       <div>
         {properties.map((prop) => (
-          <div class="card">
+          <div class="card" onClick = {() => this.props.onCardClick(prop)}>
             <div class="row ">
               <div class="col-md-7 px-3">
                 <div class="card-block px-6">
                   <h4 class="card-title">
-                    Title: | <b>Price: Rs.{prop.propertyPrice}</b>
+                    {prop.propertyTitle} | <b>Price: Rs.{prop.propertyPrice}</b>
                   </h4>
                   <p class="card-text">
-                    Area : {prop.propertyArea}(sqft) | Dimension :{" "}
-                    {prop.dimensionLength}x{prop.dimensionBreadth}
+                    Area : {prop.propertyArea}(sqft) | Dimension (lxb) : {prop.dimensionLength} x {prop.dimensionBreadth}
                     <br />
-                    Property Type : {prop.propertyType} | Ownership Type :{" "}
-                    {prop.ownershipType}
+                    Property Type : {prop.propertyType} | Ownership Type : {prop.ownershipType}
                     <br />
-                    City : {prop.propertyCity} | Pincode :{" "}
-                    {prop.propertyPincode}
+                    City : {prop.propertyCity} | Pincode : {prop.propertyPincode}
                   </p>
                   <br />
                   <p class="card-text">
-                    Owner Name : {prop.propertyOwner.ownerName} | Phone No. :{" "}
-                    {prop.propertyOwner.ownerPhoneNo}
+                    Owner Name : {prop.propertyOwner.ownerName} | PhoneNo : {prop.propertyOwner.ownerPhoneNo}
                   </p>
                   <br />
                   

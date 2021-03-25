@@ -5,6 +5,7 @@ import Pagination from "./common/pagination";
 import PropertyCards from "./propertyCard";
 import PropertyTable from "./propertyTable";
 import BuyerApiService from "../service/buyerAxios";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 class BuyerDashboard extends Component {
   state = {
@@ -16,6 +17,9 @@ class BuyerDashboard extends Component {
     searchCity: "",
     length: "",
     breadth: "",
+    lat:21.152451,
+    lang:79.080559,
+    zoom:5
   };
 
   componentDidMount() {
@@ -125,18 +129,31 @@ class BuyerDashboard extends Component {
   };
 
   handlePropertyTypeSearch = (propType) => {
-    PropertyApiService.fetchByPropertyType(propType).then((res)=>{
+    PropertyApiService.fetchByPropertyType(propType).then((res) => {
       const properties = res.data;
       this.setState({ properties });
     });
   };
 
   handleOwnershipTypeSearch = (ownershipType) => {
-    PropertyApiService.fetchByOwnershipType(ownershipType).then((res)=>{
+    PropertyApiService.fetchByOwnershipType(ownershipType).then((res) => {
       const properties = res.data;
       this.setState({ properties });
-    })
+    });
   };
+
+  handleMap = (prop) =>{
+    console.log("map change cld");
+    console.log("mapProp",prop);
+    const lat = prop.latitude;
+    const lang = prop.longitude;
+    console.log(lat,lang);
+    this.setState({lat, lang});
+    const zoom = 12;
+    this.setState({zoom})
+    console.log(this.state.lat, this.state.lang);
+    console.log(this.state.zoom);
+  }
 
   render() {
     const { name, city } = this.state.user;
@@ -148,36 +165,80 @@ class BuyerDashboard extends Component {
     // );
     return (
       <div>
-         
-        
+        <h2>
+          {name}'s dashboard{" "}
+          <span>
+            <button
+              className="btn btn-warning"
+              onClick={() => this.props.history.push("./myFavorites")}
+            >
+              <i>My Favorites</i>
+            </button>
+          </span>
+        </h2>
         <div className="row">
-          <div className="col-8">
-          <h2>{name}'s dashboard <span><button className = "btn btn-outline-warning"></button></span></h2>
-            <div>
-              <h3>Map</h3>
-            </div>
-            {count === 0 ? (
-              <p>There are no land property to show in your city</p>
-            ) : (
-              <div>
-                <p>Displaying {this.state.properties.length} properties</p>
-                <PropertyCards
-                  properties={this.state.properties}
-                  favProperties={this.state.favProperties}
-                  onLike={this.handleLike}
-                ></PropertyCards>
-                {/* <PropertyTable
+          <div className="col-9">
+            <div className="row">
+              <div className="col-6">
+                <MapContainer
+                  center={[this.state.lat, this.state.lang]}
+                  zoom={this.state.zoom}
+                  scrollWheelZoom={false}
+                >
+                  <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                  />
+                  {this.state.properties.map((prop) => (
+                    <Marker
+                      draggable={false}
+                      position={[prop.latitude, prop.longitude]}
+                      key={prop.propertyId}
+                    >
+                      <Popup>
+                        <i>
+                          {prop.propertyTitle} | Price : {prop.propertyPrice}
+                        </i>
+                      </Popup>
+                    </Marker>
+                  ))}
+                </MapContainer>
+              </div>
+              <div className="col">
+                {count === 0 ? (
+                  <h4>
+                    <i>There are no land property to show</i>
+                  </h4>
+                ) : (
+                  <div>
+                    <h4>
+                      <i>
+                        Displaying {this.state.properties.length} properties
+                      </i>
+                    </h4>
+                    <div className="scroll">
+                      <PropertyCards
+                        properties={this.state.properties}
+                        favProperties={this.state.favProperties}
+                        onLike={this.handleLike}
+                        onCardClick={this.handleMap}
+                      ></PropertyCards>
+                    </div>
+
+                    {/* <PropertyTable
                   properties={properties}
                   onLike={this.handleLike}
                 ></PropertyTable> */}
-                {/* <Pagination
+                    {/* <Pagination
                   itemsCount={count}
                   pageSize={this.state.pageSize}
                   currentPage={this.state.currentPage}
                   onPageChange={this.handlePageChange}
                 ></Pagination> */}
+                  </div>
+                )}
               </div>
-            )}
+            </div>
           </div>
           <div className="col">
             <h3>Filter</h3>
@@ -323,7 +384,9 @@ class BuyerDashboard extends Component {
                     <button
                       class="dropdown-item"
                       type="button"
-                      onClick={() => this.handlePropertyTypeSearch("RESIDENTIAL")}
+                      onClick={() =>
+                        this.handlePropertyTypeSearch("RESIDENTIAL")
+                      }
                     >
                       Residential
                     </button>
@@ -337,7 +400,9 @@ class BuyerDashboard extends Component {
                     <button
                       class="dropdown-item"
                       type="button"
-                      onClick={() => this.handlePropertyTypeSearch("AGRICULTURAL")}
+                      onClick={() =>
+                        this.handlePropertyTypeSearch("AGRICULTURAL")
+                      }
                     >
                       Agricultural
                     </button>
@@ -364,22 +429,26 @@ class BuyerDashboard extends Component {
                       class="dropdown-item"
                       type="button"
                       onClick={() => this.handleOwnershipTypeSearch("FREEHOLD")}
-                    > 
-                    Freehold
+                    >
+                      Freehold
                     </button>
                     <button
                       class="dropdown-item"
                       type="button"
-                      onClick={() =>this.handleOwnershipTypeSearch("LEASEHOLD")}
+                      onClick={() =>
+                        this.handleOwnershipTypeSearch("LEASEHOLD")
+                      }
                     >
                       Leasehold
                     </button>
                     <button
                       class="dropdown-item"
                       type="button"
-                      onClick={() => this.handleOwnershipTypeSearch("POWEROFATTORNEY")}
+                      onClick={() =>
+                        this.handleOwnershipTypeSearch("POWEROFATTORNEY")
+                      }
                     >
-                     Power of Attorney
+                      Power of Attorney
                     </button>
                   </div>
                 </div>

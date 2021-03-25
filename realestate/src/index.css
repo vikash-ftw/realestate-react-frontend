@@ -1,7 +1,8 @@
-html , body {
+html,
+body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -11,11 +12,21 @@ html , body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
-.navbar{
+.jumbotron{
+  background-image: url("./images/jumbo_bg.jpg");
+  background-size: cover;
+}
+
+.mapbg{
+  background-image: url("./images/light_bg.jpg");
+  background-size: auto;
+}
+
+.navbar {
   margin-bottom: 30px;
 }
 
@@ -30,18 +41,25 @@ code {
   margin: 0;
   padding: 1em;
   border: none;
-  border-top: 1px solid rgba(34, 36, 38, .1);
+  border-top: 1px solid rgba(34, 36, 38, 0.1);
   box-shadow: none;
-   
 }
 .card {
   font-size: 1em;
   overflow: hidden;
   padding: 5;
   border: none;
-  border-radius: .28571429rem;
+  border-radius: 0.28571429rem;
   box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
-  margin-top:20px;
+  margin-top: 20px;
 }
 
-.leaflet-container{width: 100%; height: 85vh;}
+.leaflet-container {
+  width: 100%;
+  height: 85vh;
+}
+
+.scroll {
+  max-height: 600px;
+  overflow-y: scroll;
+}

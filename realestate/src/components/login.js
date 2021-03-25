@@ -1,35 +1,53 @@
 import React from "react";
 import regAcc from "./registrationChoice";
 import Axios from "axios";
-import Joi from "joi-browser";
-import Css from "../App.css";
+import Joi from 'joi-browser';
 
 class mainLogin extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      password: "",
-      isLogin: false,
-      errors: {},
-      account: {
-        email: "",
-        password: "",
-      },
+      user : {email: "", password: ""},
+      errors : {},
+      isLogin: false
     };
   }
 
   schema = {
-    email: Joi.string().required(),
-    password: Joi.string().required(),
-  };
+    email : Joi.string().required().label("Email"),
+    password : Joi.string().required().label("Password")
+  }
 
   validate = () => {
-    Joi.validate(this.sta);
-  };
+    const {error} = Joi.validate(this.state.user, this.schema, {abortEarly : false});
+    if(!error) return null;
 
-  loginProcess() {
-    const { email, password } = this.state;
+    const errors = {};
+    for(let item of error.details) {
+      errors[item.path[0]]= item.message;
+    }
+
+    return errors;
+  }
+
+  validateProperty = (input) => {
+    const obj = {[input.name] : input.value}
+    const schema = {[input.name] : this.schema[input.name]}
+    const {error} = Joi.validate(obj, schema);
+
+    return error ? error.details[0].message : null;
+  }
+
+  handleSumbit = (e) => {
+    e.preventDefault();
+
+    const errors = this.validate();
+    console.log(errors);
+    this.setState({ errors : errors || {}});
+    if(errors) return;
+
+    console.log("submitted");
+    const { email, password } = this.state.user;
     switch (this.props.ownerType) {
       case "Owner":
         console.log("inOwnerLogin", email, password);
@@ -133,7 +151,19 @@ class mainLogin extends React.Component {
     }
   }
 
+  handleChange = (e) => {
+    const errors = {...this.state.errors};
+    const errorMessages = this.validateProperty(e.currentTarget);
+    if(errorMessages) errors[e.currentTarget.name] = errorMessages;
+    else delete errors[e.currentTarget.name]
+
+    const user = {...this.state.user};
+    user[e.currentTarget.name] = e.currentTarget.value;
+    this.setState({ user, errors});
+  }
+
   render() {
+    const {errors} = this.state;
     return (
       <div>
         <div id="cover-caption">
@@ -148,13 +178,14 @@ class mainLogin extends React.Component {
                     <div className="form-group">
                       <label className="sr-only">Email</label>
                       <input
+                        autoFocus
                         type="text"
                         className="form-control"
                         placeholder="Email"
-                        onChange={(e) => {
-                          this.setState({ email: e.target.value });
-                        }}
+                        name="email"
+                        onChange={this.handleChange}
                       />
+                      {errors.email && <div className="alert alert-danger">{errors.email}</div>}
                     </div>
                     <div className="form-group">
                       <label className="sr-only">Password</label>
@@ -162,10 +193,10 @@ class mainLogin extends React.Component {
                         type="password"
                         className="form-control"
                         placeholder="Password"
-                        onChange={(e) => {
-                          this.setState({ password: e.target.value });
-                        }}
+                        name="password"
+                        onChange={this.handleChange}
                       />
+                      {errors.password && <div className="alert alert-danger">{errors.password}</div>}
                     </div>
                   </form>
 
@@ -173,9 +204,10 @@ class mainLogin extends React.Component {
                     <div className="col text-center">
                       <div className="form-group m-0">
                         <button
+                          disabled = {this.validate()}
                           type="submit"
                           className="btn btn-primary btn-block"
-                          onClick={() => this.loginProcess()}
+                          onClick={this.handleSumbit}
                         >
                           Login
                         </button>
