@@ -23,12 +23,12 @@ class ownerReg extends React.Component {
   }
   schema = {
     name: Joi.string()
-      .regex(/^[A-Za-z]+$/)
+      .regex(/^[A-Za-z ]+$/)
       .max(50)
       .required()
       .label("Name"),
 
-    email: Joi.string().email().required().label("Name"),
+    email: Joi.string().email().required().label("Email"),
     password: Joi.string().max(15).required().label("Password"),
     phone: Joi.string()
       .length(10)
@@ -40,7 +40,7 @@ class ownerReg extends React.Component {
       .regex(/^[A-Za-z]+$/)
       .max(20)
       .required()
-      .label("Name"),
+      .label("City"),
 
     pinCode: Joi.string().length(6).regex(/^\d+$/).required().label("PinCode"),
   };
