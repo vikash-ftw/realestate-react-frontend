@@ -33,47 +33,8 @@ class Home extends React.Component {
         <div className="jumbotron text-center">
           <h1>Horizon Real Estate</h1>
         </div>
-        {/* <div>
-          <Carousel>
-            <Carousel.Item>
-              <img className="d-block w-100" src={image} alt="First slide" />
-              <Carousel.Caption>
-                <h3>First slide label</h3>
-                <p>
-                  Nulla vitae elit libero, a pharetra augue mollis interdum.
-                </p>
-              </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-              <img className="d-block w-100" src={i2} alt="Second slide" />
-
-              <Carousel.Caption>
-                <h3>Second slide label</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-              <img className="d-block w-100" src={i3} alt="Third slide" />
-
-              <Carousel.Caption>
-                <h3>Third slide label</h3>
-                <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl
-                  consectetur.
-                </p>
-              </Carousel.Caption>
-            </Carousel.Item>
-          </Carousel>
-        </div> */}
-        <div className="row">
-          {/* <div className="col-9"></div>
-          <div className="col">
-            <h4>Property Registered</h4>
-          </div> */}
-        </div>
-        <h3>
-          <i>Land Property registered till now - </i>
-        </h3>
+        
+        <h3><i>Land Property registered till now - </i></h3>
         <MapContainer center={position} zoom={6} scrollWheelZoom={false}>
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

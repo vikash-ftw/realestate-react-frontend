@@ -208,7 +208,7 @@ class App extends React.Component {
               <ul className="nav navbar-nav m-2">
                 <li>
                   <NavLink className="nav-link" to="/Login">
-                    Login
+                    <h5>Login</h5>
                   </NavLink>
                 </li>
               </ul>
@@ -216,7 +216,7 @@ class App extends React.Component {
               <ul className="nav navbar-nav m-2 ">
                 <li>
                   <NavLink className="nav-link" exact to="/Register">
-                    SignUp
+                    <h5>SignUp</h5>
                   </NavLink>
                 </li>
               </ul>
