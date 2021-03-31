@@ -247,7 +247,7 @@ class BuyerDashboard extends Component {
                 <form
                   onSubmit={this.handleSubmit}
                   id="custom-search-form"
-                  class="form-search form-horizontal"
+                  className="form-search form-horizontal"
                 >
                   <div class="input-append span12">
                     <input
@@ -263,13 +263,13 @@ class BuyerDashboard extends Component {
                       className="btn"
                       onClick={this.handleCitySearch}
                     >
-                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <i className="fa fa-search" aria-hidden="true"></i>
                     </button>
                   </div>
                 </form>
               </li>
               <li>
-                <div class="dropdown">
+                <div className="dropdown">
                   <button
                     className="btn btn-secondary dropdown-toggle"
                     type="button"
@@ -285,42 +285,42 @@ class BuyerDashboard extends Component {
                     aria-labelledby="dropdownMenu2"
                   >
                     <button
-                      class="dropdown-item"
+                      className="dropdown-item"
                       type="button"
                       onClick={() => this.handlePriceSearch(500000, 2000000)}
                     >
                       5Lac - 20Lac
                     </button>
                     <button
-                      class="dropdown-item"
+                      className="dropdown-item"
                       type="button"
                       onClick={() => this.handlePriceSearch(2000000, 5000000)}
                     >
                       20Lac - 50Lac
                     </button>
                     <button
-                      class="dropdown-item"
+                      className="dropdown-item"
                       type="button"
                       onClick={() => this.handlePriceSearch(5000000, 8000000)}
                     >
                       50Lac - 80Lac
                     </button>
                     <button
-                      class="dropdown-item"
+                      className="dropdown-item"
                       type="button"
                       onClick={() => this.handlePriceSearch(8000000, 10000000)}
                     >
                       80Lac - 1Cr
                     </button>
                     <button
-                      class="dropdown-item"
+                      className="dropdown-item"
                       type="button"
                       onClick={() => this.handlePriceSearch(10000000, 50000000)}
                     >
                       1Cr - 5Cr
                     </button>
                     <button
-                      class="dropdown-item"
+                      className="dropdown-item"
                       type="button"
                       onClick={() => this.handlePriceSearch(50000000)}
                     >
@@ -334,9 +334,9 @@ class BuyerDashboard extends Component {
                 <form
                   onSubmit={this.handleSubmit}
                   id="custom-search-form"
-                  class="form-search form-horizontal"
+                  className="form-search form-horizontal"
                 >
-                  <div class="input-append span12">
+                  <div className="input-append span12">
                     <input
                       type="number"
                       className="search-query"

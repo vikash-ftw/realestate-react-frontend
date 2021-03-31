@@ -47,21 +47,6 @@ class App extends React.Component {
         pinCode: "",
         regDate: "",
       },
-
-      // landProperty: {
-      //   propertyTitle: "",
-      //   propertyArea: "",
-      //   dimensionLength: "",
-      //   dimensionBreadth: "",
-      //   propertyPrice: "",
-      //   propertyType: "",
-      //   ownershipType: "",
-      //   latitude: "",
-      //   longitude: "",
-      //   propertyCity: "",
-      //   propertyPincode: "",
-      //   propertyRegistDate: "",
-      // },
     };
   }
 
@@ -238,7 +223,7 @@ class App extends React.Component {
             </div>
           )}
         </nav>
-        <div>
+        <div className="container-fluid">
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/Login" component={LoginChoice} />

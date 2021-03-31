@@ -3,7 +3,7 @@ import { Carousel } from "react-bootstrap";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { LatLng } from "leaflet";
 import Axios from "axios";
-import Register from './registrationChoice';
+import Register from "./registrationChoice";
 
 class Home extends React.Component {
   state = {
@@ -71,7 +71,9 @@ class Home extends React.Component {
             <h4>Property Registered</h4>
           </div> */}
         </div>
-        <h3><i>Land Property registered till now - </i></h3>
+        <h3>
+          <i>Land Property registered till now - </i>
+        </h3>
         <MapContainer center={position} zoom={6} scrollWheelZoom={false}>
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -85,7 +87,7 @@ class Home extends React.Component {
               eventHandlers={{
                 click: (e) => {
                   if (localStorage.getItem("actorId") === null) {
-                    this.props.history.push("/login");
+                    this.props.history.push("/Login");
                   }
                 },
               }}

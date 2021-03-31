@@ -23,7 +23,7 @@ class ownerReg extends React.Component {
   }
   schema = {
     name: Joi.string()
-      .regex(/^[A-Za-z]+$/)
+      .regex(/^[A-Za-z ]+$/)
       .max(50)
       .required()
       .label("Name"),
@@ -83,7 +83,7 @@ class ownerReg extends React.Component {
     })
       .then((response) => {
         console.log(response.data);
-        this.props.history.replace("/ownerLogin");
+        this.props.history.replace("/Login");
       })
       .catch((err) => {
         this.setState({ isRegister: true });

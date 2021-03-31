@@ -18,7 +18,7 @@ class BuyerReg extends React.Component {
   };
 
   schema = {
-    name : Joi.string().regex(/^[A-Za-z]+$/).max(50).required().label("Name"),
+    name : Joi.string().regex(/^[A-Za-z ]+$/).max(50).required().label("Name"),
     email: Joi.string().email().required().label("Email"),
     password: Joi.string().max(15).required().label("Password"),
     phone: Joi.string().length(10).regex(/^\d+$/).required().label("PhoneNo"),
@@ -79,7 +79,7 @@ class BuyerReg extends React.Component {
     })
       .then((response) => {
         console.log(response.data);
-        this.props.history.replace("/buyerLogin");
+        this.props.history.replace("/Login");
       })
       .catch((err) => {
         this.setState({ isRegister: true });
